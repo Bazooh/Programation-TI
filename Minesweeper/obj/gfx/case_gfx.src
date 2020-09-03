@@ -1,0 +1,22 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\GFX\CASE_GFX.C"
+	.assume ADL=1
+	SEGMENT DATA
+_mines_weeper_gfx_pal:
+	DW	0
+	DW	32767
+	DW	26425
+	DW	19026
+	DW	0
+	DW	22528
+	DW	480
+	DW	23
+	DW	20500
+	DW	12288
+	XDEF _mines_weeper_gfx_pal
+;    1	#include "case_gfx.h"
+;    2	
+;    3	uint16_t mines_weeper_gfx_pal[LENGTH_PAL] = {
+	END

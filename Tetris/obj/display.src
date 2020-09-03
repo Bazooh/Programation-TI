@@ -1,0 +1,1078 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\DISPLAY.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "display.h"
+;    3	#include <string.h>
+;    4	
+;    5	gfx_sprite_t* initPrintBlock(uint8_t color) {
+_initPrintBlock:
+	LD	HL,-104
+	CALL	__frameset
+;    6	    uint16_t i;
+;    7	    uint8_t sprite_case[CASE_SIZE];
+;    8	
+;    9	    sprite_case[0] = CASE_X_LENGTH;
+	LD	(IX+-104),10
+;   10	    sprite_case[1] = CASE_Y_LENGTH;
+	LEA	HL,IX+-104
+	INC	HL
+	LD	(HL),10
+;   11	    for (i = 2; i < CASE_SIZE; i++) {
+	LD	(IX+-2),2
+	LD	(IX+-1),0
+	JR	L_3
+L_1:
+;   12	        sprite_case[i] = color;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	A,(IX+6)
+	LD	(HL),A
+	LD	HL,(IX+-2)
+	INC	HL
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   13	    }
+L_3:
+	LD.LIS	BC,102
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_1
+;   14	    for (i = 2; i < CASE_X_LENGTH ; i++) {
+	LD	(IX+-2),2
+	LD	(IX+-1),0
+	JR	L_7
+L_5:
+;   15	        sprite_case[i] = color - 1;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	A,(IX+6)
+	DEC	A
+	LD	(HL),A
+	LD	HL,(IX+-2)
+	INC	HL
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   16	    }
+L_7:
+	LD.LIS	BC,10
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_5
+;   17	    for (i = CASE_X_LENGTH + 2; i < CASE_SIZE - CASE_X_LENGTH; i += CASE_X_LENGTH) {
+	LD	(IX+-2),12
+	LD	(IX+-1),0
+	JR	L_11
+L_9:
+;   18	        sprite_case[i] = color - 1;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	A,(IX+6)
+	DEC	A
+	LD	(HL),A
+	LD	IY,(IX+-2)
+	LEA	HL,IY+10
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   19	    }
+L_11:
+	LD.LIS	BC,92
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_9
+;   20	    for (i = CASE_X_LENGTH + 3; i < (CASE_X_LENGTH * 2) + 1; i++) {
+	LD	(IX+-2),13
+	LD	(IX+-1),0
+	JR	L_16
+L_14:
+;   21	        sprite_case[i] = WHITE;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	(HL),1
+	LD	HL,(IX+-2)
+	INC	HL
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   22	    }
+L_16:
+	LD.LIS	BC,21
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_14
+;   23	    for (i = (CASE_X_LENGTH * 2) + 3; i < (CASE_X_LENGTH * 2) + 5; i++) {
+	LD	(IX+-2),23
+	LD	(IX+-1),0
+	JR	L_21
+L_19:
+;   24	        sprite_case[i] = WHITE;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	(HL),1
+	LD	HL,(IX+-2)
+	INC	HL
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   25	    }
+L_21:
+	LD.LIS	BC,25
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_19
+;   26	    for (i = (CASE_X_LENGTH * 2) + 1; i < CASE_SIZE; i += CASE_X_LENGTH) {
+	LD	(IX+-2),21
+	LD	(IX+-1),0
+	JR	L_25
+L_23:
+;   27	        sprite_case[i] = color + 1;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	A,(IX+6)
+	INC	A
+	LD	(HL),A
+	LD	IY,(IX+-2)
+	LEA	HL,IY+10
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   28	    }
+L_25:
+	LD.LIS	BC,102
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_23
+;   29	    for (i = CASE_SIZE - CASE_X_LENGTH; i < CASE_SIZE; i++) {
+	LD	(IX+-2),92
+	LD	(IX+-1),0
+	JR	L_30
+L_28:
+;   30	        sprite_case[i] = color + 1;
+	LD	BC,(IX+-2)
+	CALL	__stoiu
+	LD	BC,HL
+	LEA	HL,IX+-104
+	ADD	HL,BC
+	LD	A,(IX+6)
+	INC	A
+	LD	(HL),A
+	LD	HL,(IX+-2)
+	INC	HL
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   31	    }
+L_30:
+	LD.LIS	BC,102
+	LD	HL,(IX+-2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	C,L_28
+;   32	
+;   33	     //                                 color - 1, color - 1, color - 1, color - 1, color - 1, color - 1, color - 1, color - 1, color - 1, color - 1,
+;   34	     //                                 color - 1,     WHITE,     WHITE,     WHITE,     WHITE,     WHITE,     WHITE,     WHITE,     WHITE, color + 1,
+;   35	     //                                 color - 1,     WHITE,     WHITE,     color,     color,     color,     color,     color,     color, color + 1,
+;   36	     //                                 color - 1,     color,     color,     color,     color,     color,     color,     color,     color, color + 1,
+;   37	     //                                 color - 1,     color,     color,     color,     color,     color,     color,     color,     color, color + 1,
+;   38	     //                                 color - 1,     color,     color,     color,     color,     color,     color,     color,     color, color + 1,
+;   39	     //                                 color - 1,     color,     color,     color,     color,     color,     color,     color,     color, color + 1,
+;   40	     //                                 color - 1,     color,     color,     color,     color,     color,     color,     color,     color, color + 1,
+;   41	     //                                 color - 1,     color,     color,     color,     color,     color,     color,     color,     color, color + 1,
+;   42	     //                                 color + 1, color + 1, color + 1, color + 1, color + 1, color + 1, color + 1, color + 1, color + 1, color + 1,
+;   43	
+;   44	    return (gfx_sprite_t*)sprite_case;
+	LEA	HL,IX+-104
+;   45	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initPrintBlock ***************************
+;Name                         Addr/Register   Size   Type
+;sprite_case                         IX-104    102   variable
+;i                                     IX-2      2   variable
+;color                                 IX+6      1   parameter
+
+
+; Stack Frame Size: 113 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   46	
+;   47	void printScreen(uint8_t matrix[MATRIX_Y_LENGTH][MATRIX_X_LENGTH]) {
+_printScreen:
+	LD	HL,-2
+	CALL	__frameset
+;   48	    uint8_t i;
+;   49	    uint8_t j;
+;   50	
+;   51	    for (i = 0; i < MATRIX_Y_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_41
+L_39:
+;   52	        for (j = 0; j < MATRIX_X_LENGTH; j++) {
+	LD	(IX+-2),0
+	JR	L_38
+L_36:
+;   53	            printBlock((uint24_t)j, (uint8_t)i, matrix[i][j]);
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,10
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-1)
+	PUSH	BC
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_printBlock
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-2)
+;   54	        }
+L_38:
+	LD	A,(IX+-2)
+	CP	A,10
+	JR	C,L_36
+	INC	(IX+-1)
+;   55	    }
+L_41:
+	LD	A,(IX+-1)
+	CP	A,20
+	JR	C,L_39
+;   56	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printScreen ***************************
+;Name                         Addr/Register   Size   Type
+;_printBlock                         IMPORT  -----   function
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 11 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   57	
+;   58	void printPause() {
+_printPause:
+;   59	    uint24_t marge_x_pause;
+;   60	    uint8_t marge_y_pause;
+;   61	
+;   62	    marge_x_pause = MARGE_X_PAUSE;
+;   63	    marge_y_pause = MARGE_Y_PAUSE;
+;   64	
+;   65	    gfx_SetTextFGColor(BRIGHT_WHITE);
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;   66	    gfx_PrintStringXY("game paused", marge_x_pause, marge_y_pause);
+	LD	BC,160
+	PUSH	BC
+	LD	BC,196
+	PUSH	BC
+	LD	BC,L__11
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;   67	}
+	RET	
+
+
+;**************************** _printPause ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__11:
+	DB	"game paused"
+	DB	0
+	SEGMENT CODE
+;   68	
+;   69	void clearPause() {
+_clearPause:
+;   70	    uint24_t marge_x_pause;
+;   71	    uint8_t marge_y_pause;
+;   72	    uint8_t char_length;
+;   73	    uint8_t pause_length;
+;   74	
+;   75	    marge_x_pause = MARGE_X_PAUSE;
+;   76	    marge_y_pause = MARGE_Y_PAUSE;
+;   77	    char_length = CHAR_LENGTH;
+;   78	    pause_length = PAUSE_LENGTH;
+;   79	
+;   80	    gfx_SetColor(BLACK);
+	LD	BC,25
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;   81	    gfx_FillRectangle(marge_x_pause, marge_y_pause, pause_length * char_length, char_length);
+	LD	BC,8
+	PUSH	BC
+	LD	BC,88
+	PUSH	BC
+	LD	BC,160
+	PUSH	BC
+	LD	BC,196
+	PUSH	BC
+	CALL	_gfx_FillRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   82	}
+	RET	
+
+
+;**************************** _clearPause ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_FillRectangle                  IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   83	
+;   84	void printGameOver() {
+_printGameOver:
+;   85	    uint24_t marge_x_pause;
+;   86	    uint8_t marge_y_pause;
+;   87	
+;   88	    marge_x_pause = MARGE_X_PAUSE;
+;   89	    marge_y_pause = MARGE_Y_PAUSE;
+;   90	
+;   91	    gfx_SetTextFGColor(BRIGHT_WHITE);
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;   92	    gfx_PrintStringXY("game over", marge_x_pause, marge_y_pause);
+	LD	BC,160
+	PUSH	BC
+	LD	BC,196
+	PUSH	BC
+	LD	BC,L__14
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;   93	}
+	RET	
+
+
+;**************************** _printGameOver ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__14:
+	DB	"game over"
+	DB	0
+	SEGMENT CODE
+;   94	
+;   95	void printPiece(t_piece piece) {
+_printPiece:
+	LD	HL,-9
+	CALL	__frameset
+;   96	    uint8_t i;
+;   97	    t_pos piece_pos;
+;   98	
+;   99	    for (i = 0; i < SIZE_OF_PIECE; i++) {
+	LD	(IX+-1),0
+	JR	L_51
+L_49:
+;  100	        piece_pos.x = piece.pos.x + piece.rotation_pos[piece.rotation_state][i].x;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,HL
+;  101	        piece_pos.y = piece.pos.y + piece.rotation_pos[piece.rotation_state][i].y;
+	LD	DE,HL
+	LD	A,(IX+41)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+-6),DE	; spill
+	LEA	DE,IX+6
+	LD	(IX+-9),DE	; spill
+	LD	DE,(IX+-6)	; unspill
+	LD	(IX+-6),DE	; spill
+	LD	DE,(IX+-9)	; unspill
+	ADD	HL,DE
+	LD	DE,(IX+-6)	; unspill
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IY+0)
+	ADD	A,(IX+38)
+	LD	(IX+-3),A
+	LD	A,(IX+41)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LEA	BC,IX+6
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	A,(IY+1)
+	ADD	A,(IX+39)
+	LD	(IX+-2),A
+;  102	        if (piece_pos.y >= 0 && piece_pos.y < MATRIX_Y_LENGTH) {
+	OR	A,A
+	JP	M,L_50
+	LD	A,(IX+-2)
+	CP	A,20
+	CALL	__setflag
+	JP	P,L_50
+;  103	            printBlock((uint24_t)piece_pos.x, (uint8_t)piece_pos.y, piece.color);
+	LD	C,(IX+40)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-2)
+	PUSH	BC
+	LD	A,(IX+-3)
+	SEXT	HL
+	LD	L,(IX+-3)
+	PUSH	HL
+	CALL	_printBlock
+	POP	BC
+	POP	BC
+	POP	BC
+;  104	        }
+;  105	    }
+L_50:
+	INC	(IX+-1)
+L_51:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_49
+;  106	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printPiece ***************************
+;Name                         Addr/Register   Size   Type
+;_printBlock                         IMPORT  -----   function
+;piece_pos                             IX-3      2   variable
+;i                                     IX-1      1   variable
+;piece                                 IX+6     36   parameter
+
+
+; Stack Frame Size: 51 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  107	
+;  108	void printBlock(uint24_t x, uint8_t y, uint8_t color) {
+_printBlock:
+	CALL	__frameset0
+;  109	    gfx_Sprite_NoClip(
+;  110	            initPrintBlock(color),
+;  111	            (CASE_X_LENGTH * x) + MARGE_X,
+;  112	            (CASE_Y_LENGTH * y) + MARGE_Y);
+	LD	B,10
+	LD	C,(IX+9)
+	MLT	BC
+	LD	A,C
+	ADD	A,20
+	LD	C,A
+	LD	A,10
+	LD	B,0
+	PUSH	BC
+	LD	HL,(IX+6)
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+50
+	PUSH	BC
+	LD	C,(IX+12)
+	LD	B,0
+	PUSH	BC
+	CALL	_initPrintBlock
+	POP	BC
+	PUSH	HL
+	CALL	_gfx_Sprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;  113	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printBlock ***************************
+;Name                         Addr/Register   Size   Type
+;_initPrintBlock                     IMPORT  -----   function
+;_gfx_Sprite_NoClip                  IMPORT  -----   function
+;color                                IX+12      1   parameter
+;y                                     IX+9      1   parameter
+;x                                     IX+6      3   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  114	
+;  115	void clearPiece(t_piece piece) {
+_clearPiece:
+	LD	HL,-9
+	CALL	__frameset
+;  116	    uint8_t i;
+;  117	    t_pos piece_pos;
+;  118	
+;  119	    for (i = 0; i < SIZE_OF_PIECE; i++) {
+	LD	(IX+-1),0
+	JR	L_59
+L_57:
+;  120	        piece_pos.x = piece.pos.x + piece.rotation_pos[piece.rotation_state][i].x;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,HL
+;  121	        piece_pos.y = piece.pos.y + piece.rotation_pos[piece.rotation_state][i].y;
+	LD	DE,HL
+	LD	A,(IX+41)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+-6),DE	; spill
+	LEA	DE,IX+6
+	LD	(IX+-9),DE	; spill
+	LD	DE,(IX+-6)	; unspill
+	LD	(IX+-6),DE	; spill
+	LD	DE,(IX+-9)	; unspill
+	ADD	HL,DE
+	LD	DE,(IX+-6)	; unspill
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IY+0)
+	ADD	A,(IX+38)
+	LD	(IX+-3),A
+	LD	A,(IX+41)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	LEA	BC,IX+6
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	A,(IY+1)
+	ADD	A,(IX+39)
+	LD	(IX+-2),A
+;  122	        if (piece_pos.y >= 0 && piece_pos.y < MATRIX_Y_LENGTH) {
+	OR	A,A
+	JP	M,L_58
+	LD	A,(IX+-2)
+	CP	A,20
+	CALL	__setflag
+	JP	P,L_58
+;  123	            printBlock((uint24_t)piece_pos.x, (uint8_t)piece_pos.y, WHITE);
+	LD	BC,1
+	PUSH	BC
+	LD	C,(IX+-2)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+-3)
+	SEXT	HL
+	LD	L,(IX+-3)
+	PUSH	HL
+	CALL	_printBlock
+	POP	BC
+	POP	BC
+	POP	BC
+;  124	        }
+;  125	    }
+L_58:
+	INC	(IX+-1)
+L_59:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_57
+;  126	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _clearPiece ***************************
+;Name                         Addr/Register   Size   Type
+;_printBlock                         IMPORT  -----   function
+;piece_pos                             IX-3      2   variable
+;i                                     IX-1      1   variable
+;piece                                 IX+6     36   parameter
+
+
+; Stack Frame Size: 51 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  127	
+;  128	void printDifficulty(uint8_t difficulty) {
+_printDifficulty:
+	CALL	__frameset0
+;  129	    uint24_t marge_x_difficulty;
+;  130	    uint8_t marge_y_difficulty;
+;  131	    uint8_t char_length;
+;  132	    uint8_t difficulty_length;
+;  133	
+;  134	    marge_x_difficulty = MARGE_X_DIFFICULTY;
+;  135	    marge_y_difficulty = MARGE_Y_DIFFICULTY;
+;  136	    char_length = CHAR_LENGTH;
+;  137	    difficulty_length = DIFFICULTY_LENGTH;
+;  138	
+;  139	    gfx_SetColor(BRIGHT_WHITE);
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  140	    gfx_FillRectangle(marge_x_difficulty, marge_y_difficulty, difficulty_length * char_length, char_length);
+	LD	BC,8
+	PUSH	BC
+	LD	BC,48
+	PUSH	BC
+	LD	BC,120
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	CALL	_gfx_FillRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  141	
+;  142	    gfx_SetTextFGColor(BLACK);
+	LD	BC,25
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;  143	    gfx_PrintStringXY("difficulty :", marge_x_difficulty - (char_length * 10) - 2, marge_y_difficulty);
+	LD	BC,120
+	PUSH	BC
+	LD	BC,98
+	PUSH	BC
+	LD	BC,L__25
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  144	    switch (difficulty) {
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	CALL	__seqcase
+L__26:
+	DW	3
+	DW	0
+	DB	0
+	DW24	L_61	
+
+	DW24	L_62	
+
+	DW24	L_63	
+
+	DW24	L_64	
+
+;  145	        case 0 :
+L_61:
+;  146	            gfx_PrintStringXY(" Easy ", marge_x_difficulty, marge_y_difficulty);
+	LD	BC,120
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,L__27
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  147	            break;
+	JR	L_64
+;  148	        case 1 :
+L_62:
+;  149	            gfx_PrintStringXY("Normal", marge_x_difficulty, marge_y_difficulty);
+	LD	BC,120
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,L__28
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  150	            break;
+	JR	L_64
+;  151	        case 2 :
+L_63:
+;  152	            gfx_PrintStringXY(" Hard ", marge_x_difficulty, marge_y_difficulty);
+	LD	BC,120
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,L__29
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  153	            break;
+;  154	    }
+;  155	}
+L_64:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printDifficulty ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;_gfx_FillRectangle                  IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+;difficulty                            IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__25:
+	DB	"difficulty :"
+	DB	0
+L__27:
+	DB	" Easy "
+	DB	0
+L__28:
+	DB	"Normal"
+	DB	0
+L__29:
+	DB	" Hard "
+	DB	0
+	SEGMENT CODE
+;  156	
+;  157	void printScore(uint32_t score) {
+_printScore:
+	CALL	__frameset0
+;  158	    uint8_t score_length;
+;  159	    uint24_t marge_x_score;
+;  160	    uint8_t marge_y_score;
+;  161	    uint8_t char_length;
+;  162	
+;  163	    score_length = SCORE_LENGTH;
+;  164	    marge_x_score = MARGE_X_SCORE;
+;  165	    marge_y_score = MARGE_Y_SCORE;
+;  166	    char_length = CHAR_LENGTH;
+;  167	
+;  168	    gfx_SetColor(BLACK);
+	LD	BC,25
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  169	    gfx_FillRectangle(marge_x_score, marge_y_score, score_length * char_length, char_length);
+	LD	BC,8
+	PUSH	BC
+	LD	BC,48
+	PUSH	BC
+	LD	BC,100
+	PUSH	BC
+	LD	BC,240
+	PUSH	BC
+	CALL	_gfx_FillRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  170	
+;  171	    gfx_SetTextFGColor (WHITE);
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;  172	    gfx_PrintStringXY("score :", marge_x_score - (char_length * 6) - 2, marge_y_score);
+	LD	BC,100
+	PUSH	BC
+	LD	BC,190
+	PUSH	BC
+	LD	BC,L__31
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  173	    gfx_SetTextXY(marge_x_score, marge_y_score);
+	LD	BC,100
+	PUSH	BC
+	LD	BC,240
+	PUSH	BC
+	CALL	_gfx_SetTextXY
+	POP	BC
+	POP	BC
+;  174	    gfx_PrintUInt(score, score_length);
+	LD	BC,6
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_gfx_PrintUInt
+	POP	BC
+	POP	BC
+;  175	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printScore ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintUInt                      IMPORT  -----   function
+;_gfx_SetTextXY                      IMPORT  -----   function
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;_gfx_FillRectangle                  IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+;score                                 IX+6      4   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT STRSECT
+L__31:
+	DB	"score :"
+	DB	0
+	SEGMENT CODE
+;  176	
+;  177	void printNextPiece(t_piece next_piece) {
+_printNextPiece:
+	LD	HL,-9
+	CALL	__frameset
+;  178	    uint8_t i;
+;  179	    uint8_t j;
+;  180	    uint24_t x;
+;  181	    uint8_t y;
+;  182	
+;  183	    for (i = 0; i < SIZE_OF_PIECE + 2; i++) {
+	LD	(IX+-1),0
+	JR	L_73
+L_71:
+;  184	        for (j = 0; j < SIZE_OF_PIECE + 2; j++) {
+	LD	(IX+-2),0
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	DEC	HL
+	LD	A,10
+	CALL	__imul_b
+	LD	BC,220
+	ADD	HL,BC
+	LD	(IX+-6),HL
+	JR	L_70
+L_68:
+;  185	            x = (CASE_X_LENGTH * (i - 1)) + MARGE_X_NEXT_PIECE;
+;  186	            y = (CASE_Y_LENGTH * (j - 1)) + MARGE_Y_NEXT_PIECE;
+	LD	B,(IX+-2)
+	DEC	B
+	LD	C,10
+	MLT	BC
+	LD	A,C
+	ADD	A,30
+	LD	(IX+-3),A
+;  187	            gfx_Sprite_NoClip(initPrintBlock(WHITE), x, y);
+	LD	C,(IX+-3)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+-6)
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	CALL	_initPrintBlock
+	POP	BC
+	PUSH	HL
+	CALL	_gfx_Sprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-2)
+;  188	        }
+L_70:
+	LD	A,(IX+-2)
+	CP	A,6
+	JR	C,L_68
+	INC	(IX+-1)
+;  189	    }
+L_73:
+	LD	A,(IX+-1)
+	CP	A,6
+	JR	C,L_71
+;  190	    for (i = 0; i < SIZE_OF_PIECE; i++) {
+	LD	(IX+-1),0
+	JR	L_77
+L_75:
+;  191	        x = (CASE_X_LENGTH * next_piece.rotation_pos[0][i].x) + MARGE_X_NEXT_PIECE;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,HL
+	LEA	HL,IX+6
+	ADD	HL,BC
+	LD	(IX+-9),HL
+	LD	IY,(IX+-9)
+	LD	A,(IY+0)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	A,10
+	CALL	__imul_b
+	LD	BC,220
+	ADD	HL,BC
+	LD	(IX+-6),HL
+;  192	        y = (CASE_Y_LENGTH * next_piece.rotation_pos[0][i].y) + MARGE_Y_NEXT_PIECE;
+	LD	B,(IY+1)
+	LD	C,10
+	MLT	BC
+	LD	A,C
+	ADD	A,30
+	LD	(IX+-3),A
+;  193	        gfx_Sprite_NoClip(initPrintBlock(next_piece.color), x, y);
+	LD	C,(IX+-3)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+-6)
+	PUSH	BC
+	LD	C,(IX+40)
+	LD	B,0
+	PUSH	BC
+	CALL	_initPrintBlock
+	POP	BC
+	PUSH	HL
+	CALL	_gfx_Sprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-1)
+;  194	    }
+L_77:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_75
+;  195	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printNextPiece ***************************
+;Name                         Addr/Register   Size   Type
+;_initPrintBlock                     IMPORT  -----   function
+;_gfx_Sprite_NoClip                  IMPORT  -----   function
+;x                                     IX-6      3   variable
+;y                                     IX-3      1   variable
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;next_piece                            IX+6     36   parameter
+
+
+; Stack Frame Size: 51 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _gfx_Sprite_NoClip:ROM
+	XREF _gfx_SetTextFGColor:ROM
+	XREF _gfx_SetTextXY:ROM
+	XREF _gfx_PrintStringXY:ROM
+	XREF _gfx_PrintUInt:ROM
+	XREF _gfx_FillRectangle:ROM
+	XREF _gfx_SetColor:ROM
+	XREF __stoiu:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XREF __setflag:ROM
+	XREF __seqcase:ROM
+	XREF __imul_b:ROM
+	XDEF _printNextPiece
+	XDEF _printScore
+	XDEF _printDifficulty
+	XDEF _clearPiece
+	XDEF _printBlock
+	XDEF _printPiece
+	XDEF _printGameOver
+	XDEF _clearPause
+	XDEF _printPause
+	XDEF _printScreen
+	XDEF _initPrintBlock
+	END

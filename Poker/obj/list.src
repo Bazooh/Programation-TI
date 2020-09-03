@@ -1,0 +1,320 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\LIST.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "list.h"
+;    3	# include "deck.h"
+;    4	
+;    5	#include <stdlib.h>
+;    6	
+;    7	void removeCardToDeck(t_list *deck, uint8_t elem_place) {
+_removeCardToDeck:
+	LD	HL,-7
+	CALL	__frameset
+;    8	    uint8_t i;
+;    9	    t_list *card_to_free;
+;   10	
+;   11	    if (elem_place < 1) { return; }
+	LD	A,(IX+9)
+	CP	A,1
+	JR	C,L_9
+;   12	
+;   13	    for (i = 0; i < elem_place - 1; i++) {
+	LD	(IX+-1),0
+	JR	L_6
+L_4:
+;   14	        if (!deck->next) { return; }
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-4),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	Z,L_9
+;   15	        deck = deck->next;
+	LD	BC,(IX+-4)
+	LD	(IX+6),BC
+	INC	(IX+-1)
+;   16	    }
+L_6:
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	M,L_4
+;   17	
+;   18	    card_to_free = deck->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-7),BC
+;   19	    deck->next = card_to_free->next;
+	LD	IY,(IX+-7)
+	LD	BC,(IY+2)
+	LD	IY,(IX+6)
+	LD	(IY+2),BC
+;   20	    free(card_to_free);
+	LD	BC,(IX+-7)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   21	}
+L_9:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _removeCardToDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;card_to_free                          IX-7      3   variable
+;G_0                                   IX-4      3   variable
+;i                                     IX-1      1   variable
+;elem_place                            IX+9      1   parameter
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   22	
+;   23	void freeDeck(t_list *deck) {
+_freeDeck:
+	LD	HL,-3
+	CALL	__frameset
+;   24	    t_list *card_to_free;
+;   25	
+;   26	    deck = deck->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+6),BC
+;   27	
+;   28	    while (deck->next) {
+	JR	L_10
+L_11:
+;   29	        card_to_free = deck;
+	LD	BC,(IX+6)
+	LD	(IX+-3),BC
+;   30	        deck = deck->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+6),BC
+;   31	        free(card_to_free);
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   32	    }
+L_10:
+	LD	IY,(IX+6)
+	LD	HL,(IY+2)
+	CALL	__icmpzero
+	JR	NZ,L_11
+;   33	    free(deck);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   34	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _freeDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;card_to_free                          IX-3      3   variable
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   35	
+;   36	t_list *addCardToDeck(uint8_t color, uint8_t value) {
+_addCardToDeck:
+	LD	HL,-3
+	CALL	__frameset
+;   37	    t_list *new_elem;
+;   38	
+;   39	    if (!(new_elem = malloc(sizeof(t_list)))) { return NULL; }
+	LD	BC,5
+	PUSH	BC
+	CALL	_malloc
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	NZ,L_15
+	OR	A,A
+	SBC	HL,HL
+	JR	L_16
+L_15:
+;   40	
+;   41	    new_elem->card.color = color;
+	LD	A,(IX+6)
+	LD	IY,(IX+-3)
+	LD	(IY+1),A
+;   42	    new_elem->card.value = value;
+	LD	A,(IX+9)
+	LD	(IY+0),A
+;   43	
+;   44	    return new_elem;
+	LD	HL,(IX+-3)
+;   45	}
+L_16:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _addCardToDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_malloc                             IMPORT  -----   function
+;new_elem                              IX-3      3   variable
+;value                                 IX+9      1   parameter
+;color                                 IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   46	
+;   47	void initDeck(t_list *deck) {
+_initDeck:
+	LD	HL,-5
+	CALL	__frameset
+;   48	    uint8_t color;
+;   49	    uint8_t value;
+;   50	
+;   51	    for (color = 1; color <= NUMBER_OF_COLOR; color++) {
+	LD	(IX+-1),1
+	JR	L_26
+L_24:
+;   52	        for (value = 1; value <= NUMBER_OF_VALUE; value++) {
+	LD	(IX+-2),1
+	JR	L_23
+L_21:
+;   53	            if (!(deck->next = addCardToDeck(color, value))) { return; }
+	LD	C,(IX+-2)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-1)
+	PUSH	BC
+	CALL	_addCardToDeck
+	POP	BC
+	POP	BC
+	LD	IY,(IX+6)
+	LD	(IY+2),HL
+	LD	BC,(IY+2)
+	LD	(IX+-5),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	Z,L_28
+;   54	            deck = deck->next;
+	LD	BC,(IX+-5)
+	LD	(IX+6),BC
+	INC	(IX+-2)
+;   55	        }
+L_23:
+	LD	A,13
+	CP	A,(IX+-2)
+	JR	NC,L_21
+	INC	(IX+-1)
+;   56	    }
+L_26:
+	LD	A,4
+	CP	A,(IX+-1)
+	JR	NC,L_24
+;   57	
+;   58	    deck->next = NULL;
+	LD	BC,0
+	LD	IY,(IX+6)
+	LD	(IY+2),BC
+;   59	}
+L_28:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initDeck ***************************
+;Name                         Addr/Register   Size   Type
+;G_1                                   IX-5      3   variable
+;value                                 IX-2      1   variable
+;color                                 IX-1      1   variable
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   60	
+;   61	uint8_t sizeOfList(t_list *list) {
+_sizeOfList:
+	LD	HL,-4
+	CALL	__frameset
+;   62	    uint8_t i;
+;   63	
+;   64	    i = 0;
+	LD	(IX+-1),0
+;   65	
+;   66	    while (list->next) {
+	JR	L_30
+L_31:
+;   67	        list = list->next;
+	LD	BC,(IX+-4)
+	LD	(IX+6),BC
+;   68	        i++;
+	INC	(IX+-1)
+;   69	    }
+L_30:
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-4),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	NZ,L_31
+;   70	    return i;
+	LD	A,(IX+-1)
+;   71	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _sizeOfList ***************************
+;Name                         Addr/Register   Size   Type
+;G_2                                   IX-4      3   variable
+;i                                     IX-1      1   variable
+;list                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 13 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _free:ROM
+	XREF _malloc:ROM
+	XREF __frameset:ROM
+	XREF __setflag:ROM
+	XREF __icmpzero:ROM
+	XDEF _sizeOfList
+	XDEF _initDeck
+	XDEF _addCardToDeck
+	XDEF _freeDeck
+	XDEF _removeCardToDeck
+	END

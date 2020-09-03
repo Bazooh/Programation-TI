@@ -1,0 +1,1246 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\MAIN.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "main.h"
+;    3	
+;    4	void moveCursor(uint8_t *cursor_x, uint8_t *cursor_y) {
+_moveCursor:
+	CALL	__frameset0
+;    5	    if (*cursor_x < MATRIX_LENGTH - 1) {
+	LD	HL,(IX+6)
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	LD	BC,3
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_5
+;    6	        (*cursor_x)++;
+	LD	HL,(IX+6)
+	LD	A,(HL)
+	INC	A
+	LD	HL,(IX+6)
+	LD	(HL),A
+;    7	    } else {
+	JR	L_6
+L_5:
+;    8	        *cursor_x = 0;
+	LD	HL,(IX+6)
+	LD	(HL),0
+;    9	        if (*cursor_y < MATRIX_LENGTH - 1) {
+	LD	HL,(IX+9)
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_3
+;   10	            (*cursor_y)++;
+	LD	HL,(IX+9)
+	LD	A,(HL)
+	INC	A
+	LD	HL,(IX+9)
+	LD	(HL),A
+;   11	        } else {
+	JR	L_6
+L_3:
+;   12	            *cursor_y = 0;
+	LD	HL,(IX+9)
+	LD	(HL),0
+;   13	        }
+;   14	    }
+;   15	}
+L_6:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _moveCursor ***************************
+;Name                         Addr/Register   Size   Type
+;cursor_y                              IX+9      3   parameter
+;cursor_x                              IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   16	
+;   17	uint8_t placeNumber(uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH], uint8_t *availableCase) {
+_placeNumber:
+	LD	HL,-10
+	CALL	__frameset
+;   18	    uint32_t randomNumber;
+;   19	    uint8_t cursor_x;
+;   20	    uint8_t cursor_y;
+;   21	
+;   22	    if (!(*availableCase)) { return 0; }
+	LD	HL,(IX+9)
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_8
+	XOR	A,A
+	JR	L_20
+L_8:
+;   23	
+;   24	    cursor_x = 0;
+	LD	(IX+-1),0
+;   25	    cursor_y = 0;
+	LD	(IX+-2),0
+	LD	(IX+-10),A
+;   26	    randomNumber = random() % *availableCase;
+	CALL	_random
+	LD	A,(IX+-10)
+	LD	(IX+-9),HL
+	UEXT	HL
+	LD	IY,(IX+9)
+	LD	L,(IY)
+	LD	BC,HL
+	LD	A,H
+	LD	HL,(IX+-9)
+	CALL	__lremu
+	LD	(IX+-6),HL
+	LD	(IX+-3),E
+;   27	    while (randomNumber) {
+	JR	L_13
+;   28	        while (matrix[cursor_y][cursor_x]) {
+L_10:
+;   29	            moveCursor(&cursor_x, &cursor_y);
+	PEA	IX+-2
+	PEA	IX+-1
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+;   30	        }
+L_9:
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_10
+;   31	        moveCursor(&cursor_x, &cursor_y);
+	PEA	IX+-2
+	PEA	IX+-1
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+;   32	        randomNumber--;
+	LD	HL,(IX+-6)
+	LD	E,(IX+-3)
+	LD	BC,1
+	XOR	A,A
+	CALL	__lsub
+	LD	(IX+-6),HL
+	LD	(IX+-3),E
+;   33	    }
+L_13:
+	LD	HL,(IX+-6)
+	LD	E,(IX+-3)
+	CALL	__lcmpzero
+	JR	NZ,L_9
+;   34	    while (matrix[cursor_y][cursor_x]) {
+	JR	L_15
+L_16:
+;   35	        moveCursor(&cursor_x, &cursor_y);
+	PEA	IX+-2
+	PEA	IX+-1
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+;   36	    }
+L_15:
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_16
+;   37	
+;   38	    matrix[cursor_y][cursor_x] = (random() % 2) + 1;
+	CALL	_random
+	LD	BC,HL
+	LD	A,C
+	AND	A,1
+	UEXT	HL
+	LD	L,A
+	LD	A,1
+	LD	E,H
+	CALL	__ladd_b
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,(IX+6)
+	ADD	HL,DE
+	LD	DE,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+;   39	    (*availableCase)--;
+;   40	
+;   41	    return 1;
+	LD	A,1
+	ADD	HL,DE
+	LD	(HL),C
+	LD	HL,(IX+9)
+	LD	B,(HL)
+	DEC	B
+	LD	HL,(IX+9)
+	LD	(HL),B
+;   42	}
+L_20:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _placeNumber ***************************
+;Name                         Addr/Register   Size   Type
+;_random                             IMPORT  -----   function
+;randomNumber                          IX-6      4   variable
+;cursor_y                              IX-2      1   variable
+;cursor_x                              IX-1      1   variable
+;availableCase                         IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 22 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   43	
+;   44	void initMatrix(uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH]) {
+_initMatrix:
+	LD	HL,-2
+	CALL	__frameset
+;   45	    uint8_t i;
+;   46	    uint8_t j;
+;   47	
+;   48	    srandom(rtc_Time());
+	LD	A,(15925319)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	BC,(15925316)
+	PUSH	BC
+	CALL	_srandom
+	POP	BC
+	POP	BC
+;   49	
+;   50	    for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_28
+L_26:
+;   51	        for (j = 0; j < MATRIX_LENGTH; j++) {
+	LD	(IX+-2),0
+	JR	L_25
+L_23:
+;   52	            matrix[i][j] = 0;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	A,(IX+-2)
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(HL),0
+	INC	(IX+-2)
+;   53	        }
+L_25:
+	LD	A,(IX+-2)
+	CP	A,4
+	JR	C,L_23
+	INC	(IX+-1)
+;   54	    }
+L_28:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_26
+;   55	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initMatrix ***************************
+;Name                         Addr/Register   Size   Type
+;_srandom                            IMPORT  -----   function
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 11 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   56	
+;   57	void defLine(uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH], uint8_t *line, uint8_t direction, uint8_t number) {
+_defLine:
+	LD	HL,-1
+	CALL	__frameset
+;   58	    int8_t i;
+;   59	
+;   60	    switch (direction) {
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	CALL	__seqcase
+L__11:
+	DW	4
+	DW	1
+	DB	0
+	DW24	L_30	
+
+	DW24	L_36	
+
+	DW24	L_42	
+
+	DW24	L_48	
+
+	DW24	L_54	
+
+;   61	        case 1:
+L_30:
+;   62	            for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_34
+L_32:
+;   63	                line[i] = matrix[number][i];
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	A,(IX+-1)
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IX+-1)
+	ADD	HL,BC
+	LD	IY,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IY)
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	(HL),A
+	INC	(IX+-1)
+;   64	            }
+L_34:
+	LD	A,(IX+-1)
+	CP	A,4
+	JP	M,L_32
+;   65	            break;
+	JR	L_54
+;   66	        case 2:
+L_36:
+;   67	            for (i = MATRIX_LENGTH - 1; i >= 0; i--) {
+	LD	(IX+-1),3
+	JR	L_40
+L_38:
+;   68	                line[MATRIX_LENGTH - i - 1] = matrix[i][number];
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	A,(IX+15)
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	UEXT	HL
+	LD	L,A
+	LD	A,(IX+-1)
+	ADD	HL,BC
+	LD	IY,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	OR	A,A
+	LD	A,(IY)
+	LD	BC,HL
+	LD	HL,4
+	SBC	HL,BC
+	LD	BC,HL
+	LD	HL,(IX+9)
+	DEC	BC
+	ADD	HL,BC
+	LD	(HL),A
+	DEC	(IX+-1)
+;   69	            }
+L_40:
+	LD	A,(IX+-1)
+	OR	A,A
+	JP	P,L_38
+;   70	            break;
+	JR	L_54
+;   71	        case 3:
+L_42:
+;   72	            for (i = MATRIX_LENGTH - 1; i >= 0; i--) {
+	LD	(IX+-1),3
+	JR	L_46
+L_44:
+;   73	                line[MATRIX_LENGTH - i - 1] = matrix[number][i];
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	A,(IX+-1)
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IX+-1)
+	ADD	HL,BC
+	LD	IY,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	OR	A,A
+	LD	A,(IY)
+	LD	BC,HL
+	LD	HL,4
+	SBC	HL,BC
+	LD	BC,HL
+	LD	HL,(IX+9)
+	DEC	BC
+	ADD	HL,BC
+	LD	(HL),A
+	DEC	(IX+-1)
+;   74	            }
+L_46:
+	LD	A,(IX+-1)
+	OR	A,A
+	JP	P,L_44
+;   75	            break;
+	JR	L_54
+;   76	        case 4:
+L_48:
+;   77	            for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_52
+L_50:
+;   78	                line[i] = matrix[i][number];
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	A,(IX+15)
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	UEXT	HL
+	LD	L,A
+	LD	A,(IX+-1)
+	ADD	HL,BC
+	LD	IY,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IY)
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	(HL),A
+	INC	(IX+-1)
+;   79	            }
+L_52:
+	LD	A,(IX+-1)
+	CP	A,4
+	CALL	__setflag
+	JP	M,L_50
+;   80	            break;
+;   81	    }
+;   82	}
+L_54:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _defLine ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;number                               IX+15      1   parameter
+;direction                            IX+12      1   parameter
+;line                                  IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   83	
+;   84	void replaceLine(uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH], uint8_t *line, uint8_t direction, uint8_t number) {
+_replaceLine:
+	LD	HL,-1
+	CALL	__frameset
+;   85	    int8_t i;
+;   86	
+;   87	    switch (direction) {
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	CALL	__seqcase
+L__17:
+	DW	4
+	DW	1
+	DB	0
+	DW24	L_55	
+
+	DW24	L_61	
+
+	DW24	L_67	
+
+	DW24	L_73	
+
+	DW24	L_79	
+
+;   88	        case 1:
+L_55:
+;   89	            for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_59
+L_57:
+;   90	                matrix[number][i] = line[i];
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IX+15)
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	IY,HL
+	UEXT	HL
+	LD	L,A
+	LD	A,(IX+-1)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IY)
+	ADD	HL,BC
+	LD	(HL),A
+	INC	(IX+-1)
+;   91	            }
+L_59:
+	LD	A,(IX+-1)
+	CP	A,4
+	CALL	__setflag
+	JP	M,L_57
+;   92	            break;
+	JR	L_79
+;   93	        case 2:
+L_61:
+;   94	            for (i = MATRIX_LENGTH - 1; i >= 0; i--) {
+	LD	(IX+-1),3
+	JR	L_65
+L_63:
+;   95	                matrix[i][number] = line[MATRIX_LENGTH - i - 1];
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	BC,HL
+	LD	HL,4
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,HL
+	LD	HL,(IX+9)
+	DEC	BC
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IX+15)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	UEXT	HL
+	LD	L,A
+	LD	A,(IY)
+	ADD	HL,BC
+	LD	(HL),A
+	DEC	(IX+-1)
+;   96	            }
+L_65:
+	LD	A,(IX+-1)
+	OR	A,A
+	JP	P,L_63
+;   97	            break;
+	JR	L_79
+;   98	        case 3:
+L_67:
+;   99	            for (i = MATRIX_LENGTH - 1; i >= 0; i--) {
+	LD	(IX+-1),3
+	JR	L_71
+L_69:
+;  100	                matrix[number][i] = line[MATRIX_LENGTH - i - 1];
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	BC,HL
+	LD	HL,4
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,HL
+	LD	HL,(IX+9)
+	DEC	BC
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	LD	A,(IX+-1)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IY)
+	ADD	HL,BC
+	LD	(HL),A
+	DEC	(IX+-1)
+;  101	            }
+L_71:
+	LD	A,(IX+-1)
+	OR	A,A
+	JP	P,L_69
+;  102	            break;
+	JR	L_79
+;  103	        case 4:
+L_73:
+;  104	            for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_77
+L_75:
+;  105	                matrix[i][number] = line[i];
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IX+-1)
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	IY,HL
+	SEXT	HL
+	LD	L,(IX+-1)
+	LD	A,(IX+15)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	UEXT	HL
+	LD	L,A
+	LD	A,(IY)
+	ADD	HL,BC
+	LD	(HL),A
+	INC	(IX+-1)
+;  106	            }
+L_77:
+	LD	A,(IX+-1)
+	CP	A,4
+	CALL	__setflag
+	JP	M,L_75
+;  107	            break;
+;  108	    }
+;  109	}
+L_79:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _replaceLine ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;number                               IX+15      1   parameter
+;direction                            IX+12      1   parameter
+;line                                  IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  110	
+;  111	void initFusion(uint8_t *fusion) {
+_initFusion:
+	LD	HL,-1
+	CALL	__frameset
+;  112	    uint8_t i;
+;  113	
+;  114	    for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_83
+L_81:
+;  115	        fusion[i] = 0;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(HL),0
+	INC	(IX+-1)
+;  116	    }
+L_83:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_81
+;  117	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initFusion ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;fusion                                IX+6      3   parameter
+
+
+; Stack Frame Size: 10 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  118	
+;  119	uint8_t moveLine(uint8_t *line, uint8_t *availableCase) {
+_moveLine:
+	LD	HL,-17
+	CALL	__frameset
+;  120	    int8_t i;
+;  121	    uint8_t checkingCase;
+;  122	    uint8_t fusion[MATRIX_LENGTH];
+;  123	    uint8_t move;
+;  124	
+;  125	    move = 0;
+	LD	(IX+-7),0
+;  126	    initFusion(fusion);
+	PEA	IX+-11
+	CALL	_initFusion
+	POP	BC
+;  127	
+;  128	    for (i = MATRIX_LENGTH - 2; i >= 0; i--) {
+	LD	(IX+-5),2
+	JR	L_101
+L_99:
+;  129	        checkingCase = i;
+	LD	A,(IX+-5)
+	LD	(IX+-1),A
+;  130	        if (line[checkingCase]) {
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_96
+	JR	L_100
+;  131	            while (checkingCase < MATRIX_LENGTH - 1 && (!line[checkingCase + 1] || (line[checkingCase] == line[checkingCase + 1] && !fusion[checkingCase + 1] && !fusion[checkingCase]))) {
+L_97:
+;  132	                if (line[checkingCase + 1]) {
+	LD	A,(IX+-6)
+	OR	A,A
+	JR	NZ,L_93
+;  133	                    line[checkingCase + 1]++;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	INC	HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(IX+-17),HL
+	LD	A,(HL)
+	INC	A
+	LD	HL,(IX+-4)
+	LD	(HL),A
+;  134	                    (*availableCase)++;
+	LD	HL,(IX+9)
+	LD	A,(HL)
+	INC	A
+	LD	HL,(IX+9)
+	LD	(HL),A
+;  135	                    fusion[checkingCase + 1] = 1;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	INC	BC
+	LEA	HL,IX+-11
+	ADD	HL,BC
+	LD	(HL),1
+;  136	                } else {
+	JR	L_94
+L_93:
+;  137	                    line[checkingCase + 1] = line[checkingCase];
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	HL,(IX+-14)
+	LD	(HL),A
+;  138	                }
+L_94:
+;  139	                line[checkingCase] = 0;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(HL),0
+;  140	                checkingCase++;
+	INC	(IX+-1)
+;  141	                move = 1;
+	LD	(IX+-7),1
+;  142	            }
+L_96:
+	LD	A,(IX+-1)
+	CP	A,3
+	JR	NC,L_100
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,(IX+6)
+	INC	BC
+	ADD	HL,BC
+	LD	(IX+-4),HL
+	LD	(IX+-14),HL
+	LD	HL,(IX+-4)
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L__29
+	LD	A,1
+	JR	L__30
+L__29:
+	XOR	A,A
+L__30:
+	LD	(IX+-6),A
+	OR	A,A
+	JR	NZ,L_97
+	LD	BC,(IX+-4)
+	LD	(IX+-4),BC
+	LD	(IX+-14),BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	HL,(IX+-4)
+	CP	A,(HL)
+	JR	NZ,L_100
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	INC	BC
+	LEA	HL,IX+-11
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	NZ,L_100
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LEA	HL,IX+-11
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	Z,L_97
+;  143	        }
+;  144	    }
+L_100:
+	DEC	(IX+-5)
+L_101:
+	LD	A,(IX+-5)
+	OR	A,A
+	JP	P,L_99
+;  145	    return move;
+	LD	A,(IX+-7)
+;  146	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _moveLine ***************************
+;Name                         Addr/Register   Size   Type
+;G_2                                  IX-14      3   variable
+;fusion                               IX-11      4   variable
+;move                                  IX-7      1   variable
+;G_0                                   IX-6      1   variable
+;i                                     IX-5      1   variable
+;G_1                                   IX-4      3   variable
+;checkingCase                          IX-1      1   variable
+;availableCase                         IX+9      3   parameter
+;line                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 29 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  147	
+;  148	uint8_t move(uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH], uint8_t *availableCase, uint8_t direction) {
+_move:
+	LD	HL,-6
+	CALL	__frameset
+;  149	    uint8_t line[MATRIX_LENGTH];
+;  150	    uint8_t i;
+;  151	    uint8_t move;
+;  152	
+;  153	    move = 0;
+	LD	(IX+-2),0
+;  154	
+;  155	    for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_107
+L_105:
+;  156	        defLine(matrix, line, direction, i);
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+12)
+	PUSH	BC
+	PEA	IX+-6
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_defLine
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  157	        move += moveLine(line, availableCase);
+	LD	BC,(IX+9)
+	PUSH	BC
+	PEA	IX+-6
+	CALL	_moveLine
+	POP	BC
+	POP	BC
+	ADD	A,(IX+-2)
+	LD	(IX+-2),A
+;  158	        replaceLine(matrix, line, direction, i);
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+12)
+	PUSH	BC
+	PEA	IX+-6
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_replaceLine
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-1)
+;  159	    }
+L_107:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_105
+;  160	    return move;
+	LD	A,(IX+-2)
+;  161	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _move ***************************
+;Name                         Addr/Register   Size   Type
+;line                                  IX-6      4   variable
+;move                                  IX-2      1   variable
+;i                                     IX-1      1   variable
+;direction                            IX+12      1   parameter
+;availableCase                         IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  162	
+;  163	void play() {
+_play:
+	LD	HL,-18
+	CALL	__frameset
+;  164	    uint8_t direction;
+;  165	    uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH];
+;  166	    uint8_t availableCase;
+;  167	
+;  168	    availableCase = MATRIX_LENGTH * MATRIX_LENGTH;
+	LD	(IX+-2),16
+;  169	    initMatrix(matrix);
+	PEA	IX+-18
+	CALL	_initMatrix
+	POP	BC
+;  170	    placeNumber(matrix, &availableCase);
+	PEA	IX+-2
+	PEA	IX+-18
+	CALL	_placeNumber
+	POP	BC
+	POP	BC
+;  171	    printScreen(matrix);
+	PEA	IX+-18
+	CALL	_printScreen
+	POP	BC
+;  172	
+;  173	    while (1) {
+L_125:
+;  174	        direction = 0;
+	LD	(IX+-1),0
+;  175	
+;  176	        kb_Scan();
+	CALL	_kb_Scan
+;  177	
+;  178	        if (kb_Data[1] & kb_Del) { return; }
+	LD	A,(16056338)
+	AND	A,128
+	JR	NZ,L_126
+;  179	
+;  180	        if (kb_Data[7] & kb_Right) {
+	LD	A,(16056350)
+	AND	A,4
+	JR	Z,L_117
+;  181	            direction = 1;
+	LD	(IX+-1),1
+;  182	        } else if (kb_Data[7] & kb_Up) {
+	JR	L_123
+L_117:
+	LD	A,(16056350)
+	AND	A,8
+	JR	Z,L_115
+;  183	            direction = 2;
+	LD	(IX+-1),2
+;  184	        } else if (kb_Data[7] & kb_Left) {
+	JR	L_123
+L_115:
+	LD	A,(16056350)
+	AND	A,2
+	JR	Z,L_113
+;  185	            direction = 3;
+	LD	(IX+-1),3
+;  186	        } else if (kb_Data[7] & kb_Down) {
+	JR	L_123
+L_113:
+	LD	A,(16056350)
+	AND	A,1
+	JR	Z,L_123
+;  187	            direction = 4;
+	LD	(IX+-1),4
+;  188	        }
+L_123:
+;  189	
+;  190	        if (direction) {
+	LD	A,(IX+-1)
+	OR	A,A
+	JR	Z,L_125
+;  191	            if (move(matrix, &availableCase, direction)) {
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	PEA	IX+-2
+	PEA	IX+-18
+	CALL	_move
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_125
+;  192	                printScreen(matrix);
+	PEA	IX+-18
+	CALL	_printScreen
+	POP	BC
+;  193	                delay(50);
+	LD	BC,50
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;  194	                if (!placeNumber(matrix, &availableCase)) { return; }
+	PEA	IX+-2
+	PEA	IX+-18
+	CALL	_placeNumber
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_126
+;  195	                printScreen(matrix);
+	PEA	IX+-18
+	CALL	_printScreen
+	POP	BC
+;  196	                delay(150);
+	LD	BC,150
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+	JR	L_125
+;  197	            }
+;  198	        }
+;  199	    }
+;  200	}
+L_126:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _play ***************************
+;Name                         Addr/Register   Size   Type
+;_delay                              IMPORT  -----   function
+;_kb_Scan                            IMPORT  -----   function
+;_printScreen                        IMPORT  -----   function
+;matrix                               IX-18     16   variable
+;availableCase                         IX-2      1   variable
+;direction                             IX-1      1   variable
+
+
+; Stack Frame Size: 24 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  201	
+;  202	void menu() {
+_menu:
+;  203	    play();
+	CALL	_play
+;  204	}
+	RET	
+
+
+;**************************** _menu ***************************
+;Name                         Addr/Register   Size   Type
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;  205	
+;  206	int main() {
+_main:
+;  207	    gfx_Begin();
+	CALL	_gfx_Begin
+;  208	    gfx_SetPalette(gfx_pal, sizeof_gfx_pal, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,36
+	PUSH	BC
+	LD	BC,_gfx_pal
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
+;  209	    gfx_FillScreen(2);
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_FillScreen
+	POP	BC
+;  210	
+;  211	    menu();
+	CALL	_menu
+;  212	
+;  213	    kb_Reset();
+	CALL	_kb_Reset
+;  214	    gfx_End();
+	CALL	_gfx_End
+	OR	A,A
+;  215	    return (0);
+	SBC	HL,HL
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_End                            IMPORT  -----   function
+;_kb_Reset                           IMPORT  -----   function
+;_gfx_FillScreen                     IMPORT  -----   function
+;_gfx_pal                            IMPORT     36   variable
+;_gfx_SetPalette                     IMPORT  -----   function
+;_gfx_Begin                          IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _printScreen:ROM
+	XREF _gfx_pal:ROM
+	XREF _kb_Reset:ROM
+	XREF _kb_Scan:ROM
+	XREF _delay:ROM
+	XREF _srandom:ROM
+	XREF _random:ROM
+	XREF _gfx_FillScreen:ROM
+	XREF _gfx_SetPalette:ROM
+	XREF _gfx_End:ROM
+	XREF _gfx_Begin:ROM
+	XREF __lsub:ROM
+	XREF __lremu:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XREF __setflag:ROM
+	XREF __lcmpzero:ROM
+	XREF __seqcase:ROM
+	XREF __ladd_b:ROM
+	XDEF _main
+	XDEF _menu
+	XDEF _play
+	XDEF _move
+	XDEF _moveLine
+	XDEF _initFusion
+	XDEF _replaceLine
+	XDEF _defLine
+	XDEF _initMatrix
+	XDEF _placeNumber
+	XDEF _moveCursor
+	END

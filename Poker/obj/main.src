@@ -1,0 +1,96 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\MAIN.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include <graphx.h>
+;    3	#include <tice.h>
+;    4	#include <keypadc.h>
+;    5	
+;    6	#include "main.h"
+;    7	#include "playerList.h"
+;    8	#include "display.h"
+;    9	#include "color.h"
+;   10	#include "core.h"
+;   11	
+;   12	void main() {
+_main:
+;   13	    gfx_Begin();
+	CALL	_gfx_Begin
+;   14	    gfx_SetPalette(gfx_pal, sizeof_gfx_pal, 0);
+	LD	BC,0
+	PUSH	BC
+	LD	BC,4
+	PUSH	BC
+	LD	BC,_gfx_pal
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
+;   15	    gfx_FillScreen(0);
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_FillScreen
+	POP	BC
+;   16	    gfx_SetTextConfig(gfx_text_noclip);
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_SetTextConfig
+	POP	BC
+;   17	
+;   18	    srandom(rtc_Time());
+	LD	A,(15925319)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	BC,(15925316)
+	PUSH	BC
+	CALL	_srandom
+	POP	BC
+	POP	BC
+;   19	
+;   20	    play();
+	CALL	_play
+;   21	
+;   22	    while (!os_GetCSC());
+L_1:
+	CALL	_os_GetCSC
+	OR	A,A
+	JR	Z,L_1
+;   23	
+;   24	    gfx_End();
+	CALL	_gfx_End
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_End                            IMPORT  -----   function
+;_os_GetCSC                          IMPORT  -----   function
+;_play                               IMPORT  -----   function
+;_srandom                            IMPORT  -----   function
+;_gfx_SetTextConfig                  IMPORT  -----   function
+;_gfx_FillScreen                     IMPORT  -----   function
+;_gfx_pal                            IMPORT      4   variable
+;_gfx_SetPalette                     IMPORT  -----   function
+;_gfx_Begin                          IMPORT  -----   function
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _play:ROM
+	XREF _gfx_pal:ROM
+	XREF _os_GetCSC:ROM
+	XREF _srandom:ROM
+	XREF _gfx_SetTextConfig:ROM
+	XREF _gfx_FillScreen:ROM
+	XREF _gfx_SetPalette:ROM
+	XREF _gfx_End:ROM
+	XREF _gfx_Begin:ROM
+	XDEF _main
+	END

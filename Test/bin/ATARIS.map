@@ -1,0 +1,31 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A882             0h
+libs     D1A882 D1A882             0h
+startup  D1A882 D1A8C1            3Fh
+cleanup  D1A8C1 D1A8D5            14h
+exit     D1A8D5 D1A8DB             6h
+code     D1A8DB D1AAC5           1EAh
+data     D1AAC5 D1AAC5             0h
+strsect  D1AAC5 D1ABEF           12Ah
+text     D1ABEF D1ABEF             0h
+bss      D031F6 D031F6 D13FD6      0h
+header   D1A87F D1A882             3h
+
+Label                       Value
+-------------------------   ------
+_delay                    = D1A8DB
+_os_DisableHomeTextBuffer = D1A924
+_os_EnableHomeTextBuffer  = D1A936
+__scmpzero                = 000204
+_sprintf                  = 0000BC
+__stoiu                   = 000264
+__ccleanup                = D1A8C1
+_errno                    = D008DC
+_init                     = D1A882
+_exit                     = D1A8D7
+__exit                    = D1A8B0
+__exitsp                  = D1A8B0
+__errsp                   = D1A8B0
+_main                     = D1A948

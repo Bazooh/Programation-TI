@@ -1,0 +1,282 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\DISPLAY.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "deck.h"
+;    3	#include "playerList.h"
+;    4	#include "display.h"
+;    5	
+;    6	#include <graphx.h>
+;    7	
+;    8	void printCard(t_card card, uint24_t x, uint8_t y) {
+_printCard:
+	CALL	__frameset0
+;    9	    gfx_SetTextFGColor(1);
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;   10	    gfx_SetTextXY(x, y);
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	BC,(IX+9)
+	PUSH	BC
+	CALL	_gfx_SetTextXY
+	POP	BC
+	POP	BC
+;   11	    gfx_PrintUInt(card.value, 2);
+	LD	BC,2
+	PUSH	BC
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_PrintUInt
+	POP	BC
+	POP	BC
+;   12	    gfx_SetTextXY(x + 24, y);
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	IY,(IX+9)
+	LEA	BC,IY+24
+	PUSH	BC
+	CALL	_gfx_SetTextXY
+	POP	BC
+	POP	BC
+;   13	    gfx_PrintUInt(card.color, 1);
+	LD	BC,1
+	PUSH	BC
+	LD	A,(IX+7)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_PrintUInt
+	POP	BC
+	POP	BC
+;   14	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCard ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintUInt                      IMPORT  -----   function
+;_gfx_SetTextXY                      IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;y                                    IX+12      1   parameter
+;x                                     IX+9      3   parameter
+;card                                  IX+6      2   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   15	
+;   16	void printSizeOfDeck(t_deck *deck) {
+_printSizeOfDeck:
+	CALL	__frameset0
+;   17	    gfx_SetTextFGColor(1);
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;   18	    gfx_SetTextXY(10, 150);
+	LD	BC,150
+	PUSH	BC
+	LD	BC,10
+	PUSH	BC
+	CALL	_gfx_SetTextXY
+	POP	BC
+	POP	BC
+;   19	    gfx_PrintUInt(sizeOfDeck(deck), 2);
+	LD	BC,2
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_sizeOfDeck
+	POP	BC
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_PrintUInt
+	POP	BC
+	POP	BC
+;   20	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printSizeOfDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_sizeOfDeck                         IMPORT  -----   function
+;_gfx_PrintUInt                      IMPORT  -----   function
+;_gfx_SetTextXY                      IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   21	
+;   22	void printDeck(t_deck *deck) {
+_printDeck:
+	LD	HL,-12
+	CALL	__frameset
+;   23	    printSizeOfDeck(deck);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printSizeOfDeck
+	POP	BC
+;   24	
+;   25	    while (deck->next) {
+	JR	L_2
+L_3:
+;   26	        deck = deck->next;
+	LD	BC,(IX+-3)
+	LD	(IX+6),BC
+;   27	        printCard(deck->card, deck->card.color * 60, deck->card.value * 10);
+	LD	IY,(IX+-3)
+	LEA	BC,IY+0
+	LD	(IX+-6),BC
+	LD	IY,(IX+-6)
+	LD	B,(IY+0)
+	LD	C,10
+	MLT	BC
+	LD	B,0
+	PUSH	BC
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	LD	A,60
+	CALL	__imul_b
+	PUSH	HL
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	LD	(IX+-12),HL	; spill
+	ADD	HL,SP
+	LD	(IX+-12),HL	; spill
+	LD	IY,(IX+-3)
+	LEA	HL,IY+0
+	LD	BC,2
+	LD	(IX+-9),HL	; spill
+	LD	HL,(IX+-12)	; unspill
+	LD	DE,HL
+	LD	HL,(IX+-9)	; unspill
+	LDIR	
+	CALL	_printCard
+	POP	BC
+	POP	BC
+	POP	BC
+;   28	    }
+L_2:
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-3),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	NZ,L_3
+;   29	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printDeck ***************************
+;Name                         Addr/Register   Size   Type
+;G_0                                   IX-3      3   variable
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: -1 (instruction)
+
+
+;   30	
+;   31	void printPlayerCard(t_player *player) {
+_printPlayerCard:
+	LD	HL,-4
+	CALL	__frameset
+;   32	    uint8_t i;
+;   33	
+;   34	    for (i = 0; i < NUMBER_OF_CARD_IN_HAND; i++) {
+	LD	(IX+-1),0
+	JR	L_8
+L_6:
+;   35	        printCard(player->hand[i], 100 + (40 * i), 150);
+	LD	DE,150
+	PUSH	DE
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,40
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	DE,IY+100
+	PUSH	DE
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	DE,HL
+	LD	IY,(IX+6)
+	PUSH	BC
+	LEA	HL,IY+10
+	ADD	HL,DE
+	LD	IY,0
+	ADD	IY,SP
+	LD	DE,IY
+	LD	BC,2
+	LDIR	
+	LD	(IX+-4),BC
+	CALL	_printCard
+	LD	BC,(IX+-4)
+	POP	DE
+	POP	DE
+	POP	DE
+	INC	(IX+-1)
+;   36	    }
+L_8:
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	C,L_6
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printPlayerCard ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;player                                IX+6      3   parameter
+
+
+; Stack Frame Size: 13 (bytes)
+;       Spill Code: -1 (instruction)
+
+
+	XREF _gfx_SetTextFGColor:ROM
+	XREF _gfx_SetTextXY:ROM
+	XREF _gfx_PrintUInt:ROM
+	XREF _sizeOfDeck:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XREF __icmpzero:ROM
+	XREF __imul_b:ROM
+	XDEF _printPlayerCard
+	XDEF _printDeck
+	XDEF _printSizeOfDeck
+	XDEF _printCard
+	END

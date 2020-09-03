@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Poker"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Poker">
+				<Option output="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Poker.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/7.4.0/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/7.4.0/../../../../lib/../include/w32api"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 Poker"/>
+					<CompileFile command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Poker/fast">
+				<Option output="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Poker.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/7.4.0/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/7.4.0/../../../../lib/../include/w32api"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 Poker/fast"/>
+					<CompileFile command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j4 -f &quot;/cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/bet.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/betRound.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/card.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/checkHand.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/core.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/deck.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/display.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/gameInfo.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/initGame.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/main.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/player.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/playerAction.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/players.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/round.h">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/bet.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/betRound.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/card.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/checkHand.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/core.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/deck.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/display.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/initGame.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/main.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/player.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/playerAction.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/players.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/src/round.c">
+			<Option target="Poker"/>
+		</Unit>
+		<Unit filename="/cygdrive/d/Logiciel/CEdev/projets/Poker/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,408 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\DISPLAY.C"
+	.assume ADL=1
+	SEGMENT DATA
+_SPRITE_NEAR_BOMB:
+	DW24	_sprite_case_0
+	DW24	_sprite_case_1
+	DW24	_sprite_case_2
+	DW24	_sprite_case_3
+	DW24	_sprite_case_4
+	DW24	_sprite_case_5
+	DW24	_sprite_case_6
+	DW24	_sprite_case_7
+	DW24	_sprite_case_0
+;    1	
+;    2	#include "minesweeper.h"
+;    3	
+;    4	const gfx_sprite_t* SPRITE_NEAR_BOMB[MAX_NEAR_BOMB] = {
+	SEGMENT CODE
+;    5	        SPRITE_CASE_0,
+;    6	        SPRITE_CASE_1,
+;    7	        SPRITE_CASE_2,
+;    8	        SPRITE_CASE_3,
+;    9	        SPRITE_CASE_4,
+;   10	        SPRITE_CASE_5,
+;   11	        SPRITE_CASE_6,
+;   12	        SPRITE_CASE_7,
+;   13	        SPRITE_CASE_8,
+;   14	};
+;   15	
+;   16	
+;   17	void printCase(t_case matrix[MAP_X_MAX][MAP_Y_MAX], int8_t x, int8_t y) {
+_printCase:
+	CALL	__frameset0
+;   18	    gfx_Sprite_NoClip(
+;   19	            getCase(matrix, x, y),
+;   20	            CASE_OUTER_WIDTH * (int32_t)x + MARGE,
+;   21	            CASE_OUTER_HEIGHT * (int32_t)y + HUD_HEIGHT);
+	LD	B,10
+	LD	C,(IX+12)
+	MLT	BC
+	LD	A,C
+	ADD	A,30
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+9)
+	SEXT	HL
+	LD	L,(IX+9)
+	LD	BC,HL
+	LD	HL,10
+	CALL	__imulu
+	LD	IY,HL
+	LEA	BC,IY+5
+	PUSH	BC
+	LD	C,(IX+12)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+9)
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_getCase
+	POP	BC
+	POP	BC
+	POP	BC
+	PUSH	HL
+	CALL	_gfx_Sprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   22	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCase ***************************
+;Name                         Addr/Register   Size   Type
+;_getCase                            IMPORT  -----   function
+;_gfx_Sprite_NoClip                  IMPORT  -----   function
+;y                                    IX+12      1   parameter
+;x                                     IX+9      1   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   23	
+;   24	void printScreen(t_case matrix[MAP_X_MAX][MAP_Y_MAX], t_pos cursor) {
+_printScreen:
+	LD	HL,-5
+	CALL	__frameset
+;   25	    int8_t i;
+;   26	    int8_t j;
+;   27	    for(j = 0; j < MAP_Y_MAX; j++) {
+	LD	(IX+-2),0
+	JR	L_8
+L_6:
+;   28	        for(i = 0; i < MAP_X_MAX; i++) {
+	LD	(IX+-1),0
+	JR	L_5
+L_3:
+;   29	            printCase(matrix, i, j);
+	LD	C,(IX+-2)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-1)
+	PUSH	BC
+	LD	DE,(IX+6)
+	PUSH	DE
+	LD	(IX+-5),BC
+	CALL	_printCase
+	LD	BC,(IX+-5)
+	POP	DE
+	POP	DE
+	POP	DE
+	INC	(IX+-1)
+;   30	        }
+L_5:
+	LD	A,(IX+-1)
+	CP	A,31
+	CALL	__setflag
+	JP	M,L_3
+	INC	(IX+-2)
+;   31	    }
+L_8:
+	LD	A,(IX+-2)
+	CP	A,21
+	CALL	__setflag
+	JP	M,L_6
+;   32	    printCursor(cursor);
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+9
+	LD	BC,2
+	LDIR	
+	CALL	_printCursor
+	POP	BC
+;   33	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printScreen ***************************
+;Name                         Addr/Register   Size   Type
+;_printCursor                        IMPORT  -----   function
+;_printCase                          IMPORT  -----   function
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;cursor                                IX+9      2   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 17 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   34	
+;   35	void printCursor(t_pos cursor) {
+_printCursor:
+	CALL	__frameset0
+;   36	    gfx_TransparentSprite(
+;   37	            SPRITE_CURSOR,
+;   38	            CASE_OUTER_WIDTH * (int32_t)cursor.x + MARGE,
+;   39	            CASE_OUTER_HEIGHT * (int32_t)cursor.y + HUD_HEIGHT);
+	LD	A,(IX+7)
+	SEXT	HL
+	LD	L,(IX+7)
+	LD	A,10
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+30
+	PUSH	BC
+	LD	A,(IX+6)
+	SEXT	HL
+	LD	L,(IX+6)
+	LD	A,10
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+5
+	PUSH	BC
+	LD	BC,_sprite_cursor
+	PUSH	BC
+	CALL	_gfx_TransparentSprite
+	POP	BC
+	POP	BC
+	POP	BC
+;   40	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_cursor                      IMPORT     83   variable
+;_gfx_TransparentSprite              IMPORT  -----   function
+;cursor                                IX+6      2   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   41	
+;   42	void deleteCursor(t_case matrix[MAP_X_MAX][MAP_Y_MAX], t_pos cursor) {
+_deleteCursor:
+	CALL	__frameset0
+;   43	    printCase(matrix, cursor.x, cursor.y);
+	LD	C,(IX+10)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+9)
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+;   44	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _deleteCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_printCase                          IMPORT  -----   function
+;cursor                                IX+9      2   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   45	
+;   46	gfx_sprite_t *returnValue(uint8_t value, uint8_t bomb) {
+_returnValue:
+	CALL	__frameset0
+;   47	
+;   48	    if (bomb)
+	LD	A,(IX+9)
+	OR	A,A
+	JR	Z,L_14
+;   49	        return SPRITE_BOMB;
+	LD	HL,_sprite_bomb
+	JR	L_15
+L_14:
+;   50	    return SPRITE_NEAR_BOMB[value];
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_SPRITE_NEAR_BOMB
+	ADD	HL,BC
+	LD	HL,(HL)
+;   51	
+;   52	}
+L_15:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _returnValue ***************************
+;Name                         Addr/Register   Size   Type
+;_SPRITE_NEAR_BOMB                   STATIC     27   variable
+;_sprite_bomb                        IMPORT     83   variable
+;bomb                                  IX+9      1   parameter
+;value                                 IX+6      1   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   53	
+;   54	gfx_sprite_t *getCase(t_case matrix[MAP_X_MAX][MAP_Y_MAX], int8_t x, int8_t y) {
+_getCase:
+	LD	HL,-3
+	CALL	__frameset
+;   55	    t_case  value = matrix[x][y];
+	LD	A,(IX+9)
+	SEXT	HL
+	LD	L,(IX+9)
+	LD	A,63
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(IX+12)
+	SEXT	HL
+	LD	L,(IX+12)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LEA	DE,IX+-3
+	LD	BC,3
+	LDIR	
+;   56	
+;   57	    if (value.visible)
+	LD	HL,(IX+-3)
+	LD	A,23
+	CALL	__ishru_b
+	LD	A,L
+	OR	A,A
+	JR	Z,L_18
+;   58	        return returnValue(value.value, value.bomb);
+	LD	HL,(IX+-3)
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	A,23
+	CALL	__ishru_b
+	LD	C,L
+	LD	A,20
+	LD	B,0
+	PUSH	BC
+	LD	HL,(IX+-3)
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	CALL	__ishru_b
+	LD	C,L
+	PUSH	BC
+	CALL	_returnValue
+	POP	BC
+	POP	BC
+	JR	L_20
+L_18:
+;   59	    if (value.flag)
+	LD	HL,(IX+-3)
+	ADD	HL,HL
+	LD	A,23
+	CALL	__ishru_b
+	LD	A,L
+	OR	A,A
+	JR	Z,L_19
+;   60	        return SPRITE_FLAG;
+	LD	HL,_sprite_flag
+	JR	L_20
+L_19:
+;   61	    return SPRITE_HIDDEN_CASE;
+	LD	HL,_sprite_hidden_case
+;   62	
+;   63	}
+L_20:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _getCase ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_hidden_case                 IMPORT     83   variable
+;_sprite_flag                        IMPORT     83   variable
+;_returnValue                        IMPORT  -----   function
+;value                                 IX-3      3   variable
+;y                                    IX+12      1   parameter
+;x                                     IX+9      1   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _sprite_case_7:ROM
+	XREF _sprite_case_6:ROM
+	XREF _sprite_case_5:ROM
+	XREF _sprite_case_4:ROM
+	XREF _sprite_case_3:ROM
+	XREF _sprite_case_2:ROM
+	XREF _sprite_case_1:ROM
+	XREF _sprite_case_0:ROM
+	XREF _sprite_bomb:ROM
+	XREF _sprite_flag:ROM
+	XREF _sprite_cursor:ROM
+	XREF _sprite_hidden_case:ROM
+	XREF _gfx_TransparentSprite:ROM
+	XREF _gfx_Sprite_NoClip:ROM
+	XREF __imulu:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XREF __setflag:ROM
+	XREF __imul_b:ROM
+	XREF __ishru_b:ROM
+	XDEF _getCase
+	XDEF _returnValue
+	XDEF _deleteCursor
+	XDEF _printCursor
+	XDEF _printScreen
+	XDEF _printCase
+	XDEF _SPRITE_NEAR_BOMB
+	END

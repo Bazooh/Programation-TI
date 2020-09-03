@@ -1,0 +1,79 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A8DA            58h
+libs     D1A8DA D1A913            39h
+startup  D1A913 D1A952            3Fh
+cleanup  D1A952 D1A966            14h
+exit     D1A966 D1A96C             6h
+code     D1A96C D1B1E6           87Ah
+data     D1B1E6 D20A02          581Ch
+strsect  D20A02 D20A02             0h
+text     D20A02 D20A02             0h
+bss      D031F6 D031F6 D13FD6      0h
+header   D1A87F D1A882             3h
+
+Label                           Value
+-----------------------------   ------
+_delay                        = D1A96C
+_os_DisableHomeTextBuffer     = D1A9B5
+_os_EnableHomeTextBuffer      = D1A9C7
+_srandom                      = D1A9D9
+__setstate                    = D1A9E0
+_random                       = D1A9F0
+__state                       = D1B1E6
+__frameset0                   = D1AA47
+__lsub                        = 0001F8
+__seqcase                     = 000210
+__frameset                    = D1AA52
+__imul_b                      = 000158
+__imul_b                      = 000150
+__ladd_b                      = 00019C
+__ladd_b                      = 0001A0
+__lremu                       = 0001E0
+__lcmpzero                    = 0001B0
+__setflag                     = 000218
+__findlibload                 = D1A882
+__ccleanup                    = D1A952
+_errno                        = D008DC
+_init                         = D1A882
+_exit                         = D1A968
+__exit                        = D1A941
+__exitsp                      = D1A941
+__errsp                       = D1A941
+_sprite_8192                  = D20372
+_sprite_4096                  = D1FD30
+_sprite_2048                  = D1F6EE
+_sprite_1024                  = D1F0AC
+_sprite_512                   = D1EA6A
+_sprite_256                   = D1E428
+_sprite_128                   = D1DDE6
+_sprite_64                    = D1D7A4
+_sprite_32                    = D1D162
+_sprite_16                    = D1CB20
+_sprite_8                     = D1C4DE
+_sprite_4                     = D1BE9C
+_sprite_2                     = D1B85A
+_sprite_empty                 = D1B218
+_printScreen                  = D1AAA5
+_printCase                    = D1AA60
+_SPRITE_CASE                  = D209B4
+_main                         = D1B1B2
+_menu                         = D1B1AD
+_play                         = D1B0E5
+_move                         = D1B07C
+_moveLine                     = D1AF6E
+_initFusion                   = D1AF44
+_replaceLine                  = D1ADF4
+_defLine                      = D1ACA8
+_initMatrix                   = D1AC4E
+_placeNumber                  = D1AB4F
+_moveCursor                   = D1AAFC
+_gfx_pal                      = D209DE
+_gfx_Begin                    = D1A8ED
+_gfx_End                      = D1A8F1
+_gfx_SetPalette               = D1A8F5
+_gfx_FillScreen               = D1A8F9
+_gfx_TransparentSprite_NoClip = D1A8FD
+_kb_Scan                      = D1A90B
+_kb_Reset                     = D1A90F

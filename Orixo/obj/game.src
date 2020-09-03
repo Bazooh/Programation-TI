@@ -1,0 +1,125 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\GAME.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 3
+.ENDEF
+.DEFINE "y"
+.VALUE 2
+.CLASS 8
+.TYPE 3
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_cursor",5
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "state"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_cursor"
+.BEGREC "s_case",3
+.DEFINE "number"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "old_number"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "id"
+.VALUE 2
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_case"
+.BEGREC "s_game",1810
+.DEFINE "x_max"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_max"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "matrix"
+.VALUE 2
+.CLASS 8
+.DIM 30
+.DIM 20
+.TAG "s_case"
+.TYPE 872
+.ENDEF
+.DEFINE "number_max"
+.VALUE 1802
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "amount_number"
+.VALUE 1803
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "win"
+.VALUE 1804
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "cursor"
+.VALUE 1805
+.CLASS 8
+.TAG "s_cursor"
+.TYPE 8
+.ENDEF
+.ENDREC "s_game"
+	SEGMENT DATA
+_MENU:
+	DB	0
+	DB	15
+	DB	10
+	DB	15
+	DB	5
+	DB	1
+	DB	20
+	DB	15
+	DB	30
+	DB	5
+	DB	2
+	DB	30
+	DB	20
+	DB	60
+	DB	4
+	DB	3
+	DB	3
+	DB	3
+	DB	1
+	DB	1
+.DEFINE "MENU"
+.ALIAS "_MENU"
+.CLASS 69
+.VALUE _MENU
+.DIM 4
+.DIM 5
+.TYPE 876
+.ENDEF
+	XDEF _MENU
+;    1	#include "game.h"
+;    2	
+;    3	uint8_t MENU[NUMBER_OF_DIFFICULTY][NUMBER_OF_CATEGORY] = {
+	END

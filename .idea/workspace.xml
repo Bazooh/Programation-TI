@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d7fd5777-5117-4c42-b1e0-5c1db7cf06e3" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ProjectId" id="1UAFCTqsuBmPVGSGMm2Qlh3thOy" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Logiciel\CEdev\projets\Ataris\src" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d7fd5777-5117-4c42-b1e0-5c1db7cf06e3" name="Default Changelist" comment="" />
+      <created>1574791369444</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1574791369444</updated>
+      <workItem from="1574791378930" duration="10338000" />
+      <workItem from="1574863503827" duration="5577000" />
+      <workItem from="1574886093802" duration="4754000" />
+      <workItem from="1575044065921" duration="27245000" />
+      <workItem from="1575104844676" duration="19932000" />
+      <workItem from="1575126248429" duration="180000" />
+      <workItem from="1575133112040" duration="3898000" />
+      <workItem from="1575310766030" duration="4318000" />
+      <workItem from="1575374582124" duration="10062000" />
+      <workItem from="1575395603890" duration="1147000" />
+      <workItem from="1575548700617" duration="17205000" />
+      <workItem from="1575643591657" duration="3000" />
+      <workItem from="1580059178712" duration="6610000" />
+      <workItem from="1580636795494" duration="7207000" />
+      <workItem from="1584367104562" duration="16162000" />
+      <workItem from="1584440100838" duration="16804000" />
+      <workItem from="1584463191816" duration="605000" />
+      <workItem from="1584533963090" duration="4426000" />
+      <workItem from="1585299383235" duration="4347000" />
+      <workItem from="1585927998255" duration="10463000" />
+      <workItem from="1585988997086" duration="19521000" />
+      <workItem from="1587395974675" duration="3847000" />
+      <workItem from="1587450211985" duration="23410000" />
+      <workItem from="1587548228712" duration="2022000" />
+      <workItem from="1587550444137" duration="22539000" />
+      <workItem from="1587622312786" duration="24366000" />
+      <workItem from="1587712885081" duration="9295000" />
+      <workItem from="1587744319956" duration="3215000" />
+      <workItem from="1587972642947" duration="4173000" />
+      <workItem from="1590762760837" duration="20740000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>

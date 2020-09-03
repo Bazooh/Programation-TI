@@ -1,0 +1,79 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\BALL.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 14
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_precision_pos",8
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 6
+.ENDEF
+.DEFINE "y"
+.VALUE 4
+.CLASS 8
+.TYPE 6
+.ENDEF
+.ENDREC "s_precision_pos"
+.BEGREC "s_ball",20
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_precision_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "old_pos"
+.VALUE 8
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "direction"
+.VALUE 12
+.CLASS 8
+.TYPE 6
+.ENDEF
+.DEFINE "speed"
+.VALUE 16
+.CLASS 8
+.TYPE 6
+.ENDEF
+.ENDREC "s_ball"
+	SEGMENT TEXT
+_DIRECTION:
+	DF	0.0
+	DF	1.57079637050629
+	DF	1.57079637050629
+	DF	3.14159265358979
+	DF	3.14159265358979
+	DF	4.71238899230957
+	DF	4.71238899230957
+	DF	6.28318548202515
+.DEFINE "DIRECTION"
+.ALIAS "_DIRECTION"
+.CLASS 69
+.VALUE _DIRECTION
+.DIM 4
+.DIM 2
+.TYPE 870
+.ENDEF
+	XDEF _DIRECTION
+;    1	
+;    2	#include "ball.h"
+;    3	
+;    4	const double DIRECTION[NUMBER_DIRECTION][2] = {
+	END

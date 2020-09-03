@@ -1,0 +1,377 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\CORE.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "core.h"
+;    3	
+;    4	uint8_t checkEnd() {
+_checkEnd:
+;    5	    return 0;
+	XOR	A,A
+;    6	}
+	RET	
+
+
+;**************************** _checkEnd ***************************
+;Name                         Addr/Register   Size   Type
+
+
+; Stack Frame Size: 6 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;    7	
+;    8	void distributeCardToPlayer(t_deck *deck, t_player *player) {
+_distributeCardToPlayer:
+	LD	HL,-10
+	CALL	__frameset
+;    9	    uint32_t randomNumber;
+;   10	    uint8_t i;
+;   11	    uint8_t j;
+;   12	    t_deck *checking_card;
+;   13	    uint8_t deck_size;
+;   14	
+;   15	    for (i = 0; i < NUMBER_OF_CARD_IN_HAND; i++) {
+	LD	(IX+-1),0
+	JR	L_11
+L_9:
+;   16	        deck_size = sizeOfDeck(deck);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_sizeOfDeck
+	POP	BC
+	LD	(IX+-3),A
+;   17	
+;   18	        if (!deck_size) {
+	OR	A,A
+	JR	NZ,L_3
+;   19	            initDeck(deck);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_initDeck
+	POP	BC
+;   20	            deck_size = sizeOfDeck(deck);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_sizeOfDeck
+	POP	BC
+	LD	(IX+-3),A
+;   21	        }
+L_3:
+;   22	
+;   23	        randomNumber = randInt(1, deck_size);
+	CALL	_random
+	LD	DE,HL
+	LD	A,(IX+-3)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__iremu
+	INC	HL
+	LD	(IX+-10),HL
+	XOR	A,A
+	LD	(IX+-7),A
+;   24	        checking_card = deck;
+	LD	BC,(IX+6)
+	LD	(IX+-6),BC
+;   25	
+;   26	        for (j = 0; j < randomNumber; j++) {
+	LD	(IX+-2),0
+	JR	L_7
+L_5:
+;   27	            checking_card = checking_card->next;
+	LD	IY,(IX+-6)
+	LD	BC,(IY+2)
+	LD	(IX+-6),BC
+	INC	(IX+-2)
+;   28	        }
+L_7:
+	UEXT	HL
+	LD	L,(IX+-2)
+	LD	E,H
+	LD	A,(IX+-7)
+	LD	BC,(IX+-10)
+	CALL	__lcmpu
+	JR	C,L_5
+;   29	
+;   30	        player->hand[i] = checking_card->card;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,HL
+	LD	IY,(IX+9)
+	LEA	HL,IY+10
+	ADD	HL,BC
+	LD	DE,HL
+	LD	IY,(IX+-6)
+	LEA	HL,IY+0
+	LD	BC,2
+	LDIR	
+;   31	        removeDeckCard(deck, randomNumber);
+	LD	C,(IX+-10)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_removeDeckCard
+	POP	BC
+	POP	BC
+	INC	(IX+-1)
+;   32	    }
+L_11:
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	C,L_9
+;   33	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _distributeCardToPlayer ***************************
+;Name                         Addr/Register   Size   Type
+;_removeDeckCard                     IMPORT  -----   function
+;_random                             IMPORT  -----   function
+;_initDeck                           IMPORT  -----   function
+;_sizeOfDeck                         IMPORT  -----   function
+;randomNumber                         IX-10      4   variable
+;checking_card                         IX-6      3   variable
+;deck_size                             IX-3      1   variable
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;player                                IX+9      3   parameter
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 22 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   34	
+;   35	void distributeCardToAllPlayers(t_deck *deck, t_player *player_list, t_game_starting_info start) {
+_distributeCardToAllPlayers:
+	LD	HL,-1
+	CALL	__frameset
+;   36	    uint8_t i;
+;   37	
+;   38	    for (i = 0; i < start.number_of_player; i++) {
+	LD	(IX+-1),0
+	JR	L_16
+L_14:
+;   39	        player_list = player_list->next;
+	LD	IY,(IX+9)
+	LD	BC,(IY+18)
+	LD	(IX+9),BC
+;   40	        distributeCardToPlayer(deck, player_list);
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_distributeCardToPlayer
+	POP	BC
+	POP	BC
+	INC	(IX+-1)
+;   41	    }
+L_16:
+	LD	A,(IX+-1)
+	CP	A,(IX+12)
+	JR	C,L_14
+;   42	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _distributeCardToAllPlayers ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;start                                IX+12      5   parameter
+;player_list                           IX+9      3   parameter
+;deck                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   43	
+;   44	void menu(t_game_starting_info *start) {
+_menu:
+	CALL	__frameset0
+;   45	    start->number_of_player = 5;
+	LD	IY,(IX+6)
+	LD	(IY+0),5
+;   46	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _menu ***************************
+;Name                         Addr/Register   Size   Type
+;start                                 IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   47	
+;   48	void round(t_player *player_list, t_game_starting_info start) {
+_round:
+	LD	HL,-8
+	CALL	__frameset
+;   49	    t_deck deck;
+;   50	    t_player *player;
+;   51	    uint8_t i;
+;   52	
+;   53	    initDeck(&deck);
+	PEA	IX+-5
+	LD	(IX+-8),BC
+	CALL	_initDeck
+	LD	BC,(IX+-8)
+	POP	DE
+;   54	    distributeCardToAllPlayers(&deck, player_list, start);
+	PUSH	BC
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+9
+	LD	BC,5
+	LDIR	
+	LD	BC,(IX+6)
+	PUSH	BC
+	PEA	IX+-5
+	CALL	_distributeCardToAllPlayers
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   55	
+;   56	    printDeck(&deck);
+	PEA	IX+-5
+	CALL	_printDeck
+	POP	BC
+;   57	
+;   58	    freeDeck(&deck);
+	PEA	IX+-5
+	CALL	_freeDeck
+	POP	BC
+;   59	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _round ***************************
+;Name                         Addr/Register   Size   Type
+;_freeDeck                           IMPORT  -----   function
+;_printDeck                          IMPORT  -----   function
+;_initDeck                           IMPORT  -----   function
+;deck                                  IX-5      5   variable
+;start                                 IX+9      5   parameter
+;player_list                           IX+6      3   parameter
+
+
+; Stack Frame Size: 23 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   60	
+;   61	void play() {
+_play:
+	LD	HL,-29
+	CALL	__frameset
+;   62	    t_player player_list;
+;   63	    t_game_starting_info start;
+;   64	
+;   65	    menu(&start);
+	PEA	IX+-5
+	LD	(IX+-29),BC
+	CALL	_menu
+	LD	BC,(IX+-29)
+	POP	DE
+;   66	
+;   67	    initPlayerList(&player_list, start);
+	PUSH	BC
+	PUSH	BC
+	LEA	HL,IX+-5
+	LD	BC,5
+	LD	IY,0
+	ADD	IY,SP
+	LD	DE,IY
+	LDIR	
+	PEA	IX+-26
+	LD	(IX+-29),BC
+	CALL	_initPlayerList
+	LD	BC,(IX+-29)
+	POP	DE
+	POP	DE
+	POP	DE
+;   68	
+;   69	    while (!checkEnd()) {
+	JR	L_20
+L_21:
+;   70	        round(&player_list, start);
+	PUSH	BC
+	PUSH	BC
+	LD	IY,0
+	ADD	IY,SP
+	LEA	HL,IX+-5
+	PEA	IX+-26
+	LD	DE,IY
+	LD	BC,5
+	LDIR	
+	LD	(IX+-29),BC
+	CALL	_round
+	LD	BC,(IX+-29)
+	POP	DE
+	POP	DE
+	POP	DE
+;   71	    }
+L_20:
+	LD	(IX+-29),BC
+	CALL	_checkEnd
+	LD	BC,(IX+-29)
+	OR	A,A
+	JR	Z,L_21
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _play ***************************
+;Name                         Addr/Register   Size   Type
+;_initPlayerList                     IMPORT  -----   function
+;player_list                          IX-26     21   variable
+;start                                 IX-5      5   variable
+
+
+; Stack Frame Size: 35 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _printDeck:ROM
+	XREF _initPlayerList:ROM
+	XREF _sizeOfDeck:ROM
+	XREF _initDeck:ROM
+	XREF _freeDeck:ROM
+	XREF _removeDeckCard:ROM
+	XREF _random:ROM
+	XREF __lcmpu:ROM
+	XREF __iremu:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XDEF _play
+	XDEF _round
+	XDEF _menu
+	XDEF _distributeCardToAllPlayers
+	XDEF _distributeCardToPlayer
+	XDEF _checkEnd
+	END

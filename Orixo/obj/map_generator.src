@@ -1,0 +1,1578 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\MAP_GENERATOR.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "NONAME2",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME1"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "font",12
+.DEFINE "font"
+.VALUE 0
+.CLASS 8
+.TAG "font"
+.TYPE 40
+.ENDEF
+.DEFINE "drawChar"
+.VALUE 3
+.CLASS 8
+.TYPE 545
+.ENDEF
+.DEFINE "getWidth"
+.VALUE 6
+.CLASS 8
+.TYPE 558
+.ENDEF
+.DEFINE "getHeight"
+.VALUE 9
+.CLASS 8
+.TYPE 558
+.ENDEF
+.ENDREC "font"
+.BEGREC "NONAME8",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME10"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME10",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME10"
+.BEGREC "NONAME11",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME11"
+.BEGREC "NONAME12",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME12"
+.BEGREC "NONAME13",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME13"
+.BEGREC "NONAME14",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME14"
+.BEGREC "NONAME15",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME11"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME15"
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 3
+.ENDEF
+.DEFINE "y"
+.VALUE 2
+.CLASS 8
+.TYPE 3
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_cursor",5
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "state"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_cursor"
+.BEGREC "s_case",3
+.DEFINE "number"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "old_number"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "id"
+.VALUE 2
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_case"
+.BEGREC "s_game",1810
+.DEFINE "x_max"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_max"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "matrix"
+.VALUE 2
+.CLASS 8
+.DIM 30
+.DIM 20
+.TAG "s_case"
+.TYPE 872
+.ENDEF
+.DEFINE "number_max"
+.VALUE 1802
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "amount_number"
+.VALUE 1803
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "win"
+.VALUE 1804
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "cursor"
+.VALUE 1805
+.CLASS 8
+.TAG "s_cursor"
+.TYPE 8
+.ENDEF
+.ENDREC "s_game"
+;    1	
+;    2	#include "map_generator.h"
+;    3	
+;    4	void increment(t_pos *pos, uint8_t direction) {
+_increment:
+.DEFINE "_increment"
+
+.VALUE _increment
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "increment",4,"_increment"
+
+.LINE 4
+
+.DEFINE "pos"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "direction"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;    5	    switch (direction) {
+.LINE 5
+
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	CALL	__seqcaseD
+	JP	(HL)
+L__0:
+	DW	4
+	DW	0
+	DB	0
+	DW24	L_0	
+
+	DW24	L_1	
+
+	DW24	L_2	
+
+	DW24	L_3	
+
+	DW24	L_4	
+
+;    6	        case 0:
+L_0:
+.LINE 6
+
+;    7	            ++(pos->x);
+.LINE 7
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	INC	BC
+	LD	(IY+0),C
+	LD	(IY+1),B
+;    8	            break;
+.LINE 8
+
+	JR	L_4
+;    9	        case 1:
+L_1:
+.LINE 9
+
+;   10	            ++(pos->y);
+.LINE 10
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	INC	BC
+	LD	(IY+2),C
+	LD	(IY+3),B
+;   11	            break;
+.LINE 11
+
+	JR	L_4
+;   12	        case 2:
+L_2:
+.LINE 12
+
+;   13	            --(pos->x);
+.LINE 13
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	DEC	BC
+	LD	(IY+0),C
+	LD	(IY+1),B
+;   14	            break;
+.LINE 14
+
+	JR	L_4
+;   15	        case 3:
+L_3:
+.LINE 15
+
+;   16	            --(pos->y);
+.LINE 16
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	DEC	BC
+	LD	(IY+2),C
+	LD	(IY+3),B
+;   17	            break;
+;   18	    }
+;   19	}
+L_4:
+.LINE 19
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _increment ***************************
+;Name                         Addr/Register   Size   Type
+;direction                             IX+9      1   parameter
+;pos                                   IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "increment",19,"_increment"
+;   20	
+;   21	uint8_t checkDeploy(t_game *game, t_pos pos, uint8_t direction) {
+_checkDeploy:
+.DEFINE "_checkDeploy"
+
+.VALUE _checkDeploy
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "checkDeploy",21,"_checkDeploy"
+
+.LINE 21
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "pos"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "s_pos"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "direction"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "number"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;   22	    int8_t number;
+;   23	
+;   24	    number = game->matrix[pos.x][pos.y].number;
+.LINE 24
+
+	LD	BC,(IX+9)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+2
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IX+11)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	A,(IY+0)
+	LD	(IX+-1),A
+;   25	    increment(&pos, direction);
+.LINE 25
+
+	LD	C,(IX+15)
+	LD	B,0
+	PUSH	BC
+	PEA	IX+9
+	LD	(IX+-4),BC
+	CALL	_increment
+	LD	BC,(IX+-4)
+	POP	DE
+	POP	DE
+;   26	
+;   27	    while (number && isInMap(game, pos)) {
+.LINE 27
+
+	JR	L_8
+L_9:
+;   28	        if (game->matrix[pos.x][pos.y].number <= CASE_BLOCKED) {
+.LINE 28
+
+	LD	BC,(IX+9)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+2
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IX+11)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	A,254
+	LD	IY,HL
+	CP	A,(IY+0)
+	CALL	__setflag
+	JP	M,L_7
+;   29	            --number;
+.LINE 29
+
+	DEC	(IX+-1)
+;   30	        }
+L_7:
+.LINE 30
+
+;   31	        increment(&pos, direction);
+.LINE 31
+
+	LD	C,(IX+15)
+	LD	B,0
+	PUSH	BC
+	PEA	IX+9
+	LD	(IX+-4),BC
+	CALL	_increment
+	LD	BC,(IX+-4)
+	POP	DE
+	POP	DE
+;   32	    }
+L_8:
+.LINE 32
+
+	LD	A,(IX+-1)
+	OR	A,A
+	JR	Z,L_11
+	PUSH	BC
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+9
+	LD	BC,4
+	LDIR	
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_isInMap
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	NZ,L_9
+L_11:
+;   33	    if (!number) { return TRUE; }
+.LINE 33
+
+	LD	A,(IX+-1)
+	OR	A,A
+	JR	NZ,L_12
+	LD	A,1
+	JR	L_13
+L_12:
+;   34	    return FALSE;
+.LINE 34
+
+	XOR	A,A
+;   35	}
+L_13:
+.LINE 35
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _checkDeploy ***************************
+;Name                         Addr/Register   Size   Type
+;_isInMap                            IMPORT  -----   function
+;number                                IX-1      1   variable
+;direction                            IX+15      1   parameter
+;pos                                   IX+9      4   parameter
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 22 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "checkDeploy",35,"_checkDeploy"
+;   36	
+;   37	void deployNumber(t_game *game, t_pos *numbers) {
+_deployNumber:
+.DEFINE "_deployNumber"
+
+.VALUE _deployNumber
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "deployNumber",37,"_deployNumber"
+
+.LINE 37
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "numbers"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "direction"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "direction_count"
+
+.CLASS 65
+
+.VALUE -5
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "number"
+
+.CLASS 65
+
+.VALUE -13
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-46
+	LD	SP,HL
+;   38	    uint8_t i;
+;   39	    uint8_t direction;
+;   40	    uint8_t direction_count;
+;   41	    int8_t number;
+;   42	
+;   43	    for (i = 0; i < game->amount_number; ++i) {
+.LINE 43
+
+	LD	(IX+-6),0
+	JR	L_25
+L_23:
+;   44	        direction_count = 0;
+.LINE 44
+
+	LD	(IX+-5),0
+;   45	        direction = randInt(0, NUMBER_DIRECTION - 1);
+.LINE 45
+
+	CALL	_random
+	LD	A,L
+	AND	A,3
+	LD	(IX+-4),A
+;   46	
+;   47	        while (direction_count < NUMBER_DIRECTION && !checkDeploy(game, numbers[i], (direction + direction_count) % NUMBER_DIRECTION)) {
+.LINE 47
+
+	JR	L_15
+L_16:
+;   48	            ++direction_count;
+.LINE 48
+
+	INC	(IX+-5)
+;   49	        }
+L_15:
+.LINE 49
+
+	LD	A,(IX+-5)
+	CP	A,4
+	JR	NC,L_22
+	LD	A,(IX+-4)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	A,(IX+-5)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	BC,4
+	CALL	__irems
+	LD	C,L
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+-6)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	DE,(IX+9)
+	ADD	HL,DE
+	PUSH	BC
+	PUSH	BC
+	LD	IY,0
+	ADD	IY,SP
+	LD	DE,IY
+	LD	BC,4
+	LDIR	
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_checkDeploy
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_16
+L_22:
+;   50	        if (direction_count >= NUMBER_DIRECTION) {
+.LINE 50
+
+	LD	A,(IX+-5)
+	CP	A,4
+	JR	C,L_21
+;   51	            game->matrix[numbers[i].x][numbers[i].y].number = CASE_BLOCKED;
+.LINE 51
+
+	LD	A,(IX+-6)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-22),HL
+	LD	(IX+-19),HL
+	LD	IY,(IX+-19)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+2
+	ADD	HL,BC
+	LD	DE,HL
+	LD	IY,(IX+-19)
+	LD	BC,(IY+2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	(IY+0),254
+;   52	        } else {
+.LINE 52
+
+	JR	L_24
+L_21:
+;   53	            direction += direction_count;
+.LINE 53
+
+	LD	A,(IX+-4)
+	ADD	A,(IX+-5)
+	LD	(IX+-4),A
+;   54	            direction %= NUMBER_DIRECTION;
+.LINE 54
+
+	UEXT	HL
+	LD	L,A
+	LD	BC,4
+	CALL	__irems
+	LD	(IX+-4),L
+;   55	            number = game->matrix[numbers[i].x][numbers[i].y].number;
+.LINE 55
+
+	LD	A,(IX+-6)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	(IX+-9),HL
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-28),HL
+	LD	(IX+-25),HL
+	LD	IY,(IX+6)
+	LEA	BC,IY+2
+	LD	(IX+-16),BC
+	LD	IY,(IX+-25)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+2
+	ADD	HL,BC
+	LD	DE,HL
+	LD	IY,(IX+-25)
+	LD	BC,(IY+2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	A,(IY+0)
+	LD	(IX+-13),A
+;   56	            while (number) {
+.LINE 56
+
+	JR	L_18
+L_19:
+;   57	                increment(&numbers[i], direction);
+.LINE 57
+
+	LD	BC,(IX+-9)
+	LD	(IX+-3),BC
+	LD	C,(IX+-4)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+-3)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	PUSH	HL
+	CALL	_increment
+	POP	BC
+	POP	BC
+;   58	                if (game->matrix[numbers[i].x][numbers[i].y].number <= CASE_BLOCKED) {
+.LINE 58
+
+	LD	BC,(IX+-3)
+	LD	(IX+-9),BC
+	LD	BC,(IX+-3)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-34),HL
+	LD	(IX+-31),HL
+	LD	BC,(IX+-16)
+	LD	(IX+-12),BC
+	LD	IY,(IX+-31)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-12)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IY+2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	A,254
+	LD	IY,HL
+	CP	A,(IY+0)
+	JP	M,L_18
+;   59	                    game->matrix[numbers[i].x][numbers[i].y].number = CASE_EMPTY;
+.LINE 59
+
+	LD	BC,(IX+-3)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-46),HL
+	LD	(IX+-43),HL
+	LD	BC,(IX+-12)
+	LD	(IX+-16),BC
+	LD	IY,(IX+-43)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-12)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IY+2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	(IY+0),0
+;   60	                    game->matrix[numbers[i].x][numbers[i].y].old_number = CASE_EMPTY;
+.LINE 60
+
+	LD	BC,(IX+-3)
+	LD	(IX+-9),BC
+	LD	BC,(IX+-3)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-40),HL
+	LD	(IX+-37),HL
+	LD	IY,(IX+-37)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-12)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IY+2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	(IY+1),0
+;   61	                    --number;
+.LINE 61
+
+	DEC	(IX+-13)
+;   62	                }
+;   63	            }
+L_18:
+.LINE 63
+
+	LD	A,(IX+-13)
+	OR	A,A
+	JR	NZ,L_19
+;   64	        }
+;   65	    }
+L_24:
+.LINE 65
+
+	INC	(IX+-6)
+L_25:
+	LD	A,(IX+-6)
+	LD	HL,1803
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	CP	A,(HL)
+	JR	C,L_23
+;   66	}
+.LINE 66
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _deployNumber ***************************
+;Name                         Addr/Register   Size   Type
+;_random                             IMPORT  -----   function
+;G_2                                  IX-16      3   variable
+;number                               IX-13      1   variable
+;G_4                                  IX-12      3   variable
+;G_0                                   IX-9      3   variable
+;i                                     IX-6      1   variable
+;direction_count                       IX-5      1   variable
+;direction                             IX-4      1   variable
+;G_1                                   IX-3      3   variable
+;numbers                               IX+9      3   parameter
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 58 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "deployNumber",66,"_deployNumber"
+;   67	
+;   68	void generateNumbers(t_game *game, t_pos *numbers) {
+_generateNumbers:
+.DEFINE "_generateNumbers"
+
+.VALUE _generateNumbers
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "generateNumbers",68,"_generateNumbers"
+
+.LINE 68
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "numbers"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "random_pos"
+
+.CLASS 65
+
+.VALUE -4
+
+.TAG "s_pos"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -5
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "random_number"
+
+.CLASS 65
+
+.VALUE -6
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+;   69	    t_pos random_pos;
+;   70	    int8_t random_number;
+;   71	    uint8_t i;
+;   72	
+;   73	    for (i = 0; i < game->amount_number; ++i) {
+.LINE 73
+
+	LD	(IX+-5),0
+	JR	L_32
+;   74	        do {
+L_27:
+.LINE 74
+
+;   75	            random_pos.x = randInt(0, game->x_max - 1);
+.LINE 75
+
+	CALL	_random
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__iremu
+	LD	(IX+-4),L
+	LD	(IX+-3),H
+;   76	            random_pos.y = randInt(0, game->y_max - 1);
+.LINE 76
+
+	CALL	_random
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__iremu
+	LD	(IX+-2),L
+	LD	(IX+-1),H
+;   77	            random_number = randInt(1, game->number_max);
+.LINE 77
+
+	CALL	_random
+	LD	DE,HL
+	LD	BC,1802
+	LD	IY,(IX+6)
+	CALL	__bldiy
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,DE
+	CALL	__iremu
+	INC	HL
+	LD	(IX+-6),L
+;   78	        } while (game->matrix[random_pos.x][random_pos.y].number >= CASE_EMPTY);
+.LINE 78
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,HL
+	LEA	HL,IY+2
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IX+-2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	A,(IY+0)
+	OR	A,A
+	JP	P,L_27
+;   79	        game->matrix[random_pos.x][random_pos.y].id = i + 1;
+.LINE 79
+
+	LD	IY,(IX+6)
+	LEA	BC,IY+2
+	LD	(IX+-9),BC
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-9)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IX+-2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	A,(IX+-5)
+	INC	A
+	LD	IY,HL
+	LD	(IY+2),A
+;   80	        game->matrix[random_pos.x][random_pos.y].number = random_number;
+.LINE 80
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-9)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IX+-2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	A,(IX+-6)
+	LD	IY,HL
+	LD	(IY+0),A
+;   81	        game->matrix[random_pos.x][random_pos.y].old_number = random_number;
+.LINE 81
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-9)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	BC,(IX+-2)
+	CALL	__stoi
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	A,(IX+-6)
+	LD	IY,HL
+	LD	(IY+1),A
+;   82	        numbers[i] = random_pos;
+.LINE 82
+
+	LD	A,(IX+-5)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	DE,HL
+	LEA	HL,IX+-4
+	LD	BC,4
+	LDIR	
+	INC	(IX+-5)
+;   83	    }
+L_32:
+.LINE 83
+
+	LD	A,(IX+-5)
+	LD	HL,1803
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	CP	A,(HL)
+	JR	C,L_27
+;   84	}
+.LINE 84
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _generateNumbers ***************************
+;Name                         Addr/Register   Size   Type
+;_random                             IMPORT  -----   function
+;random_number                         IX-6      1   variable
+;i                                     IX-5      1   variable
+;random_pos                            IX-4      4   variable
+;numbers                               IX+9      3   parameter
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "generateNumbers",84,"_generateNumbers"
+;   85	
+;   86	void generateMap(t_game *game) {
+_generateMap:
+.DEFINE "_generateMap"
+
+.VALUE _generateMap
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "generateMap",86,"_generateMap"
+
+.LINE 86
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "numbers"
+
+.CLASS 65
+
+.VALUE -3
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;   87	    t_pos *numbers;
+;   88	
+;   89	    if (!(numbers = malloc(sizeof(t_pos) * game->amount_number))) { return; }
+.LINE 89
+
+	LD	BC,1803
+	LD	IY,(IX+6)
+	CALL	__bldiy
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	CALL	_malloc
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	Z,L_36
+;   90	
+;   91	    generateNumbers(game, numbers);
+.LINE 91
+
+	LD	BC,(IX+-3)
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_generateNumbers
+	POP	BC
+	POP	BC
+;   92	    deployNumber(game, numbers);
+.LINE 92
+
+	LD	BC,(IX+-3)
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_deployNumber
+	POP	BC
+	POP	BC
+;   93	
+;   94	    free(numbers);
+.LINE 94
+
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+L_36:
+.LINE 95
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _generateMap ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;_malloc                             IMPORT  -----   function
+;numbers                               IX-3      3   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "generateMap",95,"_generateMap"
+	XREF _isInMap:ROM
+	XREF _free:ROM
+	XREF _malloc:ROM
+	XREF _random:ROM
+	XREF __irems:ROM
+	XREF __iremu:ROM
+	XREF __stoi:ROM
+	XREF __bldiy:ROM
+	XREF __setflag:ROM
+	XREF __icmpzero:ROM
+	XREF __seqcaseD:ROM
+	XREF __imul_b:ROM
+	XDEF _generateMap
+	XDEF _generateNumbers
+	XDEF _deployNumber
+	XDEF _checkDeploy
+	XDEF _increment
+	END

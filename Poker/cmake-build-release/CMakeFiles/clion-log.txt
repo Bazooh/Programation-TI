@@ -1,0 +1,4 @@
+C:\Users\Bazooh\.CLion2019.2\system\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /cygdrive/d/Logiciel/CEdev/projets/Poker
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /cygdrive/d/Logiciel/CEdev/projets/Poker/cmake-build-release

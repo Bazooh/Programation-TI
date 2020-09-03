@@ -1,0 +1,188 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\DISPLAY.C"
+	.assume ADL=1
+	SEGMENT DATA
+_SPRITE_CASE:
+	DW24	_sprite_empty
+	DW24	_sprite_2
+	DW24	_sprite_4
+	DW24	_sprite_8
+	DW24	_sprite_16
+	DW24	_sprite_32
+	DW24	_sprite_64
+	DW24	_sprite_128
+	DW24	_sprite_256
+	DW24	_sprite_512
+	DW24	_sprite_1024
+	DW24	_sprite_2048
+	DW24	_sprite_4096
+	DW24	_sprite_8192
+;    1	
+;    2	#include "display.h"
+;    3	
+;    4	const gfx_sprite_t* SPRITE_CASE[MAX_VALUE] = {
+	SEGMENT CODE
+;    5	        SPRITE_EMPTY,
+;    6	        SPRITE_2,
+;    7	        SPRITE_4,
+;    8	        SPRITE_8,
+;    9	        SPRITE_16,
+;   10	        SPRITE_32,
+;   11	        SPRITE_64,
+;   12	        SPRITE_128,
+;   13	        SPRITE_256,
+;   14	        SPRITE_512,
+;   15	        SPRITE_1024,
+;   16	        SPRITE_2048,
+;   17	        SPRITE_4096,
+;   18	        SPRITE_8192,
+;   19	};
+;   20	
+;   21	void printCase(uint8_t x, uint8_t y, uint8_t value) {
+_printCase:
+	CALL	__frameset0
+;   22	    gfx_TransparentSprite_NoClip(
+;   23	            SPRITE_CASE[value],
+;   24	            (CASE_WIDTH + CASE_X_SPACE) * (int24_t)x + MARGE_X,
+;   25	            (CASE_HEIGHT + CASE_Y_SPACE) * (int8_t)y + MARGE_Y);
+	LD	B,(IX+9)
+	LD	C,44
+	MLT	BC
+	LD	A,C
+	ADD	A,34
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	A,44
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+74
+	PUSH	BC
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_SPRITE_CASE
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   26	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCase ***************************
+;Name                         Addr/Register   Size   Type
+;_SPRITE_CASE                        STATIC     42   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;value                                IX+12      1   parameter
+;y                                     IX+9      1   parameter
+;x                                     IX+6      1   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   27	
+;   28	void printScreen(uint8_t matrix[MATRIX_LENGTH][MATRIX_LENGTH]) {
+_printScreen:
+	LD	HL,-2
+	CALL	__frameset
+;   29	    uint8_t i;
+;   30	    uint8_t j;
+;   31	
+;   32	    for (i = 0; i < MATRIX_LENGTH; i++) {
+	LD	(IX+-1),0
+	JR	L_8
+L_6:
+;   33	        for (j = 0; j < MATRIX_LENGTH; j++) {
+	LD	(IX+-2),0
+	JR	L_5
+L_3:
+;   34	            printCase(j, i, matrix[i][j]);
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-1)
+	PUSH	BC
+	LD	C,(IX+-2)
+	PUSH	BC
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-2)
+;   35	        }
+L_5:
+	LD	A,(IX+-2)
+	CP	A,4
+	JR	C,L_3
+	INC	(IX+-1)
+;   36	    }
+L_8:
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	C,L_6
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printScreen ***************************
+;Name                         Addr/Register   Size   Type
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 11 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _sprite_8192:ROM
+	XREF _sprite_4096:ROM
+	XREF _sprite_2048:ROM
+	XREF _sprite_1024:ROM
+	XREF _sprite_512:ROM
+	XREF _sprite_256:ROM
+	XREF _sprite_128:ROM
+	XREF _sprite_64:ROM
+	XREF _sprite_32:ROM
+	XREF _sprite_16:ROM
+	XREF _sprite_8:ROM
+	XREF _sprite_4:ROM
+	XREF _sprite_2:ROM
+	XREF _sprite_empty:ROM
+	XREF _gfx_TransparentSprite_NoClip:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XREF __imul_b:ROM
+	XDEF _printScreen
+	XDEF _printCase
+	XDEF _SPRITE_CASE
+	END

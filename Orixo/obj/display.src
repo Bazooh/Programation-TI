@@ -1,0 +1,3325 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\DISPLAY.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 3
+.ENDEF
+.DEFINE "y"
+.VALUE 2
+.CLASS 8
+.TYPE 3
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_cursor",5
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "state"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_cursor"
+.BEGREC "s_case",3
+.DEFINE "number"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "old_number"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "id"
+.VALUE 2
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_case"
+.BEGREC "s_game",1810
+.DEFINE "x_max"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_max"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "matrix"
+.VALUE 2
+.CLASS 8
+.DIM 30
+.DIM 20
+.TAG "s_case"
+.TYPE 872
+.ENDEF
+.DEFINE "number_max"
+.VALUE 1802
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "amount_number"
+.VALUE 1803
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "win"
+.VALUE 1804
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "cursor"
+.VALUE 1805
+.CLASS 8
+.TAG "s_cursor"
+.TYPE 8
+.ENDEF
+.ENDREC "s_game"
+	SEGMENT BSS
+_gfx_pal:
+	DS	260
+.DEFINE "gfx_pal"
+.ALIAS "_gfx_pal"
+.CLASS 83
+.VALUE _gfx_pal
+.DIM 130
+.TYPE 109
+.ENDEF
+	SEGMENT DATA
+_sprite_case_blocked:
+	DB	9
+	DB	9
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+.DEFINE "sprite_case_blocked"
+.ALIAS "_sprite_case_blocked"
+.CLASS 69
+.VALUE _sprite_case_blocked
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_used:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_used"
+.ALIAS "_sprite_case_used"
+.CLASS 69
+.VALUE _sprite_case_used
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_empty:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_empty"
+.ALIAS "_sprite_case_empty"
+.CLASS 69
+.VALUE _sprite_case_empty
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_1:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	4
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_1"
+.ALIAS "_sprite_case_1"
+.CLASS 69
+.VALUE _sprite_case_1
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_2:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	6
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	6
+	DB	2
+	DB	6
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	6
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	6
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	6
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	6
+	DB	6
+	DB	6
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_2"
+.ALIAS "_sprite_case_2"
+.CLASS 69
+.VALUE _sprite_case_2
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_3:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	5
+	DB	5
+	DB	5
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	5
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	5
+	DB	5
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	5
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	5
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	5
+	DB	5
+	DB	5
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_3"
+.ALIAS "_sprite_case_3"
+.CLASS 69
+.VALUE _sprite_case_3
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_4:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	8
+	DB	2
+	DB	8
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	8
+	DB	2
+	DB	8
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	8
+	DB	8
+	DB	8
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	8
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	8
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	8
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_4"
+.ALIAS "_sprite_case_4"
+.CLASS 69
+.VALUE _sprite_case_4
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_case_5:
+	DB	9
+	DB	9
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	9
+	DB	9
+	DB	9
+	DB	9
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	9
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	9
+	DB	9
+	DB	9
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	9
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	9
+	DB	9
+	DB	9
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	2
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+	DB	1
+.DEFINE "sprite_case_5"
+.ALIAS "_sprite_case_5"
+.CLASS 69
+.VALUE _sprite_case_5
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_cursor_move:
+	DB	9
+	DB	9
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+.DEFINE "sprite_cursor_move"
+.ALIAS "_sprite_cursor_move"
+.CLASS 69
+.VALUE _sprite_cursor_move
+.DIM 83
+.TYPE 108
+.ENDEF
+_sprite_cursor_place:
+	DB	9
+	DB	9
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	0
+	DB	4
+	DB	4
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+	DB	4
+.DEFINE "sprite_cursor_place"
+.ALIAS "_sprite_cursor_place"
+.CLASS 69
+.VALUE _sprite_cursor_place
+.DIM 83
+.TYPE 108
+.ENDEF
+_CASE_TAB:
+	DW24	_sprite_case_blocked
+	DW24	_sprite_case_used
+	DW24	_sprite_case_empty
+	DW24	_sprite_case_1
+	DW24	_sprite_case_2
+	DW24	_sprite_case_3
+	DW24	_sprite_case_4
+	DW24	_sprite_case_5
+.DEFINE "CASE_TAB"
+.ALIAS "_CASE_TAB"
+.CLASS 69
+.VALUE _CASE_TAB
+.DIM 8
+.TAG "NONAME3"
+.TYPE 360
+.ENDEF
+;    1	
+;    2	#include "display.h"
+;    3	
+;    4	uint16_t gfx_pal[PAL_LENGTH];
+;    5	
+;    6	uint8_t sprite_case_blocked[CASE_SIZE] = {
+;    7	        CASE_X_LENGTH,
+;    8	        CASE_Y_LENGTH,
+;    9	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   10	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   11	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   12	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   13	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   14	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   15	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   16	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   17	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+;   18	};
+;   19	
+;   20	uint8_t sprite_case_used[CASE_SIZE] = {
+;   21	        CASE_X_LENGTH,
+;   22	        CASE_Y_LENGTH,
+;   23	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   24	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   25	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   26	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   27	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   28	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   29	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   30	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   31	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   32	};
+;   33	
+;   34	uint8_t sprite_case_empty[CASE_SIZE] = {
+;   35	        CASE_X_LENGTH,
+;   36	        CASE_Y_LENGTH,
+;   37	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   38	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   39	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   40	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   41	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   42	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   43	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   44	        0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,
+;   45	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   46	};
+;   47	
+;   48	uint8_t sprite_case_1[CASE_SIZE] = {
+;   49	        CASE_X_LENGTH,
+;   50	        CASE_Y_LENGTH,
+;   51	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   52	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   53	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   54	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   55	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   56	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   57	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   58	        0x01,0x02,0x02,0x02,0x04,0x02,0x02,0x02,0x01,
+;   59	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   60	};
+;   61	
+;   62	uint8_t sprite_case_2[CASE_SIZE] = {
+;   63	        CASE_X_LENGTH,
+;   64	        CASE_Y_LENGTH,
+;   65	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   66	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   67	        0x01,0x02,0x02,0x02,0x06,0x02,0x02,0x02,0x01,
+;   68	        0x01,0x02,0x02,0x06,0x02,0x06,0x02,0x02,0x01,
+;   69	        0x01,0x02,0x02,0x02,0x02,0x06,0x02,0x02,0x01,
+;   70	        0x01,0x02,0x02,0x02,0x06,0x02,0x02,0x02,0x01,
+;   71	        0x01,0x02,0x02,0x06,0x02,0x02,0x02,0x02,0x01,
+;   72	        0x01,0x02,0x02,0x06,0x06,0x06,0x02,0x02,0x01,
+;   73	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   74	};
+;   75	
+;   76	uint8_t sprite_case_3[CASE_SIZE] = {
+;   77	        CASE_X_LENGTH,
+;   78	        CASE_Y_LENGTH,
+;   79	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   80	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   81	        0x01,0x02,0x02,0x05,0x05,0x05,0x02,0x02,0x01,
+;   82	        0x01,0x02,0x02,0x02,0x02,0x02,0x05,0x02,0x01,
+;   83	        0x01,0x02,0x02,0x02,0x05,0x05,0x02,0x02,0x01,
+;   84	        0x01,0x02,0x02,0x02,0x02,0x02,0x05,0x02,0x01,
+;   85	        0x01,0x02,0x02,0x02,0x02,0x02,0x05,0x02,0x01,
+;   86	        0x01,0x02,0x02,0x05,0x05,0x05,0x02,0x02,0x01,
+;   87	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   88	};
+;   89	
+;   90	uint8_t sprite_case_4[CASE_SIZE] = {
+;   91	        CASE_X_LENGTH,
+;   92	        CASE_Y_LENGTH,
+;   93	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;   94	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;   95	        0x01,0x02,0x02,0x08,0x02,0x08,0x02,0x02,0x01,
+;   96	        0x01,0x02,0x02,0x08,0x02,0x08,0x02,0x02,0x01,
+;   97	        0x01,0x02,0x02,0x08,0x08,0x08,0x02,0x02,0x01,
+;   98	        0x01,0x02,0x02,0x02,0x02,0x08,0x02,0x02,0x01,
+;   99	        0x01,0x02,0x02,0x02,0x02,0x08,0x02,0x02,0x01,
+;  100	        0x01,0x02,0x02,0x02,0x02,0x08,0x02,0x02,0x01,
+;  101	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;  102	};
+;  103	
+;  104	uint8_t sprite_case_5[CASE_SIZE] = {
+;  105	        CASE_X_LENGTH,
+;  106	        CASE_Y_LENGTH,
+;  107	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;  108	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;  109	        0x01,0x02,0x02,0x09,0x09,0x09,0x09,0x02,0x01,
+;  110	        0x01,0x02,0x02,0x09,0x02,0x02,0x02,0x02,0x01,
+;  111	        0x01,0x02,0x02,0x09,0x09,0x09,0x02,0x02,0x01,
+;  112	        0x01,0x02,0x02,0x02,0x02,0x02,0x09,0x02,0x01,
+;  113	        0x01,0x02,0x02,0x09,0x09,0x09,0x02,0x02,0x01,
+;  114	        0x01,0x02,0x02,0x02,0x02,0x02,0x02,0x02,0x01,
+;  115	        0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+;  116	};
+;  117	
+;  118	uint8_t sprite_cursor_move[CASE_SIZE] = {
+;  119	        CASE_X_LENGTH,
+;  120	        CASE_Y_LENGTH,
+;  121	        0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,
+;  122	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  123	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  124	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  125	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  126	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  127	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  128	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  129	        0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,
+;  130	};
+;  131	
+;  132	uint8_t sprite_cursor_place[CASE_SIZE] = {
+;  133	        CASE_X_LENGTH,
+;  134	        CASE_Y_LENGTH,
+;  135	        0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,
+;  136	        0x04,0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x04,
+;  137	        0x04,0x00,0x04,0x00,0x00,0x00,0x00,0x00,0x04,
+;  138	        0x04,0x00,0x00,0x04,0x00,0x00,0x00,0x00,0x04,
+;  139	        0x04,0x00,0x00,0x00,0x04,0x00,0x00,0x00,0x04,
+;  140	        0x04,0x00,0x00,0x00,0x00,0x04,0x00,0x00,0x04,
+;  141	        0x04,0x00,0x00,0x00,0x00,0x00,0x04,0x00,0x04,
+;  142	        0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x04,0x04,
+;  143	        0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,0x04,
+;  144	};
+;  145	
+;  146	gfx_sprite_t* CASE_TAB[8] = {
+	SEGMENT CODE
+;  147	        SPRITE_CASE_BLOCKED,
+;  148	        SPRITE_CASE_USED,
+;  149	        SPRITE_CASE_EMPTY,
+;  150	        SPRITE_CASE_1,
+;  151	        SPRITE_CASE_2,
+;  152	        SPRITE_CASE_3,
+;  153	        SPRITE_CASE_4,
+;  154	        SPRITE_CASE_5,
+;  155	};
+;  156	
+;  157	void printText(char *text, uint8_t length, uint8_t x, uint8_t y) {
+_printText:
+.DEFINE "_printText"
+
+.VALUE _printText
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printText",157,"_printText"
+
+.LINE 157
+
+.DEFINE "text"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 34
+
+.ENDEF
+
+.DEFINE "length"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  158	    gfx_FillRectangle(x, y, CHAR_LENGTH * length, CHAR_LENGTH);
+.LINE 158
+
+	LD	BC,8
+	PUSH	BC
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_FillRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  159	    gfx_PrintStringXY(text, x, y);
+.LINE 159
+
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  160	}
+.LINE 160
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printText ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_FillRectangle                  IMPORT  -----   function
+;y                                    IX+15      1   parameter
+;x                                    IX+12      1   parameter
+;length                                IX+9      1   parameter
+;text                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printText",160,"_printText"
+;  161	
+;  162	void printUint(uint8_t number, uint8_t length, uint8_t x, uint8_t y) {
+_printUint:
+.DEFINE "_printUint"
+
+.VALUE _printUint
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printUint",162,"_printUint"
+
+.LINE 162
+
+.DEFINE "number"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "length"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  163	    gfx_FillRectangle(x, y, CHAR_LENGTH * length, CHAR_LENGTH);
+.LINE 163
+
+	LD	BC,8
+	PUSH	BC
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	ADD	HL,HL
+	ADD	HL,HL
+	PUSH	HL
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_FillRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  164	    gfx_SetTextXY(x, y);
+.LINE 164
+
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_SetTextXY
+	POP	BC
+	POP	BC
+;  165	    gfx_PrintUInt(number, length);
+.LINE 165
+
+	LD	C,(IX+9)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	CALL	_gfx_PrintUInt
+	POP	BC
+	POP	BC
+;  166	}
+.LINE 166
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printUint ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintUInt                      IMPORT  -----   function
+;_gfx_SetTextXY                      IMPORT  -----   function
+;_gfx_FillRectangle                  IMPORT  -----   function
+;y                                    IX+15      1   parameter
+;x                                    IX+12      1   parameter
+;length                                IX+9      1   parameter
+;number                                IX+6      1   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printUint",166,"_printUint"
+;  167	
+;  168	void defPal() {
+_defPal:
+.DEFINE "_defPal"
+
+.VALUE _defPal
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "defPal",168,"_defPal"
+
+.LINE 168
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;  169	    uint8_t i;
+;  170	
+;  171	    gfx_pal[0] = gfx_RGBTo1555(  0,  0,  0);     // transparent
+.LINE 171
+
+	LD	HL,_gfx_pal
+	LD	(HL),0
+	INC	HL
+	LD	(HL),0
+;  172	    gfx_pal[1] = gfx_RGBTo1555(250,250,250);     // white
+.LINE 172
+
+	LD	IY,_gfx_pal
+	LEA	HL,IY+2
+	LD	(HL),255
+	INC	HL
+	LD	(HL),127
+;  173	    gfx_pal[2] = gfx_RGBTo1555(200,200,200);     // light grey
+.LINE 173
+
+	LEA	HL,IY+4
+	LD	(HL),57
+	INC	HL
+	LD	(HL),103
+;  174	    gfx_pal[3] = gfx_RGBTo1555(150,150,150);     // grey
+.LINE 174
+
+	LEA	HL,IY+6
+	LD	(HL),82
+	INC	HL
+	LD	(HL),74
+;  175	    gfx_pal[4] = gfx_RGBTo1555(  0,  0,  0);     // black
+.LINE 175
+
+	LEA	HL,IY+8
+	LD	(HL),0
+	INC	HL
+	LD	(HL),0
+;  176	    gfx_pal[5] = gfx_RGBTo1555(180,  0,  0);     // red
+.LINE 176
+
+	LEA	HL,IY+10
+	LD	(HL),0
+	INC	HL
+	LD	(HL),88
+;  177	    gfx_pal[6] = gfx_RGBTo1555(  0,120,  0);     // green
+.LINE 177
+
+	LEA	HL,IY+12
+	LD	(HL),224
+	INC	HL
+	LD	(HL),1
+;  178	    gfx_pal[7] = gfx_RGBTo1555(  0,  0,190);     // blue
+.LINE 178
+
+	LEA	HL,IY+14
+	LD	(HL),23
+	INC	HL
+	LD	(HL),0
+;  179	    gfx_pal[8] = gfx_RGBTo1555(160,  0,160);     // magenta
+.LINE 179
+
+	LEA	HL,IY+16
+	LD	(HL),20
+	INC	HL
+	LD	(HL),80
+;  180	    gfx_pal[9] = gfx_RGBTo1555(100,  0,  0);     // dark red
+.LINE 180
+
+	LEA	HL,IY+18
+	LD	(HL),0
+	INC	HL
+	LD	(HL),48
+;  181	
+;  182	    for (i = 10; i < PAL_LENGTH; ++i) {
+.LINE 182
+
+	LD	(IX+-1),10
+	JR	L_4
+L_2:
+;  183	        gfx_pal[i] = gfx_RGBTo1555((1.5 * i) - 15, 0, 180);
+.LINE 183
+
+	UEXT	HL
+	LD	L,(IX+-1)
+	LD	A,H
+	LD	BC,HL
+	CALL	__ultof
+	LD	HL,12582912
+	LD	E,63
+	CALL	__fmul
+	LD	HL,7340032
+	LD	E,65
+	CALL	__fsub
+	CALL	__ftol
+	LD	A,C
+	UEXT	HL
+	LD	L,A
+	LD	A,3
+	CALL	__ishrs_b
+	LD	A,10
+	CALL	__sshl_b
+	LD.LIS	BC,22
+	CALL	__sor
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	DE,_gfx_pal
+	ADD	HL,DE
+	LD	(HL),C
+	INC	HL
+	LD	(HL),B
+	INC	(IX+-1)
+;  184	    }
+L_4:
+.LINE 184
+
+	LD	A,(IX+-1)
+	CP	A,130
+	JR	C,L_2
+;  185	}
+.LINE 185
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _defPal ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_pal                            STATIC    260   variable
+;i                                     IX-1      1   variable
+
+
+; Stack Frame Size: 7 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "defPal",185,"_defPal"
+;  186	
+;  187	void gradian() {
+_gradian:
+.DEFINE "_gradian"
+
+.VALUE _gradian
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "gradian",187,"_gradian"
+
+.LINE 187
+
+.DEFINE "color"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;  188	    uint8_t color;
+;  189	
+;  190	    for (color = 0; color < 120; ++color) {
+.LINE 190
+
+	LD	(IX+-1),0
+	JR	L_8
+L_6:
+;  191	        gfx_SetColor(129 - color);
+.LINE 191
+
+	LD	A,129
+	SUB	A,(IX+-1)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  192	        gfx_HorizLine(0, color * 2, 320);
+.LINE 192
+
+	LD	BC,320
+	PUSH	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	PUSH	HL
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_HorizLine
+	POP	BC
+	POP	BC
+	POP	BC
+;  193	        gfx_HorizLine(0, (color * 2) + 1, 320);
+.LINE 193
+
+	LD	BC,320
+	PUSH	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	INC	HL
+	PUSH	HL
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_HorizLine
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-1)
+;  194	    }
+L_8:
+.LINE 194
+
+	LD	A,(IX+-1)
+	CP	A,120
+	JR	C,L_6
+;  195	}
+.LINE 195
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _gradian ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_HorizLine                      IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+;color                                 IX-1      1   variable
+
+
+; Stack Frame Size: 7 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "gradian",195,"_gradian"
+;  196	
+;  197	void printCase(t_case matrix[MATRIX_X_MAX][MATRIX_Y_MAX], int8_t x, int8_t y) {
+_printCase:
+.DEFINE "_printCase"
+
+.VALUE _printCase
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCase",197,"_printCase"
+
+.LINE 197
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 20
+
+.TAG "s_case"
+
+.TYPE 808
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 2
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  198	    gfx_TransparentSprite_NoClip(
+;  199	            CASE_TAB[matrix[x][y].number + 2],
+;  200	            CASE_X_LENGTH * (uint24_t)x + MARGE_X,
+;  201	            CASE_Y_LENGTH * (uint8_t)y + MARGE_Y);
+.LINE 201
+
+	LD	B,9
+	LD	C,(IX+12)
+	MLT	BC
+	LD	A,C
+	ADD	A,25
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+9)
+	SEXT	HL
+	LD	L,(IX+9)
+	LD	BC,HL
+	LD	HL,9
+	CALL	__imulu
+	LD	IY,HL
+	LEA	BC,IY+20
+	PUSH	BC
+	LD	A,(IX+9)
+	SEXT	HL
+	LD	L,(IX+9)
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+12)
+	SEXT	HL
+	LD	L,(IX+12)
+	LD	DE,HL
+	ADD	HL,HL
+	ADD	HL,DE
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IY+0)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	INC	HL
+	INC	HL
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,_CASE_TAB
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;  202	}
+.LINE 202
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCase ***************************
+;Name                         Addr/Register   Size   Type
+;_CASE_TAB                           STATIC     24   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;y                                    IX+12      1   parameter
+;x                                     IX+9      1   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCase",202,"_printCase"
+;  203	
+;  204	gfx_sprite_t* cursorState(uint8_t state) {
+_cursorState:
+.DEFINE "_cursorState"
+
+.VALUE _cursorState
+
+.CLASS 2
+
+.TAG "NONAME3"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "cursorState",204,"_cursorState"
+
+.LINE 204
+
+.DEFINE "state"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  205	    if (state) {
+.LINE 205
+
+	LD	A,(IX+6)
+	OR	A,A
+	JR	Z,L_12
+;  206	        return SPRITE_CURSOR_PLACE;
+.LINE 206
+
+	LD	HL,_sprite_cursor_place
+	JR	L_13
+;  207	    }
+L_12:
+.LINE 207
+
+;  208	    return SPRITE_CURSOR_MOVE;
+.LINE 208
+
+	LD	HL,_sprite_cursor_move
+;  209	}
+L_13:
+.LINE 209
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _cursorState ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_cursor_move                 STATIC     83   variable
+;_sprite_cursor_place                STATIC     83   variable
+;state                                 IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "cursorState",209,"_cursorState"
+;  210	
+;  211	void printCursor(t_cursor cursor) {
+_printCursor:
+.DEFINE "_printCursor"
+
+.VALUE _printCursor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCursor",211,"_printCursor"
+
+.LINE 211
+
+.DEFINE "cursor"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_cursor"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  212	    gfx_TransparentSprite_NoClip(
+;  213	            cursorState(cursor.state),
+;  214	            CASE_X_LENGTH * (uint24_t)cursor.pos.x + MARGE_X,
+;  215	            CASE_Y_LENGTH * (uint8_t)cursor.pos.y + MARGE_Y);
+.LINE 215
+
+	LEA	BC,IX+6
+	LD	(IX+-3),BC
+	LD	IY,(IX+-3)
+	LD	B,(IY+2)
+	LD	C,9
+	MLT	BC
+	LD	A,C
+	ADD	A,25
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,9
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+20
+	PUSH	BC
+	LD	C,(IX+10)
+	LD	B,0
+	PUSH	BC
+	CALL	_cursorState
+	POP	BC
+	PUSH	HL
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;  216	}
+.LINE 216
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;cursor                                IX+6      5   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCursor",216,"_printCursor"
+;  217	
+;  218	void eraseCursor(t_game *game) {
+_eraseCursor:
+.DEFINE "_eraseCursor"
+
+.VALUE _eraseCursor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "eraseCursor",218,"_eraseCursor"
+
+.LINE 218
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;  219	    printCase(game->matrix, game->cursor.pos.x, game->cursor.pos.y);
+.LINE 219
+
+	LD	HL,1805
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(IX+-3),HL
+	LD	IY,(IX+-3)
+	LD	C,(IY+2)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IY+0)
+	PUSH	BC
+	LD	IY,(IX+6)
+	PEA	IY+2
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+;  220	}
+.LINE 220
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _eraseCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_printCase                          IMPORT  -----   function
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "eraseCursor",220,"_eraseCursor"
+;  221	
+;  222	void printMap(t_game *game) {
+_printMap:
+.DEFINE "_printMap"
+
+.VALUE _printMap
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printMap",222,"_printMap"
+
+.LINE 222
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 2
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+	DEC	SP
+;  223	    int8_t i;
+;  224	    int8_t j;
+;  225	
+;  226	    gradian();
+.LINE 226
+
+	LD	(IX+-5),BC
+	CALL	_gradian
+	LD	BC,(IX+-5)
+;  227	    for(i = 0; i < game->x_max; ++i) {
+.LINE 227
+
+	LD	(IX+-1),0
+	JR	L_21
+L_19:
+;  228	        for(j = 0; j < game->y_max; ++j) {
+.LINE 228
+
+	LD	(IX+-2),0
+	JR	L_18
+L_16:
+;  229	            printCase(game->matrix, i, j);
+.LINE 229
+
+	LD	C,(IX+-2)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-1)
+	PUSH	BC
+	LD	IY,(IX+6)
+	PEA	IY+2
+	LD	(IX+-5),BC
+	CALL	_printCase
+	LD	BC,(IX+-5)
+	POP	DE
+	POP	DE
+	POP	DE
+	INC	(IX+-2)
+;  230	        }
+L_18:
+.LINE 230
+
+	LD	IY,(IX+6)
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	LD	DE,HL
+	LD	A,(IX+-2)
+	SEXT	HL
+	LD	L,(IX+-2)
+	OR	A,A
+	SBC	HL,DE
+	JP	M,L_16
+	INC	(IX+-1)
+;  231	    }
+L_21:
+.LINE 231
+
+	LD	IY,(IX+6)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	DE,HL
+	LD	A,(IX+-1)
+	SEXT	HL
+	LD	L,(IX+-1)
+	OR	A,A
+	SBC	HL,DE
+	CALL	__setflag
+	JP	M,L_19
+;  232	    printCursor(game->cursor);
+.LINE 232
+
+	PUSH	BC
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	HL,1805
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,5
+	LDIR	
+	CALL	_printCursor
+	POP	BC
+	POP	BC
+;  233	}
+.LINE 233
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printMap ***************************
+;Name                         Addr/Register   Size   Type
+;_printCursor                        IMPORT  -----   function
+;_printCase                          IMPORT  -----   function
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printMap",233,"_printMap"
+;  234	
+;  235	void printDifficulty(uint8_t difficulty) {
+_printDifficulty:
+.DEFINE "_printDifficulty"
+
+.VALUE _printDifficulty
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printDifficulty",235,"_printDifficulty"
+
+.LINE 235
+
+.DEFINE "difficulty"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  236	    gfx_SetTextScale(2, 2);
+.LINE 236
+
+	LD	BC,2
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_SetTextScale
+	POP	BC
+	POP	BC
+;  237	    gfx_FillRectangle(170, 60, CHAR_LENGTH * 18, CHAR_LENGTH * 2);
+.LINE 237
+
+	LD	BC,16
+	PUSH	BC
+	LD	BC,144
+	PUSH	BC
+	LD	BC,60
+	PUSH	BC
+	LD	BC,170
+	PUSH	BC
+	CALL	_gfx_FillRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  238	    switch (difficulty) {
+.LINE 238
+
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	CALL	__seqcaseD
+	JP	(HL)
+L__14:
+	DW	4
+	DW	0
+	DB	0
+	DW24	L_24	
+
+	DW24	L_25	
+
+	DW24	L_26	
+
+	DW24	L_27	
+
+	DW24	L_28	
+
+;  239	        case EASY:
+L_24:
+.LINE 239
+
+;  240	            gfx_PrintStringXY("easy", 200, 60);
+.LINE 240
+
+	LD	BC,60
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,L__15
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  241	            break;
+.LINE 241
+
+	JR	L_28
+;  242	        case NORMAL:
+L_25:
+.LINE 242
+
+;  243	            gfx_PrintStringXY("normal", 190, 60);
+.LINE 243
+
+	LD	BC,60
+	PUSH	BC
+	LD	BC,190
+	PUSH	BC
+	LD	BC,L__16
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  244	            break;
+.LINE 244
+
+	JR	L_28
+;  245	        case HARD:
+L_26:
+.LINE 245
+
+;  246	            gfx_PrintStringXY("hard", 200, 60);
+.LINE 246
+
+	LD	BC,60
+	PUSH	BC
+	LD	BC,200
+	PUSH	BC
+	LD	BC,L__17
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  247	            break;
+.LINE 247
+
+	JR	L_28
+;  248	        case CUSTOMIZE:
+L_27:
+.LINE 248
+
+;  249	            gfx_PrintStringXY("customize", 170, 60);
+.LINE 249
+
+	LD	BC,60
+	PUSH	BC
+	LD	BC,170
+	PUSH	BC
+	LD	BC,L__18
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  250	            break;
+;  251	    }
+L_28:
+.LINE 251
+
+;  252	    gfx_SetTextScale(1, 1);
+.LINE 252
+
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_SetTextScale
+	POP	BC
+	POP	BC
+;  253	}
+.LINE 253
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printDifficulty ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_FillRectangle                  IMPORT  -----   function
+;_gfx_SetTextScale                   IMPORT  -----   function
+;difficulty                            IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printDifficulty",253,"_printDifficulty"
+	SEGMENT STRSECT
+L__15:
+	DB	"easy"
+	DB	0
+L__16:
+	DB	"normal"
+	DB	0
+L__17:
+	DB	"hard"
+	DB	0
+L__18:
+	DB	"customize"
+	DB	0
+	SEGMENT CODE
+;  254	
+;  255	void printCategory(t_pos *cursor_pos) {
+_printCategory:
+.DEFINE "_printCategory"
+
+.VALUE _printCategory
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCategory",255,"_printCategory"
+
+.LINE 255
+
+.DEFINE "cursor_pos"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  256	    gfx_SetTextScale(2, 2);
+.LINE 256
+
+	LD	BC,2
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_SetTextScale
+	POP	BC
+	POP	BC
+;  257	    gfx_PrintStringXY("Difficulty :", 10, 60);
+.LINE 257
+
+	LD	BC,60
+	PUSH	BC
+	LD	BC,10
+	PUSH	BC
+	LD	BC,L__20
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  258	    gfx_SetTextScale(1, 1);
+.LINE 258
+
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_SetTextScale
+	POP	BC
+	POP	BC
+;  259	    gfx_PrintStringXY("Map X max :", 105, 100);
+.LINE 259
+
+	LD	BC,100
+	PUSH	BC
+	LD	BC,105
+	PUSH	BC
+	LD	BC,L__21
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  260	    gfx_PrintStringXY("Map Y max :", 105, 120);
+.LINE 260
+
+	LD	BC,120
+	PUSH	BC
+	LD	BC,105
+	PUSH	BC
+	LD	BC,L__22
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  261	    gfx_PrintStringXY("Amount of Numbers :", 70, 140);
+.LINE 261
+
+	LD	BC,140
+	PUSH	BC
+	LD	BC,70
+	PUSH	BC
+	LD	BC,L__23
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  262	    gfx_PrintStringXY("Number max :", 100, 160);
+.LINE 262
+
+	LD	BC,160
+	PUSH	BC
+	LD	BC,100
+	PUSH	BC
+	LD	BC,L__24
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  263	
+;  264	    gfx_SetTextFGColor(RED);
+.LINE 264
+
+	LD	BC,5
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;  265	    switch (cursor_pos->y) {
+.LINE 265
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	CALL	__stoi
+	CALL	__seqcaseD
+	JP	(HL)
+L__25:
+	DW	5
+	DW	0
+	DB	0
+	DW24	L_30	
+
+	DW24	L_31	
+
+	DW24	L_32	
+
+	DW24	L_33	
+
+	DW24	L_34	
+
+	DW24	L_35	
+
+;  266	        case 0:
+L_30:
+.LINE 266
+
+;  267	            gfx_SetTextScale(2, 2);
+.LINE 267
+
+	LD	BC,2
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_SetTextScale
+	POP	BC
+	POP	BC
+;  268	            gfx_PrintStringXY("Difficulty :", 10, 60);
+.LINE 268
+
+	LD	BC,60
+	PUSH	BC
+	LD	BC,10
+	PUSH	BC
+	LD	BC,L__26
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  269	            gfx_SetTextScale(1, 1);
+.LINE 269
+
+	LD	BC,1
+	PUSH	BC
+	PUSH	BC
+	CALL	_gfx_SetTextScale
+	POP	BC
+	POP	BC
+;  270	            break;
+.LINE 270
+
+	JR	L_35
+;  271	        case 1:
+L_31:
+.LINE 271
+
+;  272	            gfx_PrintStringXY("Map X max :", 105, 100);
+.LINE 272
+
+	LD	BC,100
+	PUSH	BC
+	LD	BC,105
+	PUSH	BC
+	LD	BC,L__27
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  273	            break;
+.LINE 273
+
+	JR	L_35
+;  274	        case 2:
+L_32:
+.LINE 274
+
+;  275	            gfx_PrintStringXY("Map Y max :", 105, 120);
+.LINE 275
+
+	LD	BC,120
+	PUSH	BC
+	LD	BC,105
+	PUSH	BC
+	LD	BC,L__28
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  276	            break;
+.LINE 276
+
+	JR	L_35
+;  277	        case 3:
+L_33:
+.LINE 277
+
+;  278	            gfx_PrintStringXY("Amount of Numbers :", 70, 140);
+.LINE 278
+
+	LD	BC,140
+	PUSH	BC
+	LD	BC,70
+	PUSH	BC
+	LD	BC,L__29
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  279	            break;
+.LINE 279
+
+	JR	L_35
+;  280	        case 4:
+L_34:
+.LINE 280
+
+;  281	            gfx_PrintStringXY("Number max :", 100, 160);
+.LINE 281
+
+	LD	BC,160
+	PUSH	BC
+	LD	BC,100
+	PUSH	BC
+	LD	BC,L__30
+	PUSH	BC
+	CALL	_gfx_PrintStringXY
+	POP	BC
+	POP	BC
+	POP	BC
+;  282	            break;
+;  283	    }
+L_35:
+.LINE 283
+
+;  284	    gfx_SetTextFGColor(LIGHT_GREY);
+.LINE 284
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;  285	}
+.LINE 285
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCategory ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;_gfx_PrintStringXY                  IMPORT  -----   function
+;_gfx_SetTextScale                   IMPORT  -----   function
+;cursor_pos                            IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCategory",285,"_printCategory"
+	SEGMENT STRSECT
+L__20:
+	DB	"Difficulty :"
+	DB	0
+L__21:
+	DB	"Map X max :"
+	DB	0
+L__22:
+	DB	"Map Y max :"
+	DB	0
+L__23:
+	DB	"Amount of Numbers :"
+	DB	0
+L__24:
+	DB	"Number max :"
+	DB	0
+L__26:
+	DB	"Difficulty :"
+	DB	0
+L__27:
+	DB	"Map X max :"
+	DB	0
+L__28:
+	DB	"Map Y max :"
+	DB	0
+L__29:
+	DB	"Amount of Numbers :"
+	DB	0
+L__30:
+	DB	"Number max :"
+	DB	0
+	SEGMENT CODE
+;  286	
+;  287	void printMenu(t_pos *cursor_pos) {
+_printMenu:
+.DEFINE "_printMenu"
+
+.VALUE _printMenu
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printMenu",287,"_printMenu"
+
+.LINE 287
+
+.DEFINE "cursor_pos"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;  288	    printCategory(cursor_pos);
+.LINE 288
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printCategory
+	POP	BC
+;  289	
+;  290	    switch (cursor_pos->y) {
+.LINE 290
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	CALL	__stoi
+	CALL	__seqcaseD
+	JP	(HL)
+L__32:
+	DW	5
+	DW	0
+	DB	0
+	DW24	L_37	
+
+	DW24	L_38	
+
+	DW24	L_39	
+
+	DW24	L_40	
+
+	DW24	L_41	
+
+	DW24	L_42	
+
+;  291	        case 0:
+L_37:
+.LINE 291
+
+;  292	            printDifficulty(cursor_pos->x);
+.LINE 292
+
+	LD	IY,(IX+6)
+	LD	C,(IY+0)
+	LD	B,0
+	PUSH	BC
+	CALL	_printDifficulty
+	POP	BC
+;  293	            printUint(MENU[cursor_pos->x][1], 2, 180, 100);
+.LINE 293
+
+	LD	BC,100
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	INC	HL
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  294	            printUint(MENU[cursor_pos->x][2], 2, 180, 120);
+.LINE 294
+
+	LD	BC,120
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	INC	HL
+	INC	HL
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  295	            printUint(MENU[cursor_pos->x][3], 2, 210, 140);
+.LINE 295
+
+	LD	BC,140
+	PUSH	BC
+	LD	BC,210
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	LD	IY,HL
+	LEA	HL,IY+3
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  296	            printUint(MENU[cursor_pos->x][4], 2, 190, 160);
+.LINE 296
+
+	LD	BC,160
+	PUSH	BC
+	LD	BC,190
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	LD	IY,HL
+	LEA	HL,IY+4
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  297	            break;
+.LINE 297
+
+	JR	L_42
+;  298	        case 1:
+L_38:
+.LINE 298
+
+;  299	            printUint(cursor_pos->x, 2, 180, 100);
+.LINE 299
+
+	LD	BC,100
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+0)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  300	            break;
+.LINE 300
+
+	JR	L_42
+;  301	        case 2:
+L_39:
+.LINE 301
+
+;  302	            printUint(cursor_pos->x, 2, 180, 120);
+.LINE 302
+
+	LD	BC,120
+	PUSH	BC
+	LD	BC,180
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+0)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  303	            break;
+.LINE 303
+
+	JR	L_42
+;  304	        case 3:
+L_40:
+.LINE 304
+
+;  305	            printUint(cursor_pos->x, 2, 210, 140);
+.LINE 305
+
+	LD	BC,140
+	PUSH	BC
+	LD	BC,210
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+0)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  306	            break;
+.LINE 306
+
+	JR	L_42
+;  307	        case 4:
+L_41:
+.LINE 307
+
+;  308	            printUint(cursor_pos->x, 2, 190, 160);
+.LINE 308
+
+	LD	BC,160
+	PUSH	BC
+	LD	BC,190
+	PUSH	BC
+	LD	BC,2
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+0)
+	LD	B,0
+	PUSH	BC
+	CALL	_printUint
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  309	            break;
+;  310	    }
+L_42:
+.LINE 311
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printMenu ***************************
+;Name                         Addr/Register   Size   Type
+;_MENU                               IMPORT     20   variable
+;_printUint                          IMPORT  -----   function
+;cursor_pos                            IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printMenu",311,"_printMenu"
+	XREF _MENU:ROM
+	XREF _gfx_TransparentSprite_NoClip:ROM
+	XREF _gfx_SetTextFGColor:ROM
+	XREF _gfx_SetTextXY:ROM
+	XREF _gfx_PrintStringXY:ROM
+	XREF _gfx_PrintUInt:ROM
+	XREF _gfx_SetTextScale:ROM
+	XREF _gfx_FillRectangle:ROM
+	XREF _gfx_HorizLine:ROM
+	XREF _gfx_SetColor:ROM
+	XREF __imulu:ROM
+	XREF __sor:ROM
+	XREF __fsub:ROM
+	XREF __fmul:ROM
+	XREF __ftol:ROM
+	XREF __ultof:ROM
+	XREF __stoi:ROM
+	XREF __setflag:ROM
+	XREF __seqcaseD:ROM
+	XREF __imul_b:ROM
+	XREF __ishrs_b:ROM
+	XREF __sshl_b:ROM
+	XDEF _printMenu
+	XDEF _printCategory
+	XDEF _printDifficulty
+	XDEF _printMap
+	XDEF _eraseCursor
+	XDEF _printCursor
+	XDEF _cursorState
+	XDEF _printCase
+	XDEF _gradian
+	XDEF _defPal
+	XDEF _printUint
+	XDEF _printText
+	XDEF _CASE_TAB
+	XDEF _sprite_cursor_place
+	XDEF _sprite_cursor_move
+	XDEF _sprite_case_5
+	XDEF _sprite_case_4
+	XDEF _sprite_case_3
+	XDEF _sprite_case_2
+	XDEF _sprite_case_1
+	XDEF _sprite_case_empty
+	XDEF _sprite_case_used
+	XDEF _sprite_case_blocked
+	XDEF _gfx_pal
+	END

@@ -1,0 +1,466 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\GAME.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "s_pos",2
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_card",25
+.DEFINE "value"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.ENDREC "s_card"
+.BEGREC "s_player",50
+.DEFINE "card"
+.VALUE 0
+.CLASS 8
+.DIM 2
+.TAG "s_card"
+.TYPE 104
+.ENDEF
+.ENDREC "s_player"
+.BEGREC "s_game",166
+.DEFINE "matrix"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.DEFINE "card_id"
+.VALUE 25
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movement"
+.VALUE 26
+.CLASS 8
+.DIM 5
+.TAG "s_pos"
+.TYPE 104
+.ENDEF
+.DEFINE "side_card"
+.VALUE 36
+.CLASS 8
+.TAG "s_card"
+.TYPE 8
+.ENDEF
+.DEFINE "cursor"
+.VALUE 61
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "number_of_movement"
+.VALUE 63
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "player_turn"
+.VALUE 64
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "player"
+.VALUE 65
+.CLASS 8
+.DIM 2
+.TAG "s_player"
+.TYPE 104
+.ENDEF
+.DEFINE "win"
+.VALUE 165
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_game"
+;    1	
+;    2	#include "game.h"
+;    3	
+;    4	void reverseMatrix(MATRIX) {
+_reverseMatrix:
+.DEFINE "_reverseMatrix"
+
+.VALUE _reverseMatrix
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "reverseMatrix",4,"_reverseMatrix"
+
+.LINE 4
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "matrix_copy"
+
+.CLASS 65
+
+.VALUE -30
+
+.DIM 5
+
+.DIM 5
+
+.TYPE 866
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-30
+	LD	SP,HL
+;    5	    int8_t matrix_copy[MATRIX_X_LENGTH][MATRIX_Y_LENGTH];
+;    6	    uint8_t i;
+;    7	    uint8_t j;
+;    8	
+;    9	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 9
+
+	LD	(IX+-2),0
+	JR	L_5
+L_3:
+;   10	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 10
+
+	LD	(IX+-1),0
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	(IX+-5),HL
+	JR	L_2
+L_0:
+;   11	            matrix_copy[i][j] = matrix[i][j];
+.LINE 11
+
+	LD	BC,(IX+-5)
+	LD	HL,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	IY,HL
+	LD	BC,(IX+-5)
+	LEA	HL,IX+-30
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(IY)
+	LD	(HL),A
+	INC	(IX+-1)
+;   12	        }
+L_2:
+.LINE 12
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_0
+	INC	(IX+-2)
+;   13	    }
+L_5:
+.LINE 13
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_3
+;   14	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 14
+
+	LD	(IX+-2),0
+	JR	L_11
+L_9:
+;   15	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 15
+
+	LD	(IX+-1),0
+	JR	L_8
+L_6:
+;   16	            matrix[i][j] = matrix_copy[MATRIX_X_LENGTH - i - 1][MATRIX_Y_LENGTH - j - 1];
+.LINE 16
+
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,5
+	OR	A,A
+	SBC	HL,BC
+	DEC	HL
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,HL
+	LEA	HL,IX+-30
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,5
+	OR	A,A
+	SBC	HL,BC
+	LD	BC,HL
+	DEC	BC
+	LD	HL,DE
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(IY)
+	LD	(HL),A
+	INC	(IX+-1)
+;   17	        }
+L_8:
+.LINE 17
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_6
+	INC	(IX+-2)
+;   18	    }
+L_11:
+.LINE 18
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_9
+;   19	}
+.LINE 19
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _reverseMatrix ***************************
+;Name                         Addr/Register   Size   Type
+;matrix_copy                          IX-30     25   variable
+;O_0                                   IX-5      3   variable
+;i                                     IX-2      1   variable
+;j                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 39 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "reverseMatrix",19,"_reverseMatrix"
+;   20	
+;   21	void copyCard(CARD, int8_t card_to_copy[MATRIX_X_LENGTH][MATRIX_Y_LENGTH]) {
+_copyCard:
+.DEFINE "_copyCard"
+
+.VALUE _copyCard
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "copyCard",21,"_copyCard"
+
+.LINE 21
+
+.DEFINE "card"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "card_to_copy"
+
+.CLASS 65
+
+.VALUE 9
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;   22	    uint8_t i;
+;   23	    uint8_t j;
+;   24	
+;   25	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 25
+
+	LD	(IX+-1),0
+	JR	L_19
+L_17:
+;   26	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 26
+
+	LD	(IX+-2),0
+	JR	L_16
+L_14:
+;   27	            card[i][j] = card_to_copy[i][j];
+.LINE 27
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(IY)
+	LD	(HL),A
+	INC	(IX+-2)
+;   28	        }
+L_16:
+.LINE 28
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_14
+	INC	(IX+-1)
+;   29	    }
+L_19:
+.LINE 29
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_17
+.LINE 30
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _copyCard ***************************
+;Name                         Addr/Register   Size   Type
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;card_to_copy                          IX+9      3   parameter
+;card                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "copyCard",30,"_copyCard"
+	XREF __imul_b:ROM
+	XDEF _copyCard
+	XDEF _reverseMatrix
+	END

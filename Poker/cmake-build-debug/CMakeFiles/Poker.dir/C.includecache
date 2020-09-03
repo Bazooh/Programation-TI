@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/card.h
+stdint.h
+-
+
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/checkEnd.h
+stdint.h
+-
+player.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/player.h
+gameInfo.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/gameInfo.h
+
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/deck.h
+stdint.h
+-
+stdlib.h
+-
+card.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/card.h
+
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/gameInfo.h
+stdint.h
+-
+player.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/player.h
+deck.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/deck.h
+
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/player.h
+stdint.h
+-
+card.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/card.h
+
+/cygdrive/d/Logiciel/CEdev/projets/Poker/src/checkEnd.c
+../inc/checkEnd.h
+/cygdrive/d/Logiciel/CEdev/projets/Poker/inc/checkEnd.h
+

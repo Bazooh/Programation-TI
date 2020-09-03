@@ -1,0 +1,103 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A8DA            58h
+libs     D1A8DA D1A92F            55h
+startup  D1A92F D1A96E            3Fh
+cleanup  D1A96E D1A982            14h
+exit     D1A982 D1A988             6h
+code     D1A988 D1C0E4          175Ch
+data     D1C0E4 D1C155            71h
+strsect  D1C155 D1C195            40h
+text     D1C195 D1C291            FCh
+bss      D031F6 D031FC D13FD6      6h
+header   D1A87F D1A882             3h
+
+Label                       Value
+-------------------------   ------
+_delay                    = D1A988
+_os_DisableHomeTextBuffer = D1A9D1
+_os_EnableHomeTextBuffer  = D1A9E3
+_srandom                  = D1A9F5
+__setstate                = D1A9FC
+_random                   = D1AA0C
+__state                   = D1C0E4
+__frameset0               = D1AA63
+__scmpzero                = 000204
+__seqcase                 = 000210
+__case8                   = 000124
+__frameset                = D1AA6E
+__imul_b                  = 000158
+__imul_b                  = 000150
+__ladd_b                  = 00019C
+__ladd_b                  = 0001A0
+__stoiu                   = 000264
+__s_sbrk                  = D1AA7C
+__iremu                   = 000170
+__icmpzero                = 000138
+__setflag                 = 000218
+_malloc                   = D1AACD
+__alloc_base              = D031F6
+_free                     = D1AB75
+__findlibload             = D1A882
+__ccleanup                = D1A96E
+_errno                    = D008DC
+_init                     = D1A882
+_exit                     = D1A984
+__exit                    = D1A95D
+__exitsp                  = D1A95D
+__errsp                   = D1A95D
+_gfx_pal                  = D1C119
+_loop                     = D1B7B3
+_chooseDifficulty         = D1B721
+_gameOver                 = D1B70E
+_checkKbAction            = D1B5FD
+_checkEnd                 = D1B5AF
+_drop                     = D1B4AB
+_placePiece               = D1B3EC
+_verificationSuppressLine = D1B2DE
+_checkMoveDown            = D1B281
+_moveDownMatrix           = D1B1EF
+_moveDown                 = D1B184
+_rightRotation            = D1B0C8
+_leftRotation             = D1B00D
+_moveRight                = D1AF51
+_moveLeft                 = D1AE95
+_initMatrix               = D1AE4B
+_checkPieceMovement       = D1AD9C
+_checkCaseMovement        = D1AD31
+_createPiece              = D1AC73
+_TIMER                    = D1C14F
+_printNextPiece           = D1BFBB
+_printScore               = D1BF4D
+_printDifficulty          = D1BE9C
+_clearPiece               = D1BDF9
+_printBlock               = D1BDBF
+_printPiece               = D1BD1D
+_printGameOver            = D1BCFC
+_clearPause               = D1BCD5
+_printPause               = D1BCB4
+_printScreen              = D1BC55
+_initPrintBlock           = D1BAD9
+_PIECE_6                  = D1C26D
+_PIECE_5                  = D1C249
+_PIECE_4                  = D1C225
+_PIECE_3                  = D1C201
+_PIECE_2                  = D1C1DD
+_PIECE_1                  = D1C1B9
+_PIECE_0                  = D1C195
+_main                     = D1C08C
+_gfx_Begin                = D1A8ED
+_gfx_End                  = D1A8F1
+_gfx_SetColor             = D1A8F5
+_gfx_SetPalette           = D1A8F9
+_gfx_FillScreen           = D1A8FD
+_gfx_PrintUInt            = D1A901
+_gfx_PrintStringXY        = D1A905
+_gfx_SetTextXY            = D1A909
+_gfx_SetTextFGColor       = D1A90D
+_gfx_FillRectangle        = D1A911
+_gfx_Sprite_NoClip        = D1A915
+_gfx_SetTextConfig        = D1A919
+_kb_Scan                  = D1A927
+_kb_Reset                 = D1A92B

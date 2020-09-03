@@ -1,0 +1,124 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A8DA            58h
+libs     D1A8DA D1A92F            55h
+startup  D1A92F D1A96E            3Fh
+cleanup  D1A96E D1A982            14h
+exit     D1A982 D1A988             6h
+code     D1A988 D1C79E          1E16h
+data     D1C79E D1CB49           3ABh
+strsect  D1CB49 D1CBF0            A7h
+text     D1CBF0 D1CBF0             0h
+bss      D031F6 D03300 D13FD6    10Ah
+header   D1A87F D1A882             3h
+
+Label                           Value
+-----------------------------   ------
+_delay                        = D1A988
+_os_DisableHomeTextBuffer     = D1A9D1
+_os_EnableHomeTextBuffer      = D1A9E3
+_srandom                      = D1A9F5
+__setstate                    = D1A9FC
+_random                       = D1AA0C
+__state                       = D1C79E
+__scmpzero                    = 000204
+__frameset                    = D1AA63
+__fmul                        = 000288
+__sshl_b                      = 000240
+__sshl_b                      = 000244
+__sor                         = 000234
+__fsub                        = 000290
+__imuls                       = 000154
+__imul_b                      = 000158
+__imul_b                      = 000150
+__ishrs_b                     = 00017C
+__ishrs_b                     = 000180
+__bldix                       = D1AA71
+__irems                       = 00016C
+__s_sbrk                      = D1AA7D
+__iremu                       = 000170
+__icmpzero                    = 000138
+__seqcaseD                    = 000214
+__bldiy                       = 0000FC
+__fadd                        = 000270
+__bstiy                       = 000108
+__sstiy                       = 00025C
+__stoi                        = 000260
+__setflag                     = 000218
+__sldiy                       = 000220
+__ftol                        = 00027C
+__ultof                       = 000280
+_malloc                       = D1AACE
+__alloc_base                  = D031F6
+_free                         = D1AB76
+__findlibload                 = D1A882
+__ccleanup                    = D1A96E
+_errno                        = D008DC
+_init                         = D1A882
+_exit                         = D1A984
+__exit                        = D1A95D
+__exitsp                      = D1A95D
+__errsp                       = D1A95D
+_play                         = D1B6A8
+_kbAction                     = D1B56B
+_kbArrowPlace                 = D1B4A4
+_undo                         = D1B3DE
+_placement                    = D1B1B4
+_checkPlacement               = D1B091
+_isInMap                      = D1B01C
+_checkGameWin                 = D1AFAF
+_kbArrowMove                  = D1AF2C
+_moveCursor                   = D1AE93
+_cursorCanMove                = D1AD68
+_initCursor                   = D1AD29
+_setFirstNumber               = D1AC74
+_printMenu                    = D1BC99
+_printCategory                = D1BB3D
+_printDifficulty              = D1BA7D
+_printMap                     = D1B9DB
+_eraseCursor                  = D1B9A7
+_printCursor                  = D1B95A
+_cursorState                  = D1B93C
+_printCase                    = D1B8C3
+_gradian                      = D1B861
+_defPal                       = D1B79C
+_printUint                    = D1B73C
+_printText                    = D1B6EB
+_CASE_TAB                     = D1CB11
+_sprite_cursor_place          = D1CABE
+_sprite_cursor_move           = D1CA6B
+_sprite_case_5                = D1CA18
+_sprite_case_4                = D1C9C5
+_sprite_case_3                = D1C972
+_sprite_case_2                = D1C91F
+_sprite_case_1                = D1C8CC
+_sprite_case_empty            = D1C879
+_sprite_case_used             = D1C826
+_sprite_case_blocked          = D1C7D3
+_gfx_pal                      = D031FC
+_MENU                         = D1CB29
+_main                         = D1C1CD
+_menu                         = D1C085
+_kb_Move                      = D1BEF7
+_initMap                      = D1BE3D
+_CURSOR                       = D1CB3D
+_generateMap                  = D1C74A
+_generateNumbers              = D1C5FB
+_deployNumber                 = D1C3C8
+_checkDeploy                  = D1C2F8
+_increment                    = D1C290
+_gfx_Begin                    = D1A8ED
+_gfx_End                      = D1A8F1
+_gfx_SetColor                 = D1A8F5
+_gfx_SetPalette               = D1A8F9
+_gfx_FillScreen               = D1A8FD
+_gfx_PrintUInt                = D1A901
+_gfx_PrintStringXY            = D1A905
+_gfx_SetTextXY                = D1A909
+_gfx_SetTextFGColor           = D1A90D
+_gfx_HorizLine                = D1A911
+_gfx_FillRectangle            = D1A915
+_gfx_TransparentSprite_NoClip = D1A919
+_gfx_SetTextScale             = D1A91D
+_kb_Scan                      = D1A92B

@@ -1,0 +1,160 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\LIST.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "list.h"
+;    3	
+;    4	void	addPos(t_list *elem, t_pos pos) {
+_addPos:
+	LD	HL,-6
+	CALL	__frameset
+;    5	    t_list *new;
+;    6	
+;    7	    while(elem->next) {
+	JR	L_0
+L_1:
+;    8	        elem = elem->next;
+	LD	BC,(IX+-6)
+	LD	(IX+6),BC
+;    9	    }
+L_0:
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-6),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	NZ,L_1
+;   10	
+;   11	    if (!(new = (t_list*)malloc(sizeof(t_list)))) {
+	LD	BC,5
+	PUSH	BC
+	CALL	_malloc
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	Z,L_5
+;   12	        return ;
+;   13	    }
+;   14	
+;   15	    new->pos = pos;
+	LD	IY,(IX+-3)
+	LEA	DE,IY+0
+	LEA	HL,IX+9
+	LD	BC,2
+	LDIR	
+;   16	    new->next = NULL;
+	LD	BC,0
+	LD	(IY+2),BC
+;   17	
+;   18	    elem->next = new;
+	LD	BC,(IX+-3)
+	LD	IY,(IX+6)
+	LD	(IY+2),BC
+;   19	}
+L_5:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _addPos ***************************
+;Name                         Addr/Register   Size   Type
+;_malloc                             IMPORT  -----   function
+;G_0                                   IX-6      3   variable
+;new                                   IX-3      3   variable
+;pos                                   IX+9      2   parameter
+;elem                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   20	
+;   21	void    deleteList(t_list *elem) {
+_deleteList:
+	LD	HL,-3
+	CALL	__frameset
+;   22	    t_list *tmp;
+;   23	
+;   24	    while (elem) {
+	JR	L_6
+L_7:
+;   25	        tmp = elem->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-3),BC
+;   26	        free(elem);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   27	        elem = tmp;
+	LD	BC,(IX+-3)
+	LD	(IX+6),BC
+;   28	    }
+L_6:
+	LD	HL,(IX+6)
+	CALL	__icmpzero
+	JR	NZ,L_7
+;   29	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _deleteList ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;tmp                                   IX-3      3   variable
+;elem                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   30	
+;   31	t_list  *deleteGoNext(t_list *elem) {
+_deleteGoNext:
+	LD	HL,-3
+	CALL	__frameset
+;   32	    t_list *tmp = elem->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	LD	(IX+-3),BC
+;   33	    free(elem);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   34	    return (tmp);
+	LD	HL,(IX+-3)
+;   35	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _deleteGoNext ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;tmp                                   IX-3      3   variable
+;elem                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _free:ROM
+	XREF _malloc:ROM
+	XREF __frameset:ROM
+	XREF __icmpzero:ROM
+	XDEF _deleteGoNext
+	XDEF _deleteList
+	XDEF _addPos
+	END

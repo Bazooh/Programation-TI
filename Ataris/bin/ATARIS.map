@@ -1,0 +1,122 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A8DA            58h
+libs     D1A8DA D1A923            49h
+startup  D1A923 D1A962            3Fh
+cleanup  D1A962 D1A976            14h
+exit     D1A976 D1A97C             6h
+code     D1A97C D1D001          2685h
+data     D1D001 D1D076            75h
+strsect  D1D076 D1D0F0            7Ah
+text     D1D0F0 D1D110            20h
+bss      D031F6 D031FC D13FD6      6h
+header   D1A87F D1A882             3h
+
+Label                           Value
+-----------------------------   ------
+_sin                          = 022118
+_cos                          = 02211C
+_atan                         = 022108
+_sqrt                         = 02213C
+_delay                        = D1A97C
+_os_DisableHomeTextBuffer     = D1A9C5
+_os_EnableHomeTextBuffer      = D1A9D7
+_srandom                      = D1A9E9
+__setstate                    = D1A9F0
+_random                       = D1AA00
+__state                       = D1D001
+__scmpzero                    = 000204
+__ltof                        = 000284
+__frameset                    = D1AA57
+__fmul                        = 000288
+_sprintf                      = 0000BC
+__fsub                        = 000290
+__imuls                       = 000154
+__imul_b                      = 000158
+__imul_b                      = 000150
+__ladd_b                      = 00019C
+__ladd_b                      = 0001A0
+__fneg                        = D1AA65
+__itol                        = 000194
+__irems                       = 00016C
+__fcmp                        = 000274
+__s_sbrk                      = D1AA72
+__icmpzero                    = 000138
+__seqcaseD                    = 000214
+_abs                          = D1AA92
+__fadd                        = 000270
+__lcmpzero                    = 0001B0
+__fdiv                        = 000278
+__stoi                        = 000260
+__setflag                     = 000218
+__ftol                        = 00027C
+__ultof                       = 000280
+_malloc                       = D1AACF
+__alloc_base                  = D031F6
+_free                         = D1AB77
+__findlibload                 = D1A882
+__ccleanup                    = D1A962
+_errno                        = D008DC
+_init                         = D1A882
+_exit                         = D1A978
+__exit                        = D1A951
+__exitsp                      = D1A951
+__errsp                       = D1A951
+_DIRECTION                    = D1D0F0
+_ballMove                     = D1BEF0
+_initSpeed                    = D1BE1B
+_turnBall                     = D1BD1D
+_getContactPoint              = D1B93F
+_setAB                        = D1B855
+_addContact                   = D1B823
+_checkOrthoDistance           = D1B71E
+_calculateContactOrtho        = D1B5BD
+_preCheck                     = D1B54C
+_checkDirection               = D1B368
+_hurtObstacle                 = D1B2B7
+_ballDirection                = D1B250
+_resetContact                 = D1B224
+_setContactPoint              = D1B124
+_calculateContact             = D1AD3C
+_primaryMeasure               = D1ACDA
+_deg                          = D1ACAC
+_rad                          = D1AC75
+_printAll                     = D1C2FC
+_printMap                     = D1C276
+_printAllObstacle             = D1C245
+_eraseObstacle                = D1C1C5
+_printObstacle                = D1C0A1
+_printBall                    = D1C053
+_clearOldBall                 = D1C020
+_gfx_pal                      = D1D06C
+_sprite_clear_ball            = D1D051
+_sprite_ball                  = D1D036
+_main                         = D1C435
+_initMatrix                   = D1C3E8
+_initBall                     = D1C3A7
+_gameOver                     = D1C388
+_createMap                    = D1C347
+_mapMoveDown                  = D1CB52
+_generateLine                 = D1CAF1
+_addObstacleRectangleInMatrix = D1C959
+_setAdjHiddenObstacle         = D1C773
+_setHiddenObstacle            = D1C736
+_addObstacleRectangle         = D1CF88
+_nbObstacle                   = D1CF55
+_createInvObstacleRectangle   = D1CEE6
+_createObstacleRectangle      = D1CE79
+_createObstacle               = D1CDB4
+_freeObstacles                = D1CD76
+_removeObstacle               = D1CCE7
+_gfx_Begin                    = D1A8ED
+_gfx_End                      = D1A8F1
+_gfx_SetColor                 = D1A8F5
+_gfx_SetPalette               = D1A8F9
+_gfx_FillScreen               = D1A8FD
+_gfx_SetTextFGColor           = D1A901
+_gfx_Rectangle                = D1A905
+_gfx_FillRectangle            = D1A909
+_gfx_TransparentSprite_NoClip = D1A90D
+_kb_AnyKey                    = D1A91B
+_kb_Reset                     = D1A91F

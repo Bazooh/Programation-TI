@@ -1,0 +1,301 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\PLAYERLIST.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	
+;    2	#include "playerList.h"
+;    3	
+;    4	void freePlayerList(t_player *player) {
+_freePlayerList:
+	LD	HL,-3
+	CALL	__frameset
+;    5	    t_player *player_to_free;
+;    6	
+;    7	    player = player->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+18)
+	LD	(IX+6),BC
+;    8	
+;    9	    while (player->next) {
+	JR	L_0
+L_1:
+;   10	        player_to_free = player;
+	LD	BC,(IX+6)
+	LD	(IX+-3),BC
+;   11	        player = player->next;
+	LD	IY,(IX+6)
+	LD	BC,(IY+18)
+	LD	(IX+6),BC
+;   12	        free(player_to_free);
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   13	    }
+L_0:
+	LD	IY,(IX+6)
+	LD	HL,(IY+18)
+	CALL	__icmpzero
+	JR	NZ,L_1
+;   14	    free(player);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   15	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _freePlayerList ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;player_to_free                        IX-3      3   variable
+;player                                IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   16	
+;   17	void initPlayerName(t_player *player) {
+_initPlayerName:
+	CALL	__frameset0
+;   18	
+;   19	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initPlayerName ***************************
+;Name                         Addr/Register   Size   Type
+;player                                IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   20	
+;   21	void initPlayerHand(t_player *player) {
+_initPlayerHand:
+	LD	HL,-3
+	CALL	__frameset
+;   22	    uint8_t i;
+;   23	    t_card null_card;
+;   24	
+;   25	    initCard(&null_card, 0, 0);
+	LD	BC,0
+	PUSH	BC
+	PUSH	BC
+	PEA	IX+-3
+	CALL	_initCard
+	POP	BC
+	POP	BC
+	POP	BC
+;   26	
+;   27	    for (i = 0; i < NUMBER_OF_CARD_IN_HAND; i++) {
+	LD	(IX+-1),0
+	JR	L_8
+L_6:
+;   28	        player->hand[i] = null_card;
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+10
+	ADD	HL,BC
+	LD	DE,HL
+	LEA	HL,IX+-3
+	LD	BC,2
+	LDIR	
+	INC	(IX+-1)
+;   29	    }
+L_8:
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	C,L_6
+;   30	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initPlayerHand ***************************
+;Name                         Addr/Register   Size   Type
+;_initCard                           IMPORT  -----   function
+;null_card                             IX-3      2   variable
+;i                                     IX-1      1   variable
+;player                                IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   31	
+;   32	void initPlayer(t_player *player, uint32_t start_money) {
+_initPlayer:
+	CALL	__frameset0
+;   33	    initPlayerName(player);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_initPlayerName
+	POP	BC
+;   34	    initPlayerHand(player);
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_initPlayerHand
+	POP	BC
+;   35	    player->money = start_money;
+	LD	BC,(IX+9)
+	LD	A,(IX+12)
+	LD	IY,(IX+6)
+	LD	(IY+14),BC
+	LD	(IY+17),A
+;   36	    player->next = NULL;
+	LD	BC,0
+	LD	(IY+18),BC
+;   37	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initPlayer ***************************
+;Name                         Addr/Register   Size   Type
+;start_money                           IX+9      4   parameter
+;player                                IX+6      3   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   38	
+;   39	t_player *createPlayer(uint32_t start_money) {
+_createPlayer:
+	LD	HL,-3
+	CALL	__frameset
+;   40	    t_player *new_elem;
+;   41	
+;   42	    if (!(new_elem = malloc(sizeof(t_player)))) { return NULL; }
+	LD	BC,21
+	PUSH	BC
+	CALL	_malloc
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	NZ,L_12
+	OR	A,A
+	SBC	HL,HL
+	JR	L_13
+L_12:
+;   43	
+;   44	    initPlayer(new_elem, start_money);
+	LD	C,(IX+9)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_initPlayer
+	POP	BC
+	POP	BC
+	POP	BC
+;   45	
+;   46	    return new_elem;
+	LD	HL,(IX+-3)
+;   47	}
+L_13:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _createPlayer ***************************
+;Name                         Addr/Register   Size   Type
+;_malloc                             IMPORT  -----   function
+;new_elem                              IX-3      3   variable
+;start_money                           IX+6      4   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+;   48	
+;   49	void initPlayerList(t_player *player_list, t_game_starting_info start) {
+_initPlayerList:
+	LD	HL,-4
+	CALL	__frameset
+;   50	    uint8_t i;
+;   51	
+;   52	    for (i = 0; i < start.number_of_player; i++) {
+	LD	(IX+-1),0
+	JR	L_19
+L_17:
+;   53	        if (!(player_list->next = createPlayer(start.money))) { return; }
+	LD	C,(IX+13)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+10)
+	PUSH	BC
+	CALL	_createPlayer
+	POP	BC
+	POP	BC
+	LD	IY,(IX+6)
+	LD	(IY+18),HL
+	LD	BC,(IY+18)
+	LD	(IX+-4),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	Z,L_20
+;   54	        player_list = player_list->next;
+	LD	BC,(IX+-4)
+	LD	(IX+6),BC
+	INC	(IX+-1)
+;   55	    }
+L_19:
+	LD	A,(IX+-1)
+	CP	A,(IX+9)
+	JR	C,L_17
+L_20:
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initPlayerList ***************************
+;Name                         Addr/Register   Size   Type
+;G_0                                   IX-4      3   variable
+;i                                     IX-1      1   variable
+;start                                 IX+9      5   parameter
+;player_list                           IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	XREF _initCard:ROM
+	XREF _free:ROM
+	XREF _malloc:ROM
+	XREF __frameset0:ROM
+	XREF __frameset:ROM
+	XREF __icmpzero:ROM
+	XDEF _initPlayerList
+	XDEF _createPlayer
+	XDEF _initPlayer
+	XDEF _initPlayerHand
+	XDEF _initPlayerName
+	XDEF _freePlayerList
+	END

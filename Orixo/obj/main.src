@@ -1,0 +1,1351 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\MAIN.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "NONAME2",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME1"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "font",12
+.DEFINE "font"
+.VALUE 0
+.CLASS 8
+.TAG "font"
+.TYPE 40
+.ENDEF
+.DEFINE "drawChar"
+.VALUE 3
+.CLASS 8
+.TYPE 545
+.ENDEF
+.DEFINE "getWidth"
+.VALUE 6
+.CLASS 8
+.TYPE 558
+.ENDEF
+.DEFINE "getHeight"
+.VALUE 9
+.CLASS 8
+.TYPE 558
+.ENDEF
+.ENDREC "font"
+.BEGREC "NONAME8",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME10"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME10",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME10"
+.BEGREC "NONAME11",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME11"
+.BEGREC "NONAME12",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME12"
+.BEGREC "NONAME13",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME13"
+.BEGREC "NONAME14",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME14"
+.BEGREC "NONAME15",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME11"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME15"
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 3
+.ENDEF
+.DEFINE "y"
+.VALUE 2
+.CLASS 8
+.TYPE 3
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_cursor",5
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "state"
+.VALUE 4
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_cursor"
+.BEGREC "s_case",3
+.DEFINE "number"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "old_number"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "id"
+.VALUE 2
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_case"
+.BEGREC "s_game",1810
+.DEFINE "x_max"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_max"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "matrix"
+.VALUE 2
+.CLASS 8
+.DIM 30
+.DIM 20
+.TAG "s_case"
+.TYPE 872
+.ENDEF
+.DEFINE "number_max"
+.VALUE 1802
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "amount_number"
+.VALUE 1803
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "win"
+.VALUE 1804
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "cursor"
+.VALUE 1805
+.CLASS 8
+.TAG "s_cursor"
+.TYPE 8
+.ENDEF
+.ENDREC "s_game"
+	SEGMENT DATA
+_CURSOR:
+	DB	0
+	DB	3
+	DB	3
+	DB	30
+	DB	3
+	DB	20
+	DB	1
+	DB	100
+	DB	1
+	DB	5
+	DB	0
+	DB	0
+.DEFINE "CURSOR"
+.ALIAS "_CURSOR"
+.CLASS 69
+.VALUE _CURSOR
+.DIM 6
+.DIM 2
+.TYPE 876
+.ENDEF
+;    1	
+;    2	#include "main.h"
+;    3	
+;    4	uint8_t CURSOR[NUMBER_OF_CATEGORY + 1][2] = {
+	SEGMENT CODE
+;    5	    {0, 3},
+;    6	    {3, 30}, // Map X max
+;    7	    {3, 20}, // Map Y max
+;    8	    {1, 100}, // Amount of Numbers
+;    9	    {1, 5},  // Number max
+;   10	};
+;   11	
+;   12	void initMap(t_game *game) {
+_initMap:
+.DEFINE "_initMap"
+
+.VALUE _initMap
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initMap",12,"_initMap"
+
+.LINE 12
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+	DEC	SP
+;   13	    uint8_t i;
+;   14	    uint8_t j;
+;   15	
+;   16	    for (i = 0; i < game->x_max; ++i) {
+.LINE 16
+
+	LD	(IX+-1),0
+	JR	L_5
+L_3:
+;   17	        for (j = 0; j < game->y_max; ++j) {
+.LINE 17
+
+	LD	(IX+-2),0
+	JR	L_2
+L_0:
+;   18	            game->matrix[i][j].number = CASE_BLOCKED;
+.LINE 18
+
+	LD	IY,(IX+6)
+	LEA	BC,IY+2
+	LD	(IX+-5),BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-5)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	(IY+0),254
+;   19	            game->matrix[i][j].old_number = CASE_BLOCKED;
+.LINE 19
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-5)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	(IY+1),254
+;   20	            game->matrix[i][j].id = 0;
+.LINE 20
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,60
+	CALL	__imul_b
+	LD	BC,(IX+-5)
+	ADD	HL,BC
+	LD	DE,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	ADD	HL,DE
+	LD	IY,HL
+	LD	(IY+2),0
+	INC	(IX+-2)
+;   21	        }
+L_2:
+.LINE 21
+
+	LD	A,(IX+-2)
+	LD	IY,(IX+6)
+	CP	A,(IY+1)
+	JR	C,L_0
+	INC	(IX+-1)
+;   22	    }
+L_5:
+.LINE 22
+
+	LD	A,(IX+-1)
+	LD	IY,(IX+6)
+	CP	A,(IY+0)
+	JR	C,L_3
+;   23	}
+.LINE 23
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initMap ***************************
+;Name                         Addr/Register   Size   Type
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initMap",23,"_initMap"
+;   24	
+;   25	void kb_Move(t_pos *cursor_pos) {
+_kb_Move:
+.DEFINE "_kb_Move"
+
+.VALUE _kb_Move
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "kb_Move",25,"_kb_Move"
+
+.LINE 25
+
+.DEFINE "cursor_pos"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;   26	
+;   27	    if (!kb_Data[7]) { return; }
+.LINE 27
+
+	LD	A,(16056350)
+	OR	A,A
+	JR	Z,L_26
+;   28	
+;   29	    if (kb_Data[7] & kb_Right && cursor_pos->x < CURSOR[cursor_pos->y][1]) {
+.LINE 29
+
+	LD	A,(16056350)
+	AND	A,4
+	JR	Z,L_23
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	CALL	__stoi
+	ADD	HL,HL
+	LD	BC,_CURSOR
+	ADD	HL,BC
+	INC	HL
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	DE,HL
+	LD	BC,(IY+0)
+	CALL	__stoi
+	OR	A,A
+	SBC	HL,DE
+	JP	P,L_23
+;   30	        ++(cursor_pos->x);
+.LINE 30
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	INC	BC
+	LD	(IY+0),C
+	LD	(IY+1),B
+;   31	        if (cursor_pos->y) {
+.LINE 31
+
+	LD	BC,(IY+2)
+	LD	(IX+-2),C
+	LD	(IX+-1),B
+	LD	HL,(IX+-2)
+	CALL	__scmpzero
+	JR	Z,L_25
+;   32	            MENU[CUSTOMIZE][cursor_pos->y] = cursor_pos->x;
+.LINE 32
+
+	LD	IY,(IX+6)
+	LD	A,(IY+0)
+	LD	DE,_MENU+15
+	LD	BC,(IX+-2)
+	CALL	__stoi
+	ADD	HL,DE
+	LD	(HL),A
+;   33	        }
+;   34	    }
+;   35	    else if (kb_Data[7] & kb_Left && cursor_pos->x > CURSOR[cursor_pos->y][0]) {
+.LINE 35
+
+	JR	L_25
+L_23:
+	LD	A,(16056350)
+	AND	A,2
+	JR	Z,L_21
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	CALL	__stoi
+	ADD	HL,HL
+	LD	BC,_CURSOR
+	ADD	HL,BC
+	LD	A,(HL)
+	UEXT	HL
+	LD	L,A
+	LD	DE,HL
+	LD	BC,(IY+0)
+	CALL	__stoi
+	LD	BC,HL
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L_21
+;   36	        --(cursor_pos->x);
+.LINE 36
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+0)
+	DEC	BC
+	LD	(IY+0),C
+	LD	(IY+1),B
+;   37	        if (cursor_pos->y) {
+.LINE 37
+
+	LD	BC,(IY+2)
+	LD	(IX+-4),C
+	LD	(IX+-3),B
+	LD	HL,(IX+-4)
+	CALL	__scmpzero
+	JR	Z,L_25
+;   38	            MENU[CUSTOMIZE][cursor_pos->y] = cursor_pos->x;
+.LINE 38
+
+	LD	IY,(IX+6)
+	LD	A,(IY+0)
+	LD	DE,_MENU+15
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	ADD	HL,DE
+	LD	(HL),A
+;   39	        }
+;   40	    }
+;   41	    else if (kb_Data[7] & kb_Down && (cursor_pos->x == CUSTOMIZE || cursor_pos->y) && cursor_pos->y < NUMBER_OF_CATEGORY - 1) {
+.LINE 41
+
+	JR	L_25
+L_21:
+	LD	A,(16056350)
+	AND	A,1
+	JR	Z,L_19
+	LD.LIS	BC,3
+	LD	IY,(IX+6)
+	LD	HL,(IY+0)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JR	Z,L_14
+	LD	IY,(IX+6)
+	LD	HL,(IY+2)
+	CALL	__scmpzero
+	JR	Z,L_19
+L_14:
+	LD.LIS	BC,4
+	LD	IY,(IX+6)
+	LD	HL,(IY+2)
+	OR	A,A
+	SBC.SIS	HL,BC
+	JP	P,L_19
+;   42	        ++(cursor_pos->y);
+.LINE 42
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	INC	BC
+	LD	(IY+2),C
+	LD	(IY+3),B
+;   43	        cursor_pos->x = MENU[CUSTOMIZE][cursor_pos->y];
+.LINE 43
+
+	LD	DE,_MENU+15
+	LD	BC,(IY+2)
+	CALL	__stoi
+	ADD	HL,DE
+	LD	C,(HL)
+	LD	(IY+0),C
+	LD	(IY+1),0
+;   44	    }
+;   45	    else if (kb_Data[7] & kb_Up && cursor_pos->y > 0) {
+.LINE 45
+
+	JR	L_25
+L_19:
+	LD	A,(16056350)
+	AND	A,8
+	JR	Z,L_26
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	OR	A,A
+	SBC	HL,HL
+	OR	A,A
+	SBC.SIS	HL,BC
+	JP	P,L_26
+;   46	        --(cursor_pos->y);
+.LINE 46
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+2)
+	DEC	BC
+	LD	(IY+2),C
+	LD	(IY+3),B
+;   47	        cursor_pos->x = MENU[CUSTOMIZE][cursor_pos->y];
+.LINE 47
+
+	LD	DE,_MENU+15
+	LD	BC,(IY+2)
+	CALL	__stoi
+	ADD	HL,DE
+	LD	C,(HL)
+	LD	(IY+0),C
+	LD	(IY+1),0
+;   48	    }
+;   49	    else { return; }
+.LINE 49
+
+L_25:
+;   50	
+;   51	    printMenu(cursor_pos);
+.LINE 51
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printMenu
+	POP	BC
+;   52	    delay(WAITING_DELAY);
+.LINE 52
+
+	LD	BC,250
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;   53	}
+L_26:
+.LINE 53
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _kb_Move ***************************
+;Name                         Addr/Register   Size   Type
+;_delay                              IMPORT  -----   function
+;_printMenu                          IMPORT  -----   function
+;_MENU                               IMPORT     20   variable
+;_CURSOR                             STATIC     12   variable
+;G_1                                   IX-4      2   variable
+;G_0                                   IX-2      2   variable
+;cursor_pos                            IX+6      3   parameter
+
+
+; Stack Frame Size: 13 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "kb_Move",53,"_kb_Move"
+;   54	
+;   55	void menu(t_game *game) {
+_menu:
+.DEFINE "_menu"
+
+.VALUE _menu
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "menu",55,"_menu"
+
+.LINE 55
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "cursor_pos"
+
+.CLASS 65
+
+.VALUE -4
+
+.TAG "s_pos"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+;   56	    t_pos cursor_pos;
+;   57	
+;   58	    cursor_pos.x = EASY;
+.LINE 58
+
+	LD	(IX+-4),0
+	LD	(IX+-3),0
+;   59	    cursor_pos.y = 0;
+.LINE 59
+
+	LD	(IX+-2),0
+	LD	(IX+-1),0
+;   60	
+;   61	    delay(WAITING_DELAY);
+.LINE 61
+
+	LD	BC,250
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;   62	    printMenu(&cursor_pos);
+.LINE 62
+
+	PEA	IX+-4
+	CALL	_printMenu
+	POP	BC
+;   63	
+;   64	    do {
+L_28:
+.LINE 64
+
+;   65	        kb_Scan();
+.LINE 65
+
+	CALL	_kb_Scan
+;   66	        kb_Move(&cursor_pos);
+.LINE 66
+
+	PEA	IX+-4
+	CALL	_kb_Move
+	POP	BC
+;   67	    } while (!(kb_Data[6] & kb_Enter) && !(kb_Data[1] & kb_Del));
+.LINE 67
+
+	LD	A,(16056348)
+	AND	A,1
+	JR	NZ,L_31
+	LD	A,(16056338)
+	AND	A,128
+	JR	Z,L_28
+L_31:
+;   68	
+;   69	    if (cursor_pos.y) {
+.LINE 69
+
+	LD	HL,(IX+-2)
+	CALL	__scmpzero
+	JR	Z,L_32
+;   70	        cursor_pos.x = 3;
+.LINE 70
+
+	LD	(IX+-4),3
+	LD	(IX+-3),0
+;   71	    }
+L_32:
+.LINE 71
+
+;   72	
+;   73	    game->x_max = MENU[cursor_pos.x][1];
+.LINE 73
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	INC	HL
+	LD	A,(HL)
+	LD	IY,(IX+6)
+	LD	(IY+0),A
+;   74	    game->y_max = MENU[cursor_pos.x][2];
+.LINE 74
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	INC	HL
+	INC	HL
+	LD	A,(HL)
+	LD	(IY+1),A
+;   75	    game->amount_number = MENU[cursor_pos.x][3];
+.LINE 75
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	LD	IY,HL
+	LEA	HL,IY+3
+	LD	A,(HL)
+	LD	BC,1803
+	LD	IY,(IX+6)
+	CALL	__bstiy
+;   76	    game->number_max = MENU[cursor_pos.x][4];
+.LINE 76
+
+	LD	BC,(IX+-4)
+	CALL	__stoi
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,_MENU
+	ADD	HL,BC
+	LD	IY,HL
+	LEA	HL,IY+4
+	LD	A,(HL)
+	LD	BC,1802
+	LD	IY,(IX+6)
+	CALL	__bstiy
+;   77	    game->win = FALSE;
+.LINE 77
+
+	XOR	A,A
+	LD	BC,1804
+	CALL	__bstiy
+;   78	
+;   79	    if (game->amount_number >= game->x_max * game->y_max) {
+.LINE 79
+
+	LD	A,(IY+0)
+	LD	(IX+-5),A
+	LD	A,(IY+1)
+	LD	(IX+-6),A
+	LD	BC,1803
+	CALL	__bldiy
+	UEXT	HL
+	LD	L,A
+	LD	DE,HL
+	LD	A,(IX+-5)
+	UEXT	HL
+	LD	L,A
+	LD	(IX+-9),HL
+	LD	A,(IX+-6)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	HL,(IX+-9)
+	CALL	__imuls
+	LD	BC,HL
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L_35
+;   80	        game->amount_number = game->x_max * game->y_max;
+.LINE 80
+
+	LD	B,(IX+-5)
+	LD	C,(IX+-6)
+	MLT	BC
+	LD	A,C
+	LD	BC,1803
+	LD	IY,(IX+6)
+	CALL	__bstiy
+;   81	    }
+L_35:
+.LINE 81
+
+;   82	    if (!(kb_Data[1] & kb_Del)) {
+.LINE 82
+
+	LD	A,(16056338)
+	AND	A,128
+	JR	NZ,L_36
+;   83	        delay(WAITING_DELAY);
+.LINE 83
+
+	LD	BC,250
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;   84	    }
+;   85	}
+L_36:
+.LINE 85
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _menu ***************************
+;Name                         Addr/Register   Size   Type
+;_MENU                               IMPORT     20   variable
+;_kb_Scan                            IMPORT  -----   function
+;_printMenu                          IMPORT  -----   function
+;_delay                              IMPORT  -----   function
+;G_3                                   IX-6      1   variable
+;G_2                                   IX-5      1   variable
+;cursor_pos                            IX-4      4   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "menu",85,"_menu"
+;   86	
+;   87	void main() {
+_main:
+.DEFINE "_main"
+
+.VALUE _main
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "main",87,"_main"
+
+.LINE 87
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE -1810
+
+.TAG "s_game"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-1810
+	ADD	HL,SP
+	LD	SP,HL
+;   88	    t_game game;
+;   89	
+;   90	    gfx_Begin();
+.LINE 90
+
+	CALL	_gfx_Begin
+;   91	    defPal();
+.LINE 91
+
+	CALL	_defPal
+;   92	    gfx_SetPalette(gfx_pal, sizeof_gfx_pal, 0);
+.LINE 92
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,260
+	PUSH	BC
+	LD	BC,_gfx_pal
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
+;   93	    gfx_FillScreen(BLACK);
+.LINE 93
+
+	LD	BC,4
+	PUSH	BC
+	CALL	_gfx_FillScreen
+	POP	BC
+;   94	    gfx_SetTextFGColor(LIGHT_GREY);
+.LINE 94
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;   95	    gfx_SetColor(BLACK);
+.LINE 95
+
+	LD	BC,4
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;   96	    srandom(rtc_Time());
+.LINE 96
+
+	LD	A,(15925319)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	BC,(15925316)
+	PUSH	BC
+	CALL	_srandom
+	POP	BC
+	POP	BC
+;   97	
+;   98	    menu(&game);
+.LINE 98
+
+	LD	HL,IX
+	LD	BC,-1810
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_menu
+	POP	BC
+;   99	    initMap(&game);
+.LINE 99
+
+	LD	HL,IX
+	LD	BC,-1810
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_initMap
+	POP	BC
+;  100	    generateMap(&game);
+.LINE 100
+
+	LD	HL,IX
+	LD	BC,-1810
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_generateMap
+	POP	BC
+;  101	
+;  102	    play(game);
+.LINE 102
+
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	BC,-1812
+	ADD	HL,BC
+	LD	SP,HL
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	HL,IX
+	LD	BC,-1810
+	ADD	HL,BC
+	LD	BC,1810
+	LDIR	
+	CALL	_play
+	LD	IY,1812
+	ADD	IY,SP
+	LD	SP,IY
+;  103	
+;  104	    gfx_End();
+.LINE 104
+
+	CALL	_gfx_End
+.LINE 105
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_End                            IMPORT  -----   function
+;_play                               IMPORT  -----   function
+;_generateMap                        IMPORT  -----   function
+;_srandom                            IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;_gfx_FillScreen                     IMPORT  -----   function
+;_gfx_pal                            IMPORT    260   variable
+;_gfx_SetPalette                     IMPORT  -----   function
+;_defPal                             IMPORT  -----   function
+;_gfx_Begin                          IMPORT  -----   function
+;game                               IX-1810   1810   variable
+
+
+; Stack Frame Size: 1816 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "main",105,"_main"
+	XREF _generateMap:ROM
+	XREF _play:ROM
+	XREF _printMenu:ROM
+	XREF _defPal:ROM
+	XREF _gfx_pal:ROM
+	XREF _MENU:ROM
+	XREF _gfx_SetTextFGColor:ROM
+	XREF _gfx_FillScreen:ROM
+	XREF _gfx_SetPalette:ROM
+	XREF _gfx_SetColor:ROM
+	XREF _gfx_End:ROM
+	XREF _gfx_Begin:ROM
+	XREF _delay:ROM
+	XREF _srandom:ROM
+	XREF _kb_Scan:ROM
+	XREF __imuls:ROM
+	XREF __stoi:ROM
+	XREF __bldiy:ROM
+	XREF __bstiy:ROM
+	XREF __scmpzero:ROM
+	XREF __imul_b:ROM
+	XDEF _main
+	XDEF _menu
+	XDEF _kb_Move
+	XDEF _initMap
+	XDEF _CURSOR
+	END

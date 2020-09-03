@@ -1,0 +1,101 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A8DA            58h
+libs     D1A8DA D1A917            3Dh
+startup  D1A917 D1A956            3Fh
+cleanup  D1A956 D1A96A            14h
+exit     D1A96A D1A970             6h
+code     D1A970 D1BCD4          1364h
+data     D1BCD4 D1D8F0          1C1Ch
+strsect  D1D8F0 D1D8F0             0h
+text     D1D8F0 D1D8F0             0h
+bss      D031F6 D031F6 D13FD6      0h
+header   D1A87F D1A882             3h
+
+Label                           Value
+-----------------------------   ------
+_delay                        = D1A970
+_os_DisableHomeTextBuffer     = D1A9B9
+_os_EnableHomeTextBuffer      = D1A9CB
+_srandom                      = D1A9DD
+__setstate                    = D1A9E4
+_random                       = D1A9F4
+__state                       = D1BCD4
+__scmpzero                    = 000204
+__imul_b                      = 000158
+__imul_b                      = 000150
+__case24D                     = 000120
+__ladd_b                      = 00019C
+__ladd_b                      = 0001A0
+__lremu                       = 0001E0
+__itol                        = 000194
+__irems                       = 00016C
+__lcmps                       = 0001A8
+__stoiu                       = 000264
+__icmpzero                    = 000138
+__bldiy                       = 0000FC
+__lcmpzero                    = 0001B0
+__bstiy                       = 000108
+__ineg                        = 000160
+__setflag                     = 000218
+__findlibload                 = D1A882
+__ccleanup                    = D1A956
+_errno                        = D008DC
+_init                         = D1A882
+_exit                         = D1A96C
+__exit                        = D1A945
+__exitsp                      = D1A945
+__errsp                       = D1A945
+_sprite_card                  = D1BEB5
+_sprite_card_case_middle      = D1BE9A
+_sprite_card_case_full        = D1BE7F
+_sprite_card_case_empty       = D1BE64
+_CARDS                        = D1BD06
+_play                         = D1B2B5
+_keyAction                    = D1AFBE
+_checkWin                     = D1AF64
+_doesEnemyKingExist           = D1AEF6
+_playerTurn                   = D1AE3F
+_turnDeck                     = D1ADA3
+_moveCursor                   = D1ACE9
+_setMovement                  = D1AB86
+_isCursorOnPlayerColor        = D1AB08
+_isCursorInMovement           = D1AAA9
+_isInMap                      = D1AA4B
+_printMatrix                  = D1B853
+_printDeck                    = D1B72A
+_eraseMovement                = D1B6C6
+_printMovement                = D1B5DC
+_printCard                    = D1B534
+_printCardCase                = D1B4CC
+_printCursor                  = D1B490
+_eraseCursor                  = D1B469
+_printCase                    = D1B3E0
+_matrixCase                   = D1B38C
+_gfx_pal                      = D1C548
+_copyCard                     = D1B97E
+_reverseMatrix                = D1B89C
+_initMatrix                   = D1BBC5
+_initDeck                     = D1BAE4
+_initRandom                   = D1BAB8
+_initCard                     = D1BA3A
+_initCursor                   = D1BA21
+_isInTab                      = D1B9EB
+_main                         = D1BC72
+_sprite_movement_touch        = D1D67D
+_sprite_movement              = D1D40A
+_sprite_cursor                = D1D197
+_sprite_pion_black            = D1CF24
+_sprite_king_black            = D1CCB1
+_sprite_pion_white            = D1CA3E
+_sprite_king_white            = D1C7CB
+_sprite_empty                 = D1C558
+_gfx_Begin                    = D1A8ED
+_gfx_End                      = D1A8F1
+_gfx_SetColor                 = D1A8F5
+_gfx_SetPalette               = D1A8F9
+_gfx_FillScreen               = D1A8FD
+_gfx_SetTextFGColor           = D1A901
+_gfx_TransparentSprite_NoClip = D1A905
+_kb_Scan                      = D1A913

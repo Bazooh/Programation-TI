@@ -1,0 +1,40 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\COLOR.C"
+	.assume ADL=1
+	SEGMENT DATA
+_gfx_pal:
+	DW	32767
+	DW	29596
+	DW	26425
+	DW	13311
+	DW	1023
+	DW	627
+	DW	12703
+	DW	31
+	DW	19
+	DW	32332
+	DW	32320
+	DW	19648
+	DW	32748
+	DW	32736
+	DW	20064
+	DW	13292
+	DW	992
+	DW	608
+	DW	18847
+	DW	18463
+	DW	6163
+	DW	32140
+	DW	31744
+	DW	19456
+	DW	0
+	DW	0
+	DW	0
+	XDEF _gfx_pal
+;    1	
+;    2	#include "color.h"
+;    3	
+;    4	uint16_t gfx_pal[LENGTH_PAL] = {
+	END

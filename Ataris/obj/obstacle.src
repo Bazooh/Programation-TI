@@ -1,0 +1,1432 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\OBSTACLE.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 14
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_precision_pos",8
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 6
+.ENDEF
+.DEFINE "y"
+.VALUE 4
+.CLASS 8
+.TYPE 6
+.ENDEF
+.ENDREC "s_precision_pos"
+.BEGREC "s_ball",20
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_precision_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "old_pos"
+.VALUE 8
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "direction"
+.VALUE 12
+.CLASS 8
+.TYPE 6
+.ENDEF
+.DEFINE "speed"
+.VALUE 16
+.CLASS 8
+.TYPE 6
+.ENDEF
+.ENDREC "s_ball"
+.BEGREC "s_obstacle",35
+.DEFINE "point"
+.VALUE 0
+.CLASS 8
+.DIM 4
+.TAG "s_pos"
+.TYPE 104
+.ENDEF
+.DEFINE "ortho"
+.VALUE 16
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "id"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "life"
+.VALUE 21
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "hide"
+.VALUE 23
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "in_matrix"
+.VALUE 27
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "matrix"
+.VALUE 28
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "next"
+.VALUE 32
+.CLASS 8
+.TAG "s_obstacle"
+.TYPE 40
+.ENDEF
+.ENDREC "s_obstacle"
+;    1	
+;    2	#include "obstacle.h"
+;    3	
+;    4	void removeObstacle(t_obstacle *obstacle, uint8_t elem_place) {
+_removeObstacle:
+.DEFINE "_removeObstacle"
+
+.VALUE _removeObstacle
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "removeObstacle",4,"_removeObstacle"
+
+.LINE 4
+
+.DEFINE "obstacle"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "elem_place"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "obstacle_to_free"
+
+.CLASS 65
+
+.VALUE -10
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
+;    5	    uint8_t i;
+;    6	    t_obstacle *obstacle_to_free;
+;    7	
+;    8	    for (i = 0; i < elem_place - 1; ++i) {
+.LINE 8
+
+	LD	(IX+-1),0
+	JR	L_4
+L_2:
+;    9	        if (!obstacle->next) { return; }
+.LINE 9
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+32)
+	LD	(IX+-7),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	Z,L_8
+;   10	        obstacle = obstacle->next;
+.LINE 10
+
+	LD	BC,(IX+-7)
+	LD	(IX+6),BC
+	INC	(IX+-1)
+;   11	    }
+L_4:
+.LINE 11
+
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	DEC	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	M,L_2
+;   12	
+;   13	    obstacle_to_free = obstacle->next;
+.LINE 13
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+32)
+	LD	(IX+-10),BC
+;   14	    obstacle->next = obstacle_to_free->next;
+.LINE 14
+
+	LD	IY,(IX+-10)
+	LD	BC,(IY+32)
+	LD	IY,(IX+6)
+	LD	(IY+32),BC
+;   15	    free(obstacle_to_free);
+.LINE 15
+
+	LD	BC,(IX+-10)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   16	
+;   17	    while (obstacle->next) {
+.LINE 17
+
+	JR	L_6
+L_7:
+;   18	        obstacle = obstacle->next;
+.LINE 18
+
+	LD	BC,(IX+-4)
+	LD	(IX+6),BC
+;   19	        --(obstacle->id);
+.LINE 19
+
+	LD	IY,(IX+-4)
+	LD	A,(IY+20)
+	DEC	A
+	LD	(IY+20),A
+;   20	    }
+L_6:
+.LINE 20
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+32)
+	LD	(IX+-4),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	NZ,L_7
+;   21	}
+L_8:
+.LINE 21
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _removeObstacle ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;obstacle_to_free                     IX-10      3   variable
+;G_0                                   IX-7      3   variable
+;G_1                                   IX-4      3   variable
+;i                                     IX-1      1   variable
+;elem_place                            IX+9      1   parameter
+;obstacle                              IX+6      3   parameter
+
+
+; Stack Frame Size: 22 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "removeObstacle",21,"_removeObstacle"
+;   22	
+;   23	void freeObstacles(t_obstacle *obstacle) {
+_freeObstacles:
+.DEFINE "_freeObstacles"
+
+.VALUE _freeObstacles
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "freeObstacles",23,"_freeObstacles"
+
+.LINE 23
+
+.DEFINE "obstacle"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "obstacle_to_free"
+
+.CLASS 65
+
+.VALUE -3
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;   24	    t_obstacle *obstacle_to_free;
+;   25	
+;   26	    while (obstacle->next) {
+.LINE 26
+
+	JR	L_9
+L_10:
+;   27	        obstacle_to_free = obstacle;
+.LINE 27
+
+	LD	BC,(IX+6)
+	LD	(IX+-3),BC
+;   28	        obstacle = obstacle->next;
+.LINE 28
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+32)
+	LD	(IX+6),BC
+;   29	        free(obstacle_to_free);
+.LINE 29
+
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   30	    }
+L_9:
+.LINE 30
+
+	LD	IY,(IX+6)
+	LD	HL,(IY+32)
+	CALL	__icmpzero
+	JR	NZ,L_10
+;   31	    free(obstacle);
+.LINE 31
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_free
+	POP	BC
+;   32	}
+.LINE 32
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _freeObstacles ***************************
+;Name                         Addr/Register   Size   Type
+;_free                               IMPORT  -----   function
+;obstacle_to_free                      IX-3      3   variable
+;obstacle                              IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "freeObstacles",32,"_freeObstacles"
+;   33	
+;   34	t_obstacle *createObstacle(
+;   35	        uint8_t x0, uint24_t y0,
+;   36	        uint8_t x1, uint24_t y1,
+;   37	        uint8_t x2, uint24_t y2,
+;   38	        uint8_t x3, uint24_t y3,
+;   39	        uint16_t life) {
+_createObstacle:
+.DEFINE "_createObstacle"
+
+.VALUE _createObstacle
+
+.CLASS 2
+
+.TAG "s_obstacle"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "createObstacle",39,"_createObstacle"
+
+.LINE 39
+
+.DEFINE "x0"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y0"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "x1"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y1"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "x2"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y2"
+
+.CLASS 65
+
+.VALUE 21
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "x3"
+
+.CLASS 65
+
+.VALUE 24
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y3"
+
+.CLASS 65
+
+.VALUE 27
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "life"
+
+.CLASS 65
+
+.VALUE 30
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "new_elem"
+
+.CLASS 65
+
+.VALUE -3
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
+;   40	
+;   41	    uint8_t i;
+;   42	    t_obstacle *new_elem;
+;   43	
+;   44	    if (!(new_elem = malloc(sizeof(t_obstacle)))) { return NULL; }
+.LINE 44
+
+	LD	BC,35
+	PUSH	BC
+	CALL	_malloc
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	NZ,L_14
+	OR	A,A
+	SBC	HL,HL
+	JR	L_19
+L_14:
+;   45	
+;   46	    new_elem->point[0].x = x0;
+.LINE 46
+
+	LD	IY,(IX+-3)
+	LEA	BC,IY+0
+	LD	(IX+-7),BC
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	IY,(IX+-7)
+	LD	(IY+0),HL
+;   47	    new_elem->point[0].y = y0;
+.LINE 47
+
+	LD	A,(IX+9)
+	LD	(IY+3),A
+;   48	    new_elem->point[1].x = x1;
+.LINE 48
+
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	LD	(IY+4),HL
+;   49	    new_elem->point[1].y = y1;
+.LINE 49
+
+	LD	A,(IX+15)
+	LD	(IY+7),A
+;   50	    new_elem->point[2].x = x2;
+.LINE 50
+
+	LD	A,(IX+18)
+	UEXT	HL
+	LD	L,A
+	LD	(IY+8),HL
+;   51	    new_elem->point[2].y = y2;
+.LINE 51
+
+	LD	A,(IX+21)
+	LD	(IY+11),A
+;   52	    new_elem->point[3].x = x3;
+.LINE 52
+
+	LD	A,(IX+24)
+	UEXT	HL
+	LD	L,A
+	LD	(IY+12),HL
+;   53	    new_elem->point[3].y = y3;
+.LINE 53
+
+	LD	A,(IX+27)
+	LD	(IY+15),A
+;   54	
+;   55	    new_elem->life = life;
+.LINE 55
+
+	LD	BC,(IX+30)
+	LD	IY,(IX+-3)
+	LD	(IY+21),C
+	LD	(IY+22),B
+;   56	
+;   57	    for (i = 0; i < NUMBER_POINT_OBSTACLE; ++i) {
+.LINE 57
+
+	LD	(IX+-4),0
+	JR	L_17
+L_15:
+;   58	        new_elem->ortho[i] = FALSE;
+.LINE 58
+
+	LD	A,(IX+-4)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LD	IY,(IX+-3)
+	LEA	HL,IY+16
+	ADD	HL,BC
+	LD	(HL),0
+;   59	        new_elem->hide[i] = FALSE;
+.LINE 59
+
+	LD	A,(IX+-4)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LEA	HL,IY+23
+	ADD	HL,BC
+	LD	(HL),0
+	INC	(IX+-4)
+;   60	    }
+L_17:
+.LINE 60
+
+	LD	A,(IX+-4)
+	CP	A,4
+	JR	C,L_15
+;   61	    new_elem->in_matrix = FALSE;
+.LINE 61
+
+	LD	IY,(IX+-3)
+	LD	(IY+27),0
+;   62	
+;   63	    new_elem->next = NULL;
+.LINE 63
+
+	LD	BC,0
+	LD	(IY+32),BC
+;   64	
+;   65	    return new_elem;
+.LINE 65
+
+	LD	HL,(IX+-3)
+;   66	}
+L_19:
+.LINE 66
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _createObstacle ***************************
+;Name                         Addr/Register   Size   Type
+;_malloc                             IMPORT  -----   function
+;i                                     IX-4      1   variable
+;new_elem                              IX-3      3   variable
+;life                                 IX+30      2   parameter
+;y3                                   IX+27      3   parameter
+;x3                                   IX+24      1   parameter
+;y2                                   IX+21      3   parameter
+;x2                                   IX+18      1   parameter
+;y1                                   IX+15      3   parameter
+;x1                                   IX+12      1   parameter
+;y0                                    IX+9      3   parameter
+;x0                                    IX+6      1   parameter
+
+
+; Stack Frame Size: 40 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "createObstacle",66,"_createObstacle"
+;   67	
+;   68	t_obstacle *createObstacleRectangle(uint8_t x, uint24_t y, uint8_t width, uint24_t height, uint16_t life) {
+_createObstacleRectangle:
+.DEFINE "_createObstacleRectangle"
+
+.VALUE _createObstacleRectangle
+
+.CLASS 2
+
+.TAG "s_obstacle"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "createObstacleRectangle",68,"_createObstacleRectangle"
+
+.LINE 68
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "life"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "new_elem"
+
+.CLASS 65
+
+.VALUE -6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+;   69	    t_obstacle *new_elem;
+;   70	
+;   71	    new_elem = createObstacle(
+;   72	            x,         y,
+;   73	            x,         y + height,
+;   74	            x + width, y + height,
+;   75	            x + width, y,
+;   76	            life);
+.LINE 76
+
+	LD	A,(IX+6)
+	ADD	A,(IX+12)
+	LD	BC,(IX+15)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	BC,(IX+18)
+	PUSH	BC
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	PUSH	HL
+	LD	C,A
+	PUSH	BC
+	PUSH	HL
+	LD	C,(IX+6)
+	PUSH	BC
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	C,(IX+6)
+	LD	B,0
+	PUSH	BC
+	CALL	_createObstacle
+	LD	IY,27
+	ADD	IY,SP
+	LD	SP,IY
+	LD	(IX+-6),HL
+;   77	
+;   78	    new_elem->ortho[WEST] = VERTICAL;
+.LINE 78
+
+	LD	IY,(IX+-6)
+	LEA	BC,IY+16
+	LD	(IX+-3),BC
+	LD	(IY+16),2
+;   79	    new_elem->ortho[SOUTH] = HORIZONTAL;
+.LINE 79
+
+	LD	HL,BC
+	INC	HL
+	LD	A,1
+	LD	(HL),A
+;   80	    new_elem->ortho[EAST] = VERTICAL;
+.LINE 80
+
+	LD	IY,(IX+-3)
+	LEA	HL,IY+2
+	LD	(HL),2
+;   81	    new_elem->ortho[NORTH] = HORIZONTAL;
+.LINE 81
+
+	LEA	HL,IY+3
+	LD	(HL),A
+;   82	
+;   83	    return new_elem;
+.LINE 83
+
+	LD	HL,(IX+-6)
+;   84	}
+.LINE 84
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _createObstacleRectangle ***************************
+;Name                         Addr/Register   Size   Type
+;new_elem                              IX-6      3   variable
+;life                                 IX+18      2   parameter
+;height                               IX+15      3   parameter
+;width                                IX+12      1   parameter
+;y                                     IX+9      3   parameter
+;x                                     IX+6      1   parameter
+
+
+; Stack Frame Size: 27 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "createObstacleRectangle",84,"_createObstacleRectangle"
+;   85	
+;   86	t_obstacle *createInvObstacleRectangle(uint8_t x, uint24_t y, uint8_t width, uint24_t height, uint16_t life) {
+_createInvObstacleRectangle:
+.DEFINE "_createInvObstacleRectangle"
+
+.VALUE _createInvObstacleRectangle
+
+.CLASS 2
+
+.TAG "s_obstacle"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "createInvObstacleRectangle",86,"_createInvObstacleRectangle"
+
+.LINE 86
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "life"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "new_elem"
+
+.CLASS 65
+
+.VALUE -6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+;   87	    t_obstacle *new_elem;
+;   88	
+;   89	    new_elem = createObstacle(
+;   90	            x + width, y + height,
+;   91	            x + width, y,
+;   92	            x,         y,
+;   93	            x,         y + height,
+;   94	            life);
+.LINE 94
+
+	LD	BC,(IX+15)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	A,(IX+6)
+	ADD	A,(IX+12)
+	LD	BC,(IX+18)
+	PUSH	BC
+	PUSH	HL
+	LD	C,(IX+6)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	C,(IX+6)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	PUSH	HL
+	LD	C,A
+	PUSH	BC
+	CALL	_createObstacle
+	LD	IY,27
+	ADD	IY,SP
+	LD	SP,IY
+	LD	(IX+-6),HL
+;   95	
+;   96	    new_elem->ortho[WEST] = VERTICAL;
+.LINE 96
+
+	LD	IY,(IX+-6)
+	LEA	BC,IY+16
+	LD	(IX+-3),BC
+	LD	(IY+16),2
+;   97	    new_elem->ortho[SOUTH] = HORIZONTAL;
+.LINE 97
+
+	LD	HL,BC
+	INC	HL
+	LD	A,1
+	LD	(HL),A
+;   98	    new_elem->ortho[EAST] = VERTICAL;
+.LINE 98
+
+	LD	IY,(IX+-3)
+	LEA	HL,IY+2
+	LD	(HL),2
+;   99	    new_elem->ortho[NORTH] = HORIZONTAL;
+.LINE 99
+
+	LEA	HL,IY+3
+	LD	(HL),A
+;  100	
+;  101	    return new_elem;
+.LINE 101
+
+	LD	HL,(IX+-6)
+;  102	}
+.LINE 102
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _createInvObstacleRectangle ***************************
+;Name                         Addr/Register   Size   Type
+;new_elem                              IX-6      3   variable
+;life                                 IX+18      2   parameter
+;height                               IX+15      3   parameter
+;width                                IX+12      1   parameter
+;y                                     IX+9      3   parameter
+;x                                     IX+6      1   parameter
+
+
+; Stack Frame Size: 27 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "createInvObstacleRectangle",102,"_createInvObstacleRectangle"
+;  103	
+;  104	
+;  105	uint8_t nbObstacle(t_obstacle *obstacle) {
+_nbObstacle:
+.DEFINE "_nbObstacle"
+
+.VALUE _nbObstacle
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "nbObstacle",105,"_nbObstacle"
+
+.LINE 105
+
+.DEFINE "obstacle"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;  106	    uint8_t i;
+;  107	
+;  108	    i = 1;
+.LINE 108
+
+	LD	(IX+-1),1
+;  109	
+;  110	    while (obstacle->next) {
+.LINE 110
+
+	JR	L_22
+L_23:
+;  111	        obstacle = obstacle->next;
+.LINE 111
+
+	LD	BC,(IX+-4)
+	LD	(IX+6),BC
+;  112	        ++i;
+.LINE 112
+
+	INC	(IX+-1)
+;  113	    }
+L_22:
+.LINE 113
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+32)
+	LD	(IX+-4),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	NZ,L_23
+;  114	    return i;
+.LINE 114
+
+	LD	A,(IX+-1)
+;  115	}
+.LINE 115
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _nbObstacle ***************************
+;Name                         Addr/Register   Size   Type
+;G_2                                   IX-4      3   variable
+;i                                     IX-1      1   variable
+;obstacle                              IX+6      3   parameter
+
+
+; Stack Frame Size: 13 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "nbObstacle",115,"_nbObstacle"
+;  116	
+;  117	t_obstacle *addObstacleRectangle(t_obstacle *obstacles, uint8_t x, uint24_t y, uint8_t width, uint24_t height, uint16_t life) {
+_addObstacleRectangle:
+.DEFINE "_addObstacleRectangle"
+
+.VALUE _addObstacleRectangle
+
+.CLASS 2
+
+.TAG "s_obstacle"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "addObstacleRectangle",117,"_addObstacleRectangle"
+
+.LINE 117
+
+.DEFINE "obstacles"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "width"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "height"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "life"
+
+.CLASS 65
+
+.VALUE 21
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "new_elem"
+
+.CLASS 65
+
+.VALUE -3
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "obstacle_id"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
+;  118	    t_obstacle *new_elem;
+;  119	    uint8_t obstacle_id;
+;  120	
+;  121	    if (!(new_elem = createObstacleRectangle(x, y, width, height, life))) { return NULL; }
+.LINE 121
+
+	LD	BC,(IX+21)
+	PUSH	BC
+	LD	BC,(IX+18)
+	PUSH	BC
+	LD	C,(IX+15)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+12)
+	PUSH	BC
+	LD	C,(IX+9)
+	LD	B,0
+	PUSH	BC
+	CALL	_createObstacleRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	NZ,L_27
+	OR	A,A
+	SBC	HL,HL
+	JR	L_31
+L_27:
+;  122	
+;  123	    obstacle_id = 1;
+.LINE 123
+
+	LD	(IX+-4),1
+;  124	
+;  125	    while (obstacles->next) {
+.LINE 125
+
+	JR	L_28
+L_29:
+;  126	        obstacles = obstacles->next;
+.LINE 126
+
+	LD	BC,(IX+-7)
+	LD	(IX+6),BC
+;  127	        ++obstacle_id;
+.LINE 127
+
+	INC	(IX+-4)
+;  128	    }
+L_28:
+.LINE 128
+
+	LD	IY,(IX+6)
+	LD	BC,(IY+32)
+	LD	(IX+-7),BC
+	LD	HL,BC
+	CALL	__icmpzero
+	JR	NZ,L_29
+;  129	
+;  130	    new_elem->id = obstacle_id;
+.LINE 130
+
+	LD	A,(IX+-4)
+	LD	IY,(IX+-3)
+	LD	(IY+20),A
+;  131	    new_elem->in_matrix = FALSE;
+.LINE 131
+
+	LD	(IY+27),0
+;  132	    obstacles->next = new_elem;
+.LINE 132
+
+	LD	BC,(IX+-3)
+	LD	IY,(IX+6)
+	LD	(IY+32),BC
+;  133	
+;  134	    return new_elem;
+.LINE 134
+
+	LD	HL,(IX+-3)
+L_31:
+.LINE 135
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _addObstacleRectangle ***************************
+;Name                         Addr/Register   Size   Type
+;G_3                                   IX-7      3   variable
+;obstacle_id                           IX-4      1   variable
+;new_elem                              IX-3      3   variable
+;life                                 IX+21      2   parameter
+;height                               IX+18      3   parameter
+;width                                IX+15      1   parameter
+;y                                    IX+12      3   parameter
+;x                                     IX+9      1   parameter
+;obstacles                             IX+6      3   parameter
+
+
+; Stack Frame Size: 31 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "addObstacleRectangle",135,"_addObstacleRectangle"
+	XREF _free:ROM
+	XREF _malloc:ROM
+	XREF __setflag:ROM
+	XREF __icmpzero:ROM
+	XDEF _addObstacleRectangle
+	XDEF _nbObstacle
+	XDEF _createInvObstacleRectangle
+	XDEF _createObstacleRectangle
+	XDEF _createObstacle
+	XDEF _freeObstacles
+	XDEF _removeObstacle
+	END

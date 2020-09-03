@@ -1,0 +1,2549 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\CORE.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "NONAME2",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME1"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "font",12
+.DEFINE "font"
+.VALUE 0
+.CLASS 8
+.TAG "font"
+.TYPE 40
+.ENDEF
+.DEFINE "drawChar"
+.VALUE 3
+.CLASS 8
+.TYPE 545
+.ENDEF
+.DEFINE "getWidth"
+.VALUE 6
+.CLASS 8
+.TYPE 558
+.ENDEF
+.DEFINE "getHeight"
+.VALUE 9
+.CLASS 8
+.TYPE 558
+.ENDEF
+.ENDREC "font"
+.BEGREC "s_pos",2
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_card",25
+.DEFINE "value"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.ENDREC "s_card"
+.BEGREC "s_player",50
+.DEFINE "card"
+.VALUE 0
+.CLASS 8
+.DIM 2
+.TAG "s_card"
+.TYPE 104
+.ENDEF
+.ENDREC "s_player"
+.BEGREC "s_game",166
+.DEFINE "matrix"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.DEFINE "card_id"
+.VALUE 25
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movement"
+.VALUE 26
+.CLASS 8
+.DIM 5
+.TAG "s_pos"
+.TYPE 104
+.ENDEF
+.DEFINE "side_card"
+.VALUE 36
+.CLASS 8
+.TAG "s_card"
+.TYPE 8
+.ENDEF
+.DEFINE "cursor"
+.VALUE 61
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "number_of_movement"
+.VALUE 63
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "player_turn"
+.VALUE 64
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "player"
+.VALUE 65
+.CLASS 8
+.DIM 2
+.TAG "s_player"
+.TYPE 104
+.ENDEF
+.DEFINE "win"
+.VALUE 165
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_game"
+.BEGREC "NONAME8",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME10"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME10",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME10"
+.BEGREC "NONAME11",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME11"
+.BEGREC "NONAME12",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME12"
+.BEGREC "NONAME13",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME13"
+.BEGREC "NONAME14",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME14"
+.BEGREC "NONAME15",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME11"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME15"
+;    1	
+;    2	#include "core.h"
+;    3	
+;    4	uint8_t isInMap(int32_t x, int16_t y) {
+_isInMap:
+.DEFINE "_isInMap"
+
+.VALUE _isInMap
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isInMap",4,"_isInMap"
+
+.LINE 4
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 5
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 3
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;    5	    if (x >= 0 && x < MATRIX_X_LENGTH && y >= 0 && y < MATRIX_Y_LENGTH) { return TRUE; }
+.LINE 5
+
+	LD	HL,(IX+6)
+	LD	E,(IX+9)
+	CALL	__lcmpzero
+	CALL	__setflag
+	JP	M,L_4
+	LD	HL,(IX+6)
+	LD	E,(IX+9)
+	LD	BC,5
+	XOR	A,A
+	CALL	__lcmps
+	CALL	__setflag
+	JP	P,L_4
+	LD	HL,(IX+12)
+	CALL	__scmpzero
+	CALL	__setflag
+	JP	M,L_4
+	LD.LIS	BC,5
+	LD	HL,(IX+12)
+	OR	A,A
+	SBC.SIS	HL,BC
+	CALL	__setflag
+	JP	P,L_4
+	LD	A,1
+	JR	L_5
+L_4:
+;    6	    return FALSE;
+.LINE 6
+
+	XOR	A,A
+;    7	}
+L_5:
+.LINE 7
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isInMap ***************************
+;Name                         Addr/Register   Size   Type
+;y                                    IX+12      2   parameter
+;x                                     IX+6      4   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isInMap",7,"_isInMap"
+;    8	
+;    9	uint8_t isCursorInMovement(t_pos *movement, uint8_t number_of_movement, t_pos cursor) {
+_isCursorInMovement:
+.DEFINE "_isCursorInMovement"
+
+.VALUE _isCursorInMovement
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isCursorInMovement",9,"_isCursorInMovement"
+
+.LINE 9
+
+.DEFINE "movement"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "number_of_movement"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "cursor"
+
+.CLASS 65
+
+.VALUE 12
+
+.TAG "s_pos"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	DEC	SP
+;   10	    uint8_t i;
+;   11	
+;   12	    for (i = 1; i < number_of_movement + 1; ++i) {
+.LINE 12
+
+	LD	(IX+-1),1
+	JR	L_10
+L_8:
+;   13	        if (cursor.x == movement[i].x && cursor.y == movement[i].y) { return TRUE; }
+.LINE 13
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(IX+-4),HL
+	LD	A,(IX+12)
+	LD	IY,(IX+-4)
+	CP	A,(IY+0)
+	JR	NZ,L_9
+	LD	A,(IX+13)
+	LD	IY,(IX+-4)
+	CP	A,(IY+1)
+	JR	NZ,L_9
+	LD	A,1
+	JR	L_12
+;   14	    }
+L_9:
+.LINE 14
+
+	INC	(IX+-1)
+L_10:
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	M,L_8
+;   15	    return FALSE;
+.LINE 15
+
+	XOR	A,A
+;   16	}
+L_12:
+.LINE 16
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isCursorInMovement ***************************
+;Name                         Addr/Register   Size   Type
+;G_0                                   IX-4      3   variable
+;i                                     IX-1      1   variable
+;cursor                               IX+12      2   parameter
+;number_of_movement                    IX+9      1   parameter
+;movement                              IX+6      3   parameter
+
+
+; Stack Frame Size: 19 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isCursorInMovement",16,"_isCursorInMovement"
+;   17	
+;   18	uint8_t isCursorOnPlayerColor(MATRIX, uint8_t player_turn, uint16_t x, uint8_t y) {
+_isCursorOnPlayerColor:
+.DEFINE "_isCursorOnPlayerColor"
+
+.VALUE _isCursorOnPlayerColor
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isCursorOnPlayerColor",18,"_isCursorOnPlayerColor"
+
+.LINE 18
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "player_turn"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 13
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   19	    if (player_turn == WHITE && matrix[x][y] > EMPTY) { return TRUE; } 
+.LINE 19
+
+	LD	A,(IX+9)
+	OR	A,A
+	JR	NZ,L_17
+	LD	BC,(IX+12)
+	CALL	__stoiu
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	BC,HL
+	OR	A,A
+	SBC	HL,HL
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L_17
+	LD	A,1
+	JR	L_19
+L_17:
+;   20	    if (player_turn == BLACK && matrix[x][y] < EMPTY) { return TRUE; }
+.LINE 20
+
+	LD	A,(IX+9)
+	CP	A,1
+	JR	NZ,L_18
+	LD	BC,(IX+12)
+	CALL	__stoiu
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+15)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	CALL	__icmpzero
+	CALL	__setflag
+	JP	P,L_18
+	LD	A,1
+	JR	L_19
+L_18:
+;   21	    return FALSE;
+.LINE 21
+
+	XOR	A,A
+;   22	}
+L_19:
+.LINE 22
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isCursorOnPlayerColor ***************************
+;Name                         Addr/Register   Size   Type
+;y                                    IX+15      1   parameter
+;x                                    IX+12      2   parameter
+;player_turn                           IX+9      1   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isCursorOnPlayerColor",22,"_isCursorOnPlayerColor"
+;   23	
+;   24	void setMovement(t_game *game) {
+_setMovement:
+.DEFINE "_setMovement"
+
+.VALUE _setMovement
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "setMovement",24,"_setMovement"
+
+.LINE 24
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 3
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE -8
+
+.TYPE 5
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-11
+	LD	SP,HL
+;   25	    uint8_t i;
+;   26	    uint8_t j;
+;   27	    int32_t x;
+;   28	    int16_t y;
+;   29	
+;   30	    game->number_of_movement = 0;
+.LINE 30
+
+	LD	IY,(IX+6)
+	LD	(IY+63),0
+;   31	    game->movement[0].x = game->cursor.x;
+.LINE 31
+
+	LD	A,(IY+61)
+	LD	(IY+26),A
+;   32	    game->movement[0].y = game->cursor.y;
+.LINE 32
+
+	LD	A,(IY+62)
+	LD	(IY+27),A
+;   33	
+;   34	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 34
+
+	LD	(IX+-1),0
+	JR	L_28
+L_26:
+;   35	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 35
+
+	LD	(IX+-2),0
+	JR	L_25
+L_23:
+;   36	            x = game->cursor.x + i - 2;
+.LINE 36
+
+	LD	IY,(IX+6)
+	LD	A,(IY+61)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	CALL	__itol
+	LD	(IX+-11),BC
+	LD	E,A
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	CALL	__itol
+	LD	HL,(IX+-11)
+	CALL	__ladd
+	LD	BC,16777214
+	LD	A,255
+	CALL	__ladd
+	LD	(IX+-8),HL
+	LD	(IX+-5),E
+;   37	            y = game->cursor.y + j - 2;
+.LINE 37
+
+	LD	C,(IY+62)
+	LD	B,0
+	LD	HL,BC
+	LD	C,(IX+-2)
+	ADD.SIS	HL,BC
+	DEC	HL
+	DEC	HL
+	LD	(IX+-4),L
+	LD	(IX+-3),H
+;   38	            if (game->player[game->player_turn].card[game->card_id].value[i][j] && isInMap(x, y) && !isCursorOnPlayerColor(game->matrix, game->player_turn, x, y)) {
+.LINE 38
+
+	LD	A,(IY+64)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	A,50
+	CALL	__imul_b
+	LD	BC,HL
+	LEA	HL,IY+65
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IY+25)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,BC
+	LEA	BC,IY+0
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,HL
+	LEA	HL,IY+0
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	Z,L_24
+	LD	BC,(IX+-4)
+	PUSH	BC
+	LD	C,(IX+-5)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+-8)
+	PUSH	BC
+	CALL	_isInMap
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_24
+	LD	C,(IX+-4)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+-8)
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+64)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+0
+	CALL	_isCursorOnPlayerColor
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	NZ,L_24
+;   39	                ++(game->number_of_movement);
+.LINE 39
+
+	LD	IY,(IX+6)
+	LD	A,(IY+63)
+	INC	A
+	LD	(IY+63),A
+;   40	                game->movement[game->number_of_movement].x = game->cursor.x + i - 2;
+.LINE 40
+
+	LD	A,(IY+61)
+	ADD	A,(IX+-1)
+	LD	B,A
+	LD	A,(IY+63)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LEA	DE,IY+26
+	ADD	HL,DE
+	DEC	B
+	DEC	B
+	LD	IY,HL
+	LD	(IY+0),B
+;   41	                game->movement[game->number_of_movement].y = game->cursor.y + j - 2;
+.LINE 41
+
+	LD	IY,(IX+6)
+	LD	A,(IY+62)
+	ADD	A,(IX+-2)
+	LD	B,A
+	LD	A,(IY+63)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LEA	DE,IY+26
+	ADD	HL,DE
+	DEC	B
+	DEC	B
+	LD	IY,HL
+	LD	(IY+1),B
+;   42	            }
+;   43	        }
+L_24:
+.LINE 43
+
+	INC	(IX+-2)
+L_25:
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_23
+	INC	(IX+-1)
+;   44	    }
+L_28:
+.LINE 44
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_26
+;   45	}
+.LINE 45
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _setMovement ***************************
+;Name                         Addr/Register   Size   Type
+;x                                     IX-8      4   variable
+;y                                     IX-4      2   variable
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 20 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "setMovement",45,"_setMovement"
+;   46	
+;   47	void moveCursor(t_game *game, int8_t increment_x, int8_t increment_y) {
+_moveCursor:
+.DEFINE "_moveCursor"
+
+.VALUE _moveCursor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "moveCursor",47,"_moveCursor"
+
+.LINE 47
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "increment_x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 2
+
+.ENDEF
+
+.DEFINE "increment_y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+;   48	    eraseCursor(game->matrix, game->cursor);
+.LINE 48
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+61
+	LD	BC,2
+	LDIR	
+	PEA	IY+0
+	LD	(IX+-6),BC
+	CALL	_eraseCursor
+	LD	BC,(IX+-6)
+	POP	DE
+	POP	DE
+;   49	    if (isCursorInMovement(game->movement, game->number_of_movement, game->cursor)) { printMovement(game->matrix, game->movement, game->number_of_movement); }
+.LINE 49
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+61
+	LD	BC,2
+	LDIR	
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	LD	(IX+-6),BC
+	CALL	_isCursorInMovement
+	LD	BC,(IX+-6)
+	POP	DE
+	POP	DE
+	POP	DE
+	OR	A,A
+	JR	Z,L_31
+	LD	IY,(IX+6)
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	PEA	IY+0
+	LD	(IX+-6),BC
+	CALL	_printMovement
+	LD	BC,(IX+-6)
+	POP	DE
+	POP	DE
+	POP	DE
+L_31:
+;   50	    game->cursor.x += increment_x;
+.LINE 50
+
+	LD	IY,(IX+6)
+	LEA	DE,IY+61
+	LD	(IX+-3),DE
+	LD	A,(IY+61)
+	ADD	A,(IX+9)
+	LD	IY,(IX+-3)
+	LD	(IY+0),A
+;   51	    game->cursor.y += increment_y;
+.LINE 51
+
+	LD	A,(IY+1)
+	ADD	A,(IX+12)
+	LD	(IY+1),A
+;   52	    printCursor(game->cursor);
+.LINE 52
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+61
+	LD	BC,2
+	LDIR	
+	CALL	_printCursor
+	POP	BC
+;   53	    delay(WAITING_DELAY);
+.LINE 53
+
+	LD	BC,100
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;   54	}
+.LINE 54
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _moveCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_delay                              IMPORT  -----   function
+;_printCursor                        IMPORT  -----   function
+;_printMovement                      IMPORT  -----   function
+;_eraseCursor                        IMPORT  -----   function
+;increment_y                          IX+12      1   parameter
+;increment_x                           IX+9      1   parameter
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "moveCursor",54,"_moveCursor"
+;   55	
+;   56	void turnDeck(t_game *game) {
+_turnDeck:
+.DEFINE "_turnDeck"
+
+.VALUE _turnDeck
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "turnDeck",56,"_turnDeck"
+
+.LINE 56
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "card"
+
+.CLASS 65
+
+.VALUE -25
+
+.DIM 5
+
+.DIM 5
+
+.TYPE 866
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-25
+	LD	SP,HL
+;   57	    CARD;
+;   58	    copyCard(card, game->side_card.value);
+.LINE 58
+
+	LD	IY,(IX+6)
+	PEA	IY+36
+	PEA	IX+-25
+	CALL	_copyCard
+	POP	BC
+	POP	BC
+;   59	    copyCard(game->side_card.value, game->player[game->player_turn].card[game->card_id].value);
+.LINE 59
+
+	LD	IY,(IX+6)
+	LD	A,(IY+64)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	A,50
+	CALL	__imul_b
+	LD	BC,HL
+	LEA	HL,IY+65
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IY+25)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,BC
+	LEA	BC,IY+0
+	ADD	HL,BC
+	LD	IY,HL
+	PEA	IY+0
+	LD	IY,(IX+6)
+	PEA	IY+36
+	CALL	_copyCard
+	POP	BC
+	POP	BC
+;   60	    copyCard(game->player[game->player_turn].card[game->card_id].value, card);
+.LINE 60
+
+	PEA	IX+-25
+	LD	IY,(IX+6)
+	LD	A,(IY+64)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	A,50
+	CALL	__imul_b
+	LD	BC,HL
+	LEA	HL,IY+65
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IY+25)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,BC
+	LEA	BC,IY+0
+	ADD	HL,BC
+	LD	IY,HL
+	PEA	IY+0
+	CALL	_copyCard
+	POP	BC
+	POP	BC
+;   61	}
+.LINE 61
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _turnDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_copyCard                           IMPORT  -----   function
+;card                                 IX-25     25   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 34 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "turnDeck",61,"_turnDeck"
+;   62	
+;   63	void playerTurn(t_game *game) {
+_playerTurn:
+.DEFINE "_playerTurn"
+
+.VALUE _playerTurn
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "playerTurn",63,"_playerTurn"
+
+.LINE 63
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+;   64	    turnDeck(game);
+.LINE 64
+
+	LD	DE,(IX+6)
+	PUSH	DE
+	LD	(IX+-6),BC
+	CALL	_turnDeck
+	LD	BC,(IX+-6)
+	POP	DE
+;   65	    reverseMatrix(game->matrix);
+.LINE 65
+
+	LD	IY,(IX+6)
+	PEA	IY+0
+	LD	(IX+-6),BC
+	CALL	_reverseMatrix
+	LD	BC,(IX+-6)
+	POP	DE
+;   66	    game->number_of_movement = 0;
+.LINE 66
+
+	LD	IY,(IX+6)
+	LD	(IY+63),0
+;   67	    game->player_turn = !(game->player_turn);
+.LINE 67
+
+	LD	A,(IY+64)
+	OR	A,A
+	JR	NZ,L_35
+	LD	DE,1
+	LD	(IX+-3),DE
+	JR	L_36
+L_35:
+	LD	DE,0
+	LD	(IX+-3),DE
+L_36:
+	LD	A,(IX+-3)
+	LD	IY,(IX+6)
+	LD	(IY+64),A
+;   68	    game->card_id = 0;
+.LINE 68
+
+	LD	(IY+25),0
+;   69	    initCursor(&game->cursor);
+.LINE 69
+
+	PEA	IY+61
+	LD	(IX+-6),BC
+	CALL	_initCursor
+	LD	BC,(IX+-6)
+	POP	DE
+;   70	    printMatrix(game->matrix);
+.LINE 70
+
+	LD	IY,(IX+6)
+	PEA	IY+0
+	LD	(IX+-6),BC
+	CALL	_printMatrix
+	LD	BC,(IX+-6)
+	POP	DE
+;   71	    printCursor(game->cursor);
+.LINE 71
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+61
+	LD	BC,2
+	LDIR	
+	CALL	_printCursor
+	POP	BC
+;   72	    printDeck(*game);
+.LINE 72
+
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	BC,-168
+	ADD	HL,BC
+	LD	SP,HL
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	HL,(IX+6)
+	LD	BC,166
+	LDIR	
+	CALL	_printDeck
+	LD	IY,168
+	ADD	IY,SP
+	LD	SP,IY
+;   73	}
+.LINE 73
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _playerTurn ***************************
+;Name                         Addr/Register   Size   Type
+;_printDeck                          IMPORT  -----   function
+;_printCursor                        IMPORT  -----   function
+;_printMatrix                        IMPORT  -----   function
+;_initCursor                         IMPORT  -----   function
+;_reverseMatrix                      IMPORT  -----   function
+;temp37                                IX-3      3   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 15 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "playerTurn",73,"_playerTurn"
+;   74	
+;   75	uint8_t doesEnemyKingExist(MATRIX, int8_t king_color) {
+_doesEnemyKingExist:
+.DEFINE "_doesEnemyKingExist"
+
+.VALUE _doesEnemyKingExist
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "doesEnemyKingExist",75,"_doesEnemyKingExist"
+
+.LINE 75
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "king_color"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 2
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;   76	    uint8_t i;
+;   77	    uint8_t j;
+;   78	
+;   79	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 79
+
+	LD	(IX+-1),0
+	JR	L_45
+L_43:
+;   80	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 80
+
+	LD	(IX+-2),0
+	JR	L_42
+L_40:
+;   81	            if (matrix[i][j] == -king_color) { return TRUE; }
+.LINE 81
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	LD	B,A
+	SEXT	HL
+	LD	L,B
+	LD	DE,HL
+	LD	A,(IX+9)
+	SEXT	HL
+	LD	L,(IX+9)
+	CALL	__ineg
+	LD	BC,HL
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_41
+	LD	A,1
+	JR	L_47
+;   82	        }
+L_41:
+.LINE 82
+
+	INC	(IX+-2)
+L_42:
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_40
+	INC	(IX+-1)
+;   83	    }
+L_45:
+.LINE 83
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_43
+;   84	    return FALSE;
+.LINE 84
+
+	XOR	A,A
+;   85	}
+L_47:
+.LINE 85
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _doesEnemyKingExist ***************************
+;Name                         Addr/Register   Size   Type
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;king_color                            IX+9      1   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "doesEnemyKingExist",85,"_doesEnemyKingExist"
+;   86	
+;   87	uint8_t checkWin(t_game *game) {
+_checkWin:
+.DEFINE "_checkWin"
+
+.VALUE _checkWin
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "checkWin",87,"_checkWin"
+
+.LINE 87
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "king_color"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;   88	    int8_t king_color;
+;   89	
+;   90	    if (game->player_turn == WHITE) {
+.LINE 90
+
+	LD	IY,(IX+6)
+	LD	A,(IY+64)
+	OR	A,A
+	JR	NZ,L_49
+;   91	        king_color = KING_WHITE;
+.LINE 91
+
+	LD	(IX+-1),2
+;   92	    } else {
+.LINE 92
+
+	JR	L_52
+L_49:
+;   93	        king_color = KING_BLACK;
+.LINE 93
+
+	LD	(IX+-1),254
+;   94	    }
+L_52:
+.LINE 94
+
+;   95	    if (game->matrix[2][0] == king_color || !doesEnemyKingExist(game->matrix, king_color)) {
+.LINE 95
+
+	LD	IY,(IX+6)
+	LD	A,(IY+10)
+	CP	A,(IX+-1)
+	JR	Z,L_51
+	LD	C,(IX+-1)
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+6)
+	PEA	IY+0
+	CALL	_doesEnemyKingExist
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	NZ,L_53
+L_51:
+;   96	        game->win = TRUE;
+.LINE 96
+
+	LD	A,1
+	LD	BC,165
+	LD	IY,(IX+6)
+	CALL	__bstiy
+;   97	    }
+L_53:
+.LINE 97
+
+;   98	    return (game->win);
+.LINE 98
+
+	LD	BC,165
+	LD	IY,(IX+6)
+	CALL	__bldiy
+;   99	}
+.LINE 99
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _checkWin ***************************
+;Name                         Addr/Register   Size   Type
+;king_color                            IX-1      1   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 10 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "checkWin",99,"_checkWin"
+;  100	
+;  101	void keyAction(t_game *game) {
+_keyAction:
+.DEFINE "_keyAction"
+
+.VALUE _keyAction
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "keyAction",101,"_keyAction"
+
+.LINE 101
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-30
+	LD	SP,HL
+;  102	    if (kb_Data[7] & kb_Right && game->cursor.x < MATRIX_X_LENGTH - 1) {
+.LINE 102
+
+	LD	A,(16056350)
+	AND	A,4
+	JR	Z,L_59
+	LD	IY,(IX+6)
+	LD	A,(IY+61)
+	CP	A,4
+	JR	NC,L_59
+;  103	        moveCursor(game,  1,  0);
+.LINE 103
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,1
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+	POP	BC
+;  104	    }
+L_59:
+.LINE 104
+
+;  105	    if (kb_Data[7] & kb_Left && game->cursor.x > 0) {
+.LINE 105
+
+	LD	A,(16056350)
+	AND	A,2
+	JR	Z,L_62
+	XOR	A,A
+	LD	IY,(IX+6)
+	CP	A,(IY+61)
+	JR	NC,L_62
+;  106	        moveCursor(game, -1,  0);
+.LINE 106
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,16777215
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+	POP	BC
+;  107	    }
+L_62:
+.LINE 107
+
+;  108	    if (kb_Data[7] & kb_Down && game->cursor.y < MATRIX_Y_LENGTH - 1) {
+.LINE 108
+
+	LD	A,(16056350)
+	AND	A,1
+	JR	Z,L_65
+	LD	IY,(IX+6)
+	LD	A,(IY+62)
+	CP	A,4
+	JR	NC,L_65
+;  109	        moveCursor(game,  0, 1);
+.LINE 109
+
+	LD	BC,1
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+	POP	BC
+;  110	    }
+L_65:
+.LINE 110
+
+;  111	    if (kb_Data[7] & kb_Up && game->cursor.y > 0) {
+.LINE 111
+
+	LD	A,(16056350)
+	AND	A,8
+	JR	Z,L_69
+	XOR	A,A
+	LD	IY,(IX+6)
+	CP	A,(IY+62)
+	JR	NC,L_69
+;  112	        moveCursor(game, 0, -1);
+.LINE 112
+
+	LD	BC,16777215
+	PUSH	BC
+	LD	BC,0
+	PUSH	BC
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_moveCursor
+	POP	BC
+	POP	BC
+	POP	BC
+;  113	    }
+L_69:
+.LINE 113
+
+;  114	    if (kb_Data[1] & kb_Zoom) {
+.LINE 114
+
+	LD	A,(16056338)
+	AND	A,4
+	JR	Z,L_76
+;  115	        eraseMovement(game->matrix, game->movement, game->number_of_movement);
+.LINE 115
+
+	LD	IY,(IX+6)
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	PEA	IY+0
+	CALL	_eraseMovement
+	POP	BC
+	POP	BC
+	POP	BC
+;  116	        ++(game->card_id);
+.LINE 116
+
+	LD	IY,(IX+6)
+	LD	A,(IY+25)
+	INC	A
+	LD	(IY+25),A
+;  117	        game->card_id %= NUMBER_OF_CARD_IN_HAND;
+.LINE 117
+
+	LD	A,(IY+25)
+	UEXT	HL
+	LD	L,A
+	LD	BC,2
+	CALL	__irems
+	LD	(IY+25),L
+;  118	        game->number_of_movement = 0;
+.LINE 118
+
+	LD	(IY+63),0
+;  119	        if (isCursorOnPlayerColor(game->matrix, game->player_turn, game->cursor.x, game->cursor.y)) {
+.LINE 119
+
+	LEA	BC,IY+61
+	LD	(IX+-3),BC
+	LD	IY,(IX+-3)
+	LD	C,(IY+1)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IY+0)
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+64)
+	PUSH	BC
+	PEA	IY+0
+	CALL	_isCursorOnPlayerColor
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_67
+;  120	            setMovement(game);
+.LINE 120
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_setMovement
+	POP	BC
+;  121	            printMovement(game->matrix, game->movement, game->number_of_movement);
+.LINE 121
+
+	LD	IY,(IX+6)
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	PEA	IY+0
+	CALL	_printMovement
+	POP	BC
+	POP	BC
+	POP	BC
+;  122	        }
+L_67:
+.LINE 122
+
+;  123	        delay(WAITING_DELAY);
+.LINE 123
+
+	LD	BC,100
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;  124	    }
+L_76:
+.LINE 124
+
+;  125	    if (kb_Data[6] & kb_Enter) {
+.LINE 125
+
+	LD	A,(16056348)
+	AND	A,1
+	JR	Z,L_77
+;  126	        if (isCursorOnPlayerColor(game->matrix, game->player_turn, game->cursor.x, game->cursor.y)) {
+.LINE 126
+
+	LD	IY,(IX+6)
+	LEA	BC,IY+61
+	LD	(IX+-6),BC
+	LD	IY,(IX+-6)
+	LD	C,(IY+1)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IY+0)
+	PUSH	BC
+	LD	IY,(IX+6)
+	LD	C,(IY+64)
+	PUSH	BC
+	PEA	IY+0
+	LD	(IX+-30),BC
+	CALL	_isCursorOnPlayerColor
+	LD	BC,(IX+-30)
+	POP	DE
+	POP	DE
+	POP	DE
+	POP	DE
+	OR	A,A
+	JR	Z,L_74
+;  127	            eraseMovement(game->matrix, game->movement, game->number_of_movement);
+.LINE 127
+
+	LD	IY,(IX+6)
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	PEA	IY+0
+	CALL	_eraseMovement
+	POP	BC
+	POP	BC
+	POP	BC
+;  128	            setMovement(game);
+.LINE 128
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_setMovement
+	POP	BC
+;  129	            printMovement(game->matrix, game->movement, game->number_of_movement);
+.LINE 129
+
+	LD	IY,(IX+6)
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	PEA	IY+0
+	LD	(IX+-30),BC
+	CALL	_printMovement
+	LD	BC,(IX+-30)
+	POP	DE
+	POP	DE
+	POP	DE
+;  130	            delay(WAITING_DELAY);
+.LINE 130
+
+	LD	DE,100
+	PUSH	DE
+	LD	(IX+-30),BC
+	CALL	_delay
+	LD	BC,(IX+-30)
+	POP	DE
+;  131	        } 
+L_74:
+.LINE 131
+
+;  132	        if (isCursorInMovement(game->movement, game->number_of_movement, game->cursor)) {
+.LINE 132
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+61
+	LD	BC,2
+	LDIR	
+	LD	C,(IY+63)
+	LD	B,0
+	PUSH	BC
+	PEA	IY+26
+	CALL	_isCursorInMovement
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	Z,L_77
+;  133	            game->matrix[game->cursor.x][game->cursor.y] = game->matrix[game->movement[0].x][game->movement[0].y];
+.LINE 133
+
+	LD	IY,(IX+6)
+	LEA	BC,IY+26
+	LD	(IX+-18),BC
+	LEA	BC,IY+61
+	LD	(IX+-15),BC
+	LEA	BC,IY+0
+	LD	(IX+-12),BC
+	LD	IY,(IX+-18)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+0
+	ADD	HL,BC
+	LD	BC,HL
+	LD	IY,(IX+-18)
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(IX+-27),HL	; spill
+	LD	IY,(IX+-15)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+-12)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	IY,(IX+-27)	; unspill
+	LD	A,(IY)
+	LD	(HL),A
+;  134	            game->matrix[game->movement[0].x][game->movement[0].y] = EMPTY;
+.LINE 134
+
+	LD	IY,(IX+6)
+	LEA	BC,IY+26
+	LD	(IX+-9),BC
+	LD	IY,(IX+-9)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+-12)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(HL),0
+;  135	            printCase(game->matrix, game->cursor.x, game->cursor.y);
+.LINE 135
+
+	LD	IY,(IX+-15)
+	LD	C,(IY+1)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	BC,(IX+-12)
+	PUSH	BC
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+;  136	            printCase(game->matrix, game->movement[0].x, game->movement[0].y);
+.LINE 136
+
+	LD	IY,(IX+6)
+	LEA	BC,IY+26
+	LD	(IX+-21),BC
+	LD	IY,(IX+-21)
+	LD	C,(IY+1)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	IY,(IX+6)
+	PEA	IY+0
+	LD	(IX+-30),BC
+	CALL	_printCase
+	LD	BC,(IX+-30)
+	POP	DE
+	POP	DE
+	POP	DE
+;  137	            printCursor(game->cursor);
+.LINE 137
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	IY,(IX+6)
+	LEA	HL,IY+61
+	LD	BC,2
+	LDIR	
+	CALL	_printCursor
+	POP	BC
+;  138	            if (checkWin(game)) { return; }
+.LINE 138
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_checkWin
+	POP	BC
+	OR	A,A
+	JR	NZ,L_77
+;  139	            playerTurn(game);
+.LINE 139
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_playerTurn
+	POP	BC
+;  140	            delay(WAITING_DELAY);
+.LINE 140
+
+	LD	BC,100
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;  141	        }
+;  142	    }
+;  143	}
+L_77:
+.LINE 143
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _keyAction ***************************
+;Name                         Addr/Register   Size   Type
+;_printCursor                        IMPORT  -----   function
+;_printCase                          IMPORT  -----   function
+;_delay                              IMPORT  -----   function
+;_printMovement                      IMPORT  -----   function
+;_eraseMovement                      IMPORT  -----   function
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 39 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "keyAction",143,"_keyAction"
+;  144	
+;  145	void play() {
+_play:
+.DEFINE "_play"
+
+.VALUE _play
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "play",145,"_play"
+
+.LINE 145
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE -166
+
+.TAG "s_game"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LD	HL,-169
+	ADD	HL,SP
+	LD	SP,HL
+;  146	    t_game game;
+;  147	
+;  148	    game.player_turn = WHITE;
+.LINE 148
+
+	LD	(IX+-102),0
+;  149	    game.number_of_movement = 0;
+.LINE 149
+
+	LD	(IX+-103),0
+;  150	    initMatrix(game.matrix);
+.LINE 150
+
+	LD	HL,IX
+	LD	BC,-166
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_initMatrix
+	POP	BC
+;  151	    initDeck(&game);
+.LINE 151
+
+	LD	HL,IX
+	LD	BC,-166
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_initDeck
+	POP	BC
+;  152	    initCursor(&game.cursor);
+.LINE 152
+
+	PEA	IX+-105
+	CALL	_initCursor
+	POP	BC
+;  153	    game.card_id = 0;
+.LINE 153
+
+	LEA	IY,IX+-128
+	LD	(IY+-13),0
+;  154	    game.win = FALSE;
+.LINE 154
+
+	LD	(IX+-1),0
+;  155	
+;  156	    printMatrix(game.matrix);
+.LINE 156
+
+	LD	HL,IX
+	LD	BC,-166
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_printMatrix
+	POP	BC
+;  157	    printDeck(game);
+.LINE 157
+
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	BC,-168
+	ADD	HL,BC
+	LD	SP,HL
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LD	HL,IX
+	LD	BC,-166
+	ADD	HL,BC
+	LD	BC,166
+	LDIR	
+	PUSH	IY
+	LEA	IY,IX+-128
+	LD	(IY+-41),BC
+	POP	IY
+	CALL	_printDeck
+	PUSH	IY
+	LEA	IY,IX+-128
+	LD	BC,(IY+-41)
+	POP	IY
+	LD	IY,168
+	ADD	IY,SP
+	LD	SP,IY
+;  158	    printCursor(game.cursor);
+.LINE 158
+
+	PUSH	BC
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+-105
+	LD	BC,2
+	LDIR	
+	CALL	_printCursor
+	POP	BC
+;  159	
+;  160	    while (!(kb_Data[1] & kb_Del || game.win)) {
+.LINE 160
+
+	JR	L_79
+L_80:
+;  161	        kb_Scan();
+.LINE 161
+
+	CALL	_kb_Scan
+;  162	        keyAction(&game);
+.LINE 162
+
+	LD	HL,IX
+	LD	BC,-166
+	ADD	HL,BC
+	LD	BC,HL
+	PUSH	BC
+	CALL	_keyAction
+	POP	BC
+;  163	    }
+L_79:
+.LINE 163
+
+	LD	A,(16056338)
+	AND	A,128
+	JR	NZ,L_81
+	LD	A,(IX+-1)
+	OR	A,A
+	JR	Z,L_80
+L_81:
+.LINE 164
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _play ***************************
+;Name                         Addr/Register   Size   Type
+;_kb_Scan                            IMPORT  -----   function
+;_printCursor                        IMPORT  -----   function
+;_printDeck                          IMPORT  -----   function
+;_printMatrix                        IMPORT  -----   function
+;_initCursor                         IMPORT  -----   function
+;_initDeck                           IMPORT  -----   function
+;_initMatrix                         IMPORT  -----   function
+;game                                IX-166    166   variable
+
+
+; Stack Frame Size: 175 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "play",164,"_play"
+	XREF _eraseMovement:ROM
+	XREF _printMovement:ROM
+	XREF _printDeck:ROM
+	XREF _printCursor:ROM
+	XREF _eraseCursor:ROM
+	XREF _printMatrix:ROM
+	XREF _printCase:ROM
+	XREF _initMatrix:ROM
+	XREF _initDeck:ROM
+	XREF _initCursor:ROM
+	XREF _copyCard:ROM
+	XREF _reverseMatrix:ROM
+	XREF _delay:ROM
+	XREF _kb_Scan:ROM
+	XREF __lcmps:ROM
+	XREF __ladd:ROM
+	XREF __ineg:ROM
+	XREF __irems:ROM
+	XREF __stoiu:ROM
+	XREF __itol:ROM
+	XREF __bldiy:ROM
+	XREF __bstiy:ROM
+	XREF __setflag:ROM
+	XREF __scmpzero:ROM
+	XREF __icmpzero:ROM
+	XREF __lcmpzero:ROM
+	XREF __imul_b:ROM
+	XDEF _play
+	XDEF _keyAction
+	XDEF _checkWin
+	XDEF _doesEnemyKingExist
+	XDEF _playerTurn
+	XDEF _turnDeck
+	XDEF _moveCursor
+	XDEF _setMovement
+	XDEF _isCursorOnPlayerColor
+	XDEF _isCursorInMovement
+	XDEF _isInMap
+	END

@@ -1,0 +1,1065 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\INIT.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME0"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "NONAME2",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME1"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME0"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "font",12
+.DEFINE "font"
+.VALUE 0
+.CLASS 8
+.TAG "font"
+.TYPE 40
+.ENDEF
+.DEFINE "drawChar"
+.VALUE 3
+.CLASS 8
+.TYPE 545
+.ENDEF
+.DEFINE "getWidth"
+.VALUE 6
+.CLASS 8
+.TYPE 558
+.ENDEF
+.DEFINE "getHeight"
+.VALUE 9
+.CLASS 8
+.TYPE 558
+.ENDEF
+.ENDREC "font"
+.BEGREC "s_pos",2
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_card",25
+.DEFINE "value"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.ENDREC "s_card"
+.BEGREC "s_player",50
+.DEFINE "card"
+.VALUE 0
+.CLASS 8
+.DIM 2
+.TAG "s_card"
+.TYPE 104
+.ENDEF
+.ENDREC "s_player"
+.BEGREC "s_game",166
+.DEFINE "matrix"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.DEFINE "card_id"
+.VALUE 25
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movement"
+.VALUE 26
+.CLASS 8
+.DIM 5
+.TAG "s_pos"
+.TYPE 104
+.ENDEF
+.DEFINE "side_card"
+.VALUE 36
+.CLASS 8
+.TAG "s_card"
+.TYPE 8
+.ENDEF
+.DEFINE "cursor"
+.VALUE 61
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "number_of_movement"
+.VALUE 63
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "player_turn"
+.VALUE 64
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "player"
+.VALUE 65
+.CLASS 8
+.DIM 2
+.TAG "s_player"
+.TYPE 104
+.ENDEF
+.DEFINE "win"
+.VALUE 165
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_game"
+;    1	
+;    2	#include "init.h"
+;    3	
+;    4	uint8_t isInTab(uint8_t *tab, uint8_t length, uint8_t value) {
+_isInTab:
+.DEFINE "_isInTab"
+
+.VALUE _isInTab
+
+.CLASS 2
+
+.TYPE 76
+
+.ENDEF
+
+.BEGFUNC "isInTab",4,"_isInTab"
+
+.LINE 4
+
+.DEFINE "tab"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 44
+
+.ENDEF
+
+.DEFINE "length"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "value"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;    5	    uint8_t i;
+;    6	
+;    7	    for (i = 0; i < length; ++i) {
+.LINE 7
+
+	LD	(IX+-1),0
+	JR	L_3
+L_1:
+;    8	        if (tab[i] == value) { return TRUE; }
+.LINE 8
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	A,(HL)
+	CP	A,(IX+12)
+	JR	NZ,L_2
+	LD	A,1
+	JR	L_5
+;    9	    }
+L_2:
+.LINE 9
+
+	INC	(IX+-1)
+L_3:
+	LD	A,(IX+-1)
+	CP	A,(IX+9)
+	JR	C,L_1
+;   10	    return FALSE;
+.LINE 10
+
+	XOR	A,A
+;   11	}
+L_5:
+.LINE 11
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _isInTab ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;value                                IX+12      1   parameter
+;length                                IX+9      1   parameter
+;tab                                   IX+6      3   parameter
+
+
+; Stack Frame Size: 16 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "isInTab",11,"_isInTab"
+;   12	
+;   13	void initCursor(t_pos *cursor) {
+_initCursor:
+.DEFINE "_initCursor"
+
+.VALUE _initCursor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initCursor",13,"_initCursor"
+
+.LINE 13
+
+.DEFINE "cursor"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   14	    cursor->x = 2;
+.LINE 14
+
+	LD	IY,(IX+6)
+	LD	(IY+0),2
+;   15	    cursor->y = 4;
+.LINE 15
+
+	LD	(IY+1),4
+;   16	}
+.LINE 16
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initCursor ***************************
+;Name                         Addr/Register   Size   Type
+;cursor                                IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initCursor",16,"_initCursor"
+;   17	
+;   18	void initCard(CARD, uint8_t card_number) {
+_initCard:
+.DEFINE "_initCard"
+
+.VALUE _initCard
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initCard",18,"_initCard"
+
+.LINE 18
+
+.DEFINE "card"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "card_number"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;   19	    uint8_t i;
+;   20	    uint8_t j;
+;   21	
+;   22	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 22
+
+	LD	(IX+-1),0
+	JR	L_12
+L_10:
+;   23	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 23
+
+	LD	(IX+-2),0
+	JR	L_9
+L_7:
+;   24	            card[i][j] = CARDS[card_number][j][i];
+.LINE 24
+
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	BC,_CARDS
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	IY,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(IY)
+	LD	(HL),A
+	INC	(IX+-2)
+;   25	        }
+L_9:
+.LINE 25
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_7
+	INC	(IX+-1)
+;   26	    }
+L_12:
+.LINE 26
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_10
+;   27	}
+.LINE 27
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initCard ***************************
+;Name                         Addr/Register   Size   Type
+;_CARDS                              IMPORT    350   variable
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;card_number                           IX+9      1   parameter
+;card                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 14 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initCard",27,"_initCard"
+;   28	
+;   29	void initRandom(uint8_t *random_tab) {
+_initRandom:
+.DEFINE "_initRandom"
+
+.VALUE _initRandom
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initRandom",29,"_initRandom"
+
+.LINE 29
+
+.DEFINE "random_tab"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 44
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+;   30	    uint8_t i;
+;   31	
+;   32	    for (i = 0; i < NUMBER_OF_CARD; ++i) {
+.LINE 32
+
+	LD	(IX+-1),0
+	JR	L_16
+L_14:
+;   33	        random_tab[i] = 0;
+.LINE 33
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(HL),0
+	INC	(IX+-1)
+;   34	    }
+L_16:
+.LINE 34
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_14
+;   35	}
+.LINE 35
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initRandom ***************************
+;Name                         Addr/Register   Size   Type
+;i                                     IX-1      1   variable
+;random_tab                            IX+6      3   parameter
+
+
+; Stack Frame Size: 10 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initRandom",35,"_initRandom"
+;   36	
+;   37	void initDeck(t_game *game) {
+_initDeck:
+.DEFINE "_initDeck"
+
+.VALUE _initDeck
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initDeck",37,"_initDeck"
+
+.LINE 37
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "random_tab"
+
+.CLASS 65
+
+.VALUE -6
+
+.DIM 5
+
+.TYPE 108
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	PUSH	BC
+;   38	    uint8_t random_tab[NUMBER_OF_CARD];
+;   39	    uint8_t i;
+;   40	
+;   41	    initRandom(random_tab);
+.LINE 41
+
+	PEA	IX+-6
+	CALL	_initRandom
+	POP	BC
+;   42	
+;   43	    random_tab[0] = random() % NUMBER_OF_CARD_TOTAL;
+.LINE 43
+
+	CALL	_random
+	LD	BC,14
+	XOR	A,A
+	CALL	__lremu
+	LD	BC,HL
+	LD	(IX+-6),C
+;   44	
+;   45	    for (i = 1; i < NUMBER_OF_CARD; ++i) {
+.LINE 45
+
+	LD	(IX+-1),1
+	JR	L_22
+;   46	        do {
+L_18:
+.LINE 46
+
+;   47	            random_tab[i] = random() % NUMBER_OF_CARD_TOTAL;
+.LINE 47
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	LEA	HL,IX+-6
+	ADD	HL,BC
+	LD	(IX+-9),HL
+	CALL	_random
+	LD	BC,14
+	XOR	A,A
+	CALL	__lremu
+	LD	BC,HL
+	LD	HL,(IX+-9)
+	LD	(HL),C
+;   48	        } while (isInTab(random_tab, i, random_tab[i]));
+.LINE 48
+
+	LD	HL,(IX+-9)
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	C,(IX+-1)
+	PUSH	BC
+	PEA	IX+-6
+	CALL	_isInTab
+	POP	BC
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	NZ,L_18
+	INC	(IX+-1)
+;   49	    }
+L_22:
+.LINE 49
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_18
+;   50	
+;   51	    initCard(game->player[0].card[0].value, random_tab[0]);
+.LINE 51
+
+	LD	C,(IX+-6)
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+6)
+	PEA	IY+65
+	CALL	_initCard
+	POP	BC
+	POP	BC
+;   52	    initCard(game->player[0].card[1].value, random_tab[1]);
+.LINE 52
+
+	LEA	HL,IX+-6
+	INC	HL
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+6)
+	LEA	IY,IY+90
+	PEA	IY+0
+	CALL	_initCard
+	POP	BC
+	POP	BC
+;   53	    initCard(game->side_card.value, random_tab[2]);
+.LINE 53
+
+	LEA	HL,IX+-4
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+6)
+	PEA	IY+36
+	CALL	_initCard
+	POP	BC
+	POP	BC
+;   54	    initCard(game->player[1].card[0].value, random_tab[3]);
+.LINE 54
+
+	LEA	HL,IX+-3
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+6)
+	LEA	IY,IY+115
+	PEA	IY+0
+	CALL	_initCard
+	POP	BC
+	POP	BC
+;   55	    initCard(game->player[1].card[1].value, random_tab[4]);
+.LINE 55
+
+	LEA	HL,IX+-2
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+6)
+	LEA	IY,IY+65
+	LEA	IY,IY+75
+	PEA	IY+0
+	CALL	_initCard
+	POP	BC
+	POP	BC
+;   56	}
+.LINE 56
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_random                             IMPORT  -----   function
+;random_tab                            IX-6      5   variable
+;i                                     IX-1      1   variable
+;game                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initDeck",56,"_initDeck"
+;   57	
+;   58	void initMatrix(MATRIX) {
+_initMatrix:
+.DEFINE "_initMatrix"
+
+.VALUE _initMatrix
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initMatrix",58,"_initMatrix"
+
+.LINE 58
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;   59	    uint8_t i;
+;   60	    uint8_t j;
+;   61	
+;   62	    j = 0;
+;   63	
+;   64	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 64
+
+	LD	(IX+-1),0
+	JR	L_27
+L_25:
+;   65	        matrix[i][j] = PION_BLACK;
+.LINE 65
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	(HL),255
+	INC	(IX+-1)
+;   66	    }
+L_27:
+.LINE 66
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_25
+;   67	    matrix[2][0] = KING_BLACK;
+.LINE 67
+
+	LD	IY,(IX+6)
+	LEA	HL,IY+10
+	LD	(HL),254
+;   68	
+;   69	    for (j = 1; j < MATRIX_Y_LENGTH - 1; ++j) {
+.LINE 69
+
+	LD	(IX+-2),1
+	JR	L_34
+L_32:
+;   70	        for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 70
+
+	LD	(IX+-1),0
+	JR	L_31
+L_29:
+;   71	            matrix[i][j] = EMPTY;
+.LINE 71
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(HL),0
+	INC	(IX+-1)
+;   72	        }
+L_31:
+.LINE 72
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_29
+	INC	(IX+-2)
+;   73	    }
+L_34:
+.LINE 73
+
+	LD	A,(IX+-2)
+	CP	A,4
+	JR	C,L_32
+;   74	
+;   75	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 75
+
+	LD	(IX+-1),0
+	JR	L_37
+L_35:
+;   76	        matrix[i][j] = PION_WHITE;
+.LINE 76
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(HL),1
+	INC	(IX+-1)
+;   77	    }
+L_37:
+.LINE 77
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_35
+;   78	    matrix[2][4] = KING_WHITE;
+.LINE 78
+
+	LD	IY,(IX+6)
+	LEA	HL,IY+14
+	LD	(HL),2
+.LINE 79
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initMatrix ***************************
+;Name                         Addr/Register   Size   Type
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 11 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initMatrix",79,"_initMatrix"
+	XREF _CARDS:ROM
+	XREF _random:ROM
+	XREF __lremu:ROM
+	XREF __imul_b:ROM
+	XDEF _initMatrix
+	XDEF _initDeck
+	XDEF _initRandom
+	XDEF _initCard
+	XDEF _initCursor
+	XDEF _isInTab
+	END

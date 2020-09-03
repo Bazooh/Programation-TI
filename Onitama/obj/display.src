@@ -1,0 +1,1839 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\DISPLAY.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "s_pos",2
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_card",25
+.DEFINE "value"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.ENDREC "s_card"
+.BEGREC "s_player",50
+.DEFINE "card"
+.VALUE 0
+.CLASS 8
+.DIM 2
+.TAG "s_card"
+.TYPE 104
+.ENDEF
+.ENDREC "s_player"
+.BEGREC "s_game",166
+.DEFINE "matrix"
+.VALUE 0
+.CLASS 8
+.DIM 5
+.DIM 5
+.TYPE 866
+.ENDEF
+.DEFINE "card_id"
+.VALUE 25
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "movement"
+.VALUE 26
+.CLASS 8
+.DIM 5
+.TAG "s_pos"
+.TYPE 104
+.ENDEF
+.DEFINE "side_card"
+.VALUE 36
+.CLASS 8
+.TAG "s_card"
+.TYPE 8
+.ENDEF
+.DEFINE "cursor"
+.VALUE 61
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "number_of_movement"
+.VALUE 63
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "player_turn"
+.VALUE 64
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "player"
+.VALUE 65
+.CLASS 8
+.DIM 2
+.TAG "s_player"
+.TYPE 104
+.ENDEF
+.DEFINE "win"
+.VALUE 165
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_game"
+	SEGMENT DATA
+_gfx_pal:
+	DW	0
+	DW	32767
+	DW	26425
+	DW	6342
+	DW	31942
+	DW	32742
+	DW	32761
+	DW	5136
+.DEFINE "gfx_pal"
+.ALIAS "_gfx_pal"
+.CLASS 69
+.VALUE _gfx_pal
+.DIM 8
+.TYPE 109
+.ENDEF
+;    1	
+;    2	#include "display.h"
+;    3	
+;    4	uint16_t gfx_pal[PAL_LENGTH] = {
+	SEGMENT CODE
+;    5	        gfx_RGBTo1555(  0,   0,   0),     // transparent
+;    6	        gfx_RGBTo1555(250, 250, 250),     // white
+;    7	        gfx_RGBTo1555(200, 200, 200),     // grey
+;    8	        gfx_RGBTo1555( 50,  50,  50),     // dark_grey
+;    9	        gfx_RGBTo1555(250,  50,  50),     // red
+;   10	        gfx_RGBTo1555(250, 250,  50),     // yellow
+;   11	        gfx_RGBTo1555(255, 255, 204),     // beige
+;   12	        gfx_RGBTo1555( 42,   0, 128),     // mauve
+;   13	};
+;   14	
+;   15	gfx_sprite_t* matrixCase(int8_t matrix_case) {
+_matrixCase:
+.DEFINE "_matrixCase"
+
+.VALUE _matrixCase
+
+.CLASS 2
+
+.TAG "NONAME3"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "matrixCase",15,"_matrixCase"
+
+.LINE 15
+
+.DEFINE "matrix_case"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 2
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   16	    switch (matrix_case) {
+.LINE 16
+
+	LD	A,(IX+6)
+	SEXT	HL
+	LD	L,(IX+6)
+	CALL	__case24D
+	JP	(HL)
+L__0:
+	DW	4
+	DW	1
+	DB	0
+	DW24	L_1	
+
+	DW	2
+	DB	0
+	DW24	L_0	
+
+	DW	65534
+	DB	255
+	DW24	L_2	
+
+	DW	65535
+	DB	255
+	DW24	L_3	
+
+	DW24	L_4	
+
+;   17	        case KING_WHITE:
+L_0:
+.LINE 17
+
+;   18	            return SPRITE_KING_WHITE;
+.LINE 18
+
+	LD	HL,_sprite_king_white
+	JR	L_5
+;   19	        case PION_WHITE:
+L_1:
+.LINE 19
+
+;   20	            return SPRITE_PION_WHITE;
+.LINE 20
+
+	LD	HL,_sprite_pion_white
+	JR	L_5
+;   21	        case KING_BLACK:
+L_2:
+.LINE 21
+
+;   22	            return SPRITE_KING_BLACK;
+.LINE 22
+
+	LD	HL,_sprite_king_black
+	JR	L_5
+;   23	        case PION_BLACK:
+L_3:
+.LINE 23
+
+;   24	            return SPRITE_PION_BLACK;
+.LINE 24
+
+	LD	HL,_sprite_pion_black
+	JR	L_5
+;   25	    }
+L_4:
+.LINE 25
+
+;   26	    return NULL;
+.LINE 26
+
+	OR	A,A
+	SBC	HL,HL
+;   27	}
+L_5:
+.LINE 27
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _matrixCase ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_pion_black                  IMPORT    627   variable
+;_sprite_king_black                  IMPORT    627   variable
+;_sprite_pion_white                  IMPORT    627   variable
+;_sprite_king_white                  IMPORT    627   variable
+;matrix_case                           IX+6      1   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "matrixCase",27,"_matrixCase"
+;   28	
+;   29	void printCase(MATRIX, uint24_t x, uint8_t y) {
+_printCase:
+.DEFINE "_printCase"
+
+.VALUE _printCase
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCase",29,"_printCase"
+
+.LINE 29
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;   30	    gfx_TransparentSprite_NoClip(
+;   31	        SPRITE_EMPTY,
+;   32	        CASE_X_LENGTH * x + MARGE_X,
+;   33	        CASE_Y_LENGTH * y + MARGE_Y);
+.LINE 33
+
+	LD	B,25
+	LD	C,(IX+12)
+	MLT	BC
+	LD	A,C
+	ADD	A,57
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	HL,(IX+9)
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+97
+	PUSH	BC
+	LD	BC,_sprite_empty
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   34	    if (matrix[x][y]) {
+.LINE 34
+
+	LD	HL,(IX+9)
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(IX+-3),HL
+	LD	A,(HL)
+	OR	A,A
+	JR	Z,L_7
+;   35	        gfx_TransparentSprite_NoClip(
+;   36	            matrixCase(matrix[x][y]),
+;   37	            CASE_X_LENGTH * x + MARGE_X,
+;   38	            CASE_Y_LENGTH * y + MARGE_Y);
+.LINE 38
+
+	LD	B,25
+	LD	C,(IX+12)
+	MLT	BC
+	LD	A,C
+	ADD	A,57
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	HL,(IX+9)
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+97
+	PUSH	BC
+	LD	HL,(IX+-3)
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_matrixCase
+	POP	BC
+	PUSH	HL
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   39	    }
+;   40	}
+L_7:
+.LINE 40
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCase ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_empty                       IMPORT    627   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;G_0                                   IX-3      3   variable
+;y                                    IX+12      1   parameter
+;x                                     IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 18 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCase",40,"_printCase"
+;   41	
+;   42	void eraseCursor(MATRIX, t_pos cursor) {
+_eraseCursor:
+.DEFINE "_eraseCursor"
+
+.VALUE _eraseCursor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "eraseCursor",42,"_eraseCursor"
+
+.LINE 42
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "cursor"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "s_pos"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   43	    printCase(matrix, cursor.x, cursor.y);
+.LINE 43
+
+	LD	C,(IX+10)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+9)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+;   44	}
+.LINE 44
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _eraseCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_printCase                          IMPORT  -----   function
+;cursor                                IX+9      2   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 12 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "eraseCursor",44,"_eraseCursor"
+;   45	
+;   46	void printCursor(t_pos cursor) {
+_printCursor:
+.DEFINE "_printCursor"
+
+.VALUE _printCursor
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCursor",46,"_printCursor"
+
+.LINE 46
+
+.DEFINE "cursor"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_pos"
+
+.TYPE 8
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   47	    gfx_TransparentSprite_NoClip(
+;   48	        SPRITE_CURSOR,
+;   49	        CASE_X_LENGTH * (uint24_t)(cursor.x) + MARGE_X,
+;   50	        CASE_Y_LENGTH * (cursor.y) + MARGE_Y);
+.LINE 50
+
+	LD	B,(IX+7)
+	LD	C,25
+	MLT	BC
+	LD	A,C
+	ADD	A,57
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+6)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+97
+	PUSH	BC
+	LD	BC,_sprite_cursor
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   51	}
+.LINE 51
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCursor ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_cursor                      IMPORT    627   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;cursor                                IX+6      2   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCursor",51,"_printCursor"
+;   52	
+;   53	void printCardCase(uint8_t full, uint24_t x, uint8_t y, uint24_t marge_x, uint8_t marge_y) {
+_printCardCase:
+.DEFINE "_printCardCase"
+
+.VALUE _printCardCase
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCardCase",53,"_printCardCase"
+
+.LINE 53
+
+.DEFINE "full"
+
+.CLASS 65
+
+.VALUE 6
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "marge_x"
+
+.CLASS 65
+
+.VALUE 15
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "marge_y"
+
+.CLASS 65
+
+.VALUE 18
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   54	    if (full) {
+.LINE 54
+
+	LD	A,(IX+6)
+	OR	A,A
+	JR	Z,L_11
+;   55	        gfx_TransparentSprite_NoClip(
+;   56	        SPRITE_CARD_CASE_FULL,
+;   57	        (CARD_CASE_X_LENGTH + 2)*x + marge_x,
+;   58	        (CARD_CASE_Y_LENGTH + 2)*y + marge_y);
+.LINE 58
+
+	LD	B,7
+	LD	C,(IX+12)
+	MLT	BC
+	LD	A,C
+	ADD	A,(IX+18)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	HL,(IX+9)
+	LD	A,7
+	CALL	__imul_b
+	LD	BC,(IX+15)
+	ADD	HL,BC
+	PUSH	HL
+	LD	BC,_sprite_card_case_full
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   59	    } else {
+.LINE 59
+
+	JR	L_12
+L_11:
+;   60	        gfx_TransparentSprite_NoClip(
+;   61	        SPRITE_CARD_CASE_EMPTY,
+;   62	        (CARD_CASE_X_LENGTH + 2)*x + marge_x,
+;   63	        (CARD_CASE_Y_LENGTH + 2)*y + marge_y);
+.LINE 63
+
+	LD	B,7
+	LD	C,(IX+12)
+	MLT	BC
+	LD	A,C
+	ADD	A,(IX+18)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	HL,(IX+9)
+	LD	A,7
+	CALL	__imul_b
+	LD	BC,(IX+15)
+	ADD	HL,BC
+	PUSH	HL
+	LD	BC,_sprite_card_case_empty
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   64	    }
+;   65	}
+L_12:
+.LINE 65
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCardCase ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_card_case_empty             IMPORT     27   variable
+;_sprite_card_case_full              IMPORT     27   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;marge_y                              IX+18      1   parameter
+;marge_x                              IX+15      3   parameter
+;y                                    IX+12      1   parameter
+;x                                     IX+9      3   parameter
+;full                                  IX+6      1   parameter
+
+
+; Stack Frame Size: 21 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCardCase",65,"_printCardCase"
+;   66	
+;   67	void printCard(CARD, uint24_t marge_x, uint8_t marge_y) {
+_printCard:
+.DEFINE "_printCard"
+
+.VALUE _printCard
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printCard",67,"_printCard"
+
+.LINE 67
+
+.DEFINE "card"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "marge_x"
+
+.CLASS 65
+
+.VALUE 9
+
+.TYPE 14
+
+.ENDEF
+
+.DEFINE "marge_y"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;   68	    uint8_t i;
+;   69	    uint8_t j;
+;   70	
+;   71	    gfx_TransparentSprite_NoClip(
+;   72	        SPRITE_CARD,
+;   73	        marge_x - 4,
+;   74	        marge_y - 4);
+.LINE 74
+
+	LD	A,(IX+12)
+	SUB	A,4
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+9)
+	LEA	BC,IY+-4
+	PUSH	BC
+	LD	BC,_sprite_card
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   75	
+;   76	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 76
+
+	LD	(IX+-1),0
+	JR	L_18
+L_16:
+;   77	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 77
+
+	LD	(IX+-2),0
+	JR	L_15
+L_13:
+;   78	            printCardCase(card[i][j], i, j, marge_x, marge_y);
+.LINE 78
+
+	LD	C,(IX+12)
+	LD	B,0
+	PUSH	BC
+	LD	BC,(IX+9)
+	PUSH	BC
+	LD	C,(IX+-2)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	C,(HL)
+	LD	B,0
+	PUSH	BC
+	CALL	_printCardCase
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-2)
+;   79	        }
+L_15:
+.LINE 79
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_13
+	INC	(IX+-1)
+;   80	    }
+L_18:
+.LINE 80
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_16
+;   81	    
+;   82	    gfx_TransparentSprite_NoClip(
+;   83	        SPRITE_CARD_CASE_MIDDLE,
+;   84	        (CARD_CASE_X_LENGTH + 2)*2 + marge_x,
+;   85	        (CARD_CASE_Y_LENGTH + 2)*2 + marge_y);
+.LINE 85
+
+	LD	A,(IX+12)
+	ADD	A,14
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	IY,(IX+9)
+	LEA	BC,IY+14
+	PUSH	BC
+	LD	BC,_sprite_card_case_middle
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   86	}
+.LINE 86
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printCard ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_card_case_middle            IMPORT     27   variable
+;_sprite_card                        IMPORT   1683   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;marge_y                              IX+12      1   parameter
+;marge_x                               IX+9      3   parameter
+;card                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 17 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printCard",86,"_printCard"
+;   87	
+;   88	void printMovement(MATRIX, t_pos *movement, uint8_t number_of_movement) {
+_printMovement:
+.DEFINE "_printMovement"
+
+.VALUE _printMovement
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printMovement",88,"_printMovement"
+
+.LINE 88
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "movement"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "number_of_movement"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -4
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-22
+	LD	SP,HL
+;   89	    uint8_t i;
+;   90	
+;   91	    for (i = 1; i < number_of_movement + 1; ++i) {
+.LINE 91
+
+	LD	(IX+-4),1
+	JR	L_25
+L_23:
+;   92	        if (matrix[movement[i].x][movement[i].y]) {
+.LINE 92
+
+	LD	A,(IX+-4)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	(IX+-3),HL
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-10),HL
+	LD	(IX+-7),HL
+	LD	IY,(IX+-7)
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IY+1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	A,(HL)
+	OR	A,A
+	JR	Z,L_22
+;   93	            gfx_TransparentSprite_NoClip(
+;   94	                SPRITE_MOVEMENT_TOUCH,
+;   95	                CASE_X_LENGTH * (uint24_t)(movement[i].x) + MARGE_X,
+;   96	                CASE_Y_LENGTH * (uint8_t)(movement[i].y) + MARGE_Y);
+.LINE 96
+
+	LD	BC,(IX+-3)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-16),HL
+	LD	(IX+-13),HL
+	LD	IY,(IX+-13)
+	LD	B,(IY+1)
+	LD	C,25
+	MLT	BC
+	LD	A,C
+	ADD	A,57
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+97
+	PUSH	BC
+	LD	BC,_sprite_movement_touch
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;   97	        } else {
+.LINE 97
+
+	JR	L_24
+L_22:
+;   98	            gfx_TransparentSprite_NoClip(
+;   99	                SPRITE_MOVEMENT,
+;  100	                CASE_X_LENGTH * (uint24_t)(movement[i].x) + MARGE_X,
+;  101	                CASE_Y_LENGTH * (uint8_t)(movement[i].y) + MARGE_Y);
+.LINE 101
+
+	LD	BC,(IX+-3)
+	LD	HL,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-22),HL
+	LD	(IX+-19),HL
+	LD	IY,(IX+-19)
+	LD	B,(IY+1)
+	LD	C,25
+	MLT	BC
+	LD	A,C
+	ADD	A,57
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	LD	A,25
+	CALL	__imul_b
+	LD	IY,HL
+	LEA	BC,IY+97
+	PUSH	BC
+	LD	BC,_sprite_movement
+	PUSH	BC
+	CALL	_gfx_TransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+;  102	        }
+;  103	    }
+L_24:
+.LINE 103
+
+	INC	(IX+-4)
+L_25:
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+-4)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	JP	M,L_23
+;  104	}
+.LINE 104
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printMovement ***************************
+;Name                         Addr/Register   Size   Type
+;_sprite_movement                    IMPORT    627   variable
+;_sprite_movement_touch              IMPORT    627   variable
+;_gfx_TransparentSprite_NoClip       IMPORT  -----   function
+;i                                     IX-4      1   variable
+;G_1                                   IX-3      3   variable
+;number_of_movement                   IX+12      1   parameter
+;movement                              IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 37 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printMovement",104,"_printMovement"
+;  105	
+;  106	void eraseMovement(MATRIX, t_pos *movement, uint8_t number_of_movement) {
+_eraseMovement:
+.DEFINE "_eraseMovement"
+
+.VALUE _eraseMovement
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "eraseMovement",106,"_eraseMovement"
+
+.LINE 106
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "movement"
+
+.CLASS 65
+
+.VALUE 9
+
+.TAG "s_pos"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "number_of_movement"
+
+.CLASS 65
+
+.VALUE 12
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+	PUSH	BC
+	DEC	SP
+;  107	    uint8_t i;
+;  108	
+;  109	    for (i = 1; i < number_of_movement + 1; ++i) {
+.LINE 109
+
+	LD	(IX+-1),1
+	JR	L_29
+L_27:
+;  110	        printCase(matrix, movement[i].x, movement[i].y);
+.LINE 110
+
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,HL
+	LD	BC,(IX+9)
+	ADD	HL,BC
+	LD	(IX+-7),HL
+	LD	(IX+-4),HL
+	LD	IY,(IX+-4)
+	LD	C,(IY+1)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IY+0)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-1)
+;  111	    }
+L_29:
+.LINE 111
+
+	LD	A,(IX+12)
+	UEXT	HL
+	LD	L,A
+	LD	BC,HL
+	INC	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	M,L_27
+;  112	}
+.LINE 112
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _eraseMovement ***************************
+;Name                         Addr/Register   Size   Type
+;_printCase                          IMPORT  -----   function
+;i                                     IX-1      1   variable
+;number_of_movement                   IX+12      1   parameter
+;movement                              IX+9      3   parameter
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 22 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "eraseMovement",112,"_eraseMovement"
+;  113	
+;  114	void printDeck(t_game game) {
+_printDeck:
+.DEFINE "_printDeck"
+
+.VALUE _printDeck
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printDeck",114,"_printDeck"
+
+.LINE 114
+
+.DEFINE "game"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_game"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "enemy_card"
+
+.CLASS 65
+
+.VALUE -56
+
+.DIM 2
+
+.TAG "s_card"
+
+.TYPE 104
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-56
+	LD	SP,HL
+;  115	    t_card enemy_card[2];
+;  116	
+;  117	    copyCard(enemy_card[0].value, game.player[!(game.player_turn)].card[0].value);
+.LINE 117
+
+	LD	A,(IX+70)
+	OR	A,A
+	JR	NZ,L_32
+	LD	BC,1
+	LD	(IX+-3),BC
+	JR	L_33
+L_32:
+	LD	BC,0
+	LD	(IX+-3),BC
+L_33:
+	LD	HL,50
+	LD	BC,(IX+-3)
+	CALL	__imulu
+	LEA	BC,IX+71
+	ADD	HL,BC
+	LD	IY,HL
+	PEA	IY+0
+	PEA	IX+-56
+	CALL	_copyCard
+	POP	BC
+	POP	BC
+;  118	    copyCard(enemy_card[1].value, game.player[!(game.player_turn)].card[1].value);
+.LINE 118
+
+	LD	A,(IX+70)
+	OR	A,A
+	JR	NZ,L_36
+	LD	BC,1
+	LD	(IX+-6),BC
+	JR	L_37
+L_36:
+	LD	BC,0
+	LD	(IX+-6),BC
+L_37:
+	LD	HL,50
+	LD	BC,(IX+-6)
+	CALL	__imulu
+	LEA	BC,IX+71
+	ADD	HL,BC
+	LD	IY,HL
+	LEA	IY,IY+25
+	PEA	IY+0
+	LEA	IY,IX+-31
+	PEA	IY+0
+	CALL	_copyCard
+	POP	BC
+	POP	BC
+;  119	
+;  120	    reverseMatrix(enemy_card[0].value);
+.LINE 120
+
+	PEA	IX+-56
+	CALL	_reverseMatrix
+	POP	BC
+;  121	    reverseMatrix(enemy_card[1].value);
+.LINE 121
+
+	LEA	IY,IX+-31
+	PEA	IY+0
+	CALL	_reverseMatrix
+	POP	BC
+;  122	
+;  123	    printCard(game.player[game.player_turn].card[0].value, 114, 197);
+.LINE 123
+
+	LD	BC,197
+	PUSH	BC
+	LD	BC,114
+	PUSH	BC
+	LD	A,(IX+70)
+	SEXT	HL
+	LD	L,(IX+70)
+	LD	A,50
+	CALL	__imul_b
+	LEA	BC,IX+71
+	ADD	HL,BC
+	LD	IY,HL
+	PEA	IY+0
+	CALL	_printCard
+	POP	BC
+	POP	BC
+	POP	BC
+;  124	    printCard(game.player[game.player_turn].card[1].value, 165, 197);
+.LINE 124
+
+	LD	BC,197
+	PUSH	BC
+	LD	BC,165
+	PUSH	BC
+	LD	A,(IX+70)
+	SEXT	HL
+	LD	L,(IX+70)
+	LD	A,50
+	CALL	__imul_b
+	LEA	BC,IX+71
+	ADD	HL,BC
+	LD	IY,HL
+	LEA	IY,IY+25
+	PEA	IY+0
+	CALL	_printCard
+	POP	BC
+	POP	BC
+	POP	BC
+;  125	    printCard(game.side_card.value, 250, 107);
+.LINE 125
+
+	LD	BC,107
+	PUSH	BC
+	LD	BC,250
+	PUSH	BC
+	PEA	IX+42
+	CALL	_printCard
+	POP	BC
+	POP	BC
+	POP	BC
+;  126	    printCard(enemy_card[0].value, 114, 13);
+.LINE 126
+
+	LD	BC,13
+	PUSH	BC
+	LD	BC,114
+	PUSH	BC
+	PEA	IX+-56
+	CALL	_printCard
+	POP	BC
+	POP	BC
+	POP	BC
+;  127	    printCard(enemy_card[1].value, 165, 13);
+.LINE 127
+
+	LD	BC,13
+	PUSH	BC
+	LD	BC,165
+	PUSH	BC
+	LEA	IY,IX+-31
+	PEA	IY+0
+	CALL	_printCard
+	POP	BC
+	POP	BC
+	POP	BC
+;  128	}
+.LINE 128
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printDeck ***************************
+;Name                         Addr/Register   Size   Type
+;_reverseMatrix                      IMPORT  -----   function
+;_copyCard                           IMPORT  -----   function
+;enemy_card                           IX-56     50   variable
+;temp38                                IX-6      3   variable
+;temp34                                IX-3      3   variable
+;game                                  IX+6    166   parameter
+
+
+; Stack Frame Size: 230 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printDeck",128,"_printDeck"
+;  129	
+;  130	void printMatrix(MATRIX) {
+_printMatrix:
+.DEFINE "_printMatrix"
+
+.VALUE _printMatrix
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "printMatrix",130,"_printMatrix"
+
+.LINE 130
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 802
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;  131	    uint8_t i;
+;  132	    uint8_t j;
+;  133	
+;  134	    for (i = 0; i < MATRIX_X_LENGTH; ++i) {
+.LINE 134
+
+	LD	(IX+-1),0
+	JR	L_45
+L_43:
+;  135	        for (j = 0; j < MATRIX_Y_LENGTH; ++j) {
+.LINE 135
+
+	LD	(IX+-2),0
+	JR	L_42
+L_40:
+;  136	            printCase(matrix, i, j);
+.LINE 136
+
+	LD	C,(IX+-2)
+	LD	B,0
+	PUSH	BC
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	PUSH	HL
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_printCase
+	POP	BC
+	POP	BC
+	POP	BC
+	INC	(IX+-2)
+;  137	        }
+L_42:
+.LINE 137
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_40
+	INC	(IX+-1)
+;  138	    }
+L_45:
+.LINE 138
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_43
+.LINE 139
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _printMatrix ***************************
+;Name                         Addr/Register   Size   Type
+;_printCase                          IMPORT  -----   function
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 11 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "printMatrix",139,"_printMatrix"
+	XREF _sprite_card:ROM
+	XREF _sprite_card_case_middle:ROM
+	XREF _sprite_card_case_full:ROM
+	XREF _sprite_card_case_empty:ROM
+	XREF _sprite_movement_touch:ROM
+	XREF _sprite_movement:ROM
+	XREF _sprite_cursor:ROM
+	XREF _sprite_pion_black:ROM
+	XREF _sprite_king_black:ROM
+	XREF _sprite_pion_white:ROM
+	XREF _sprite_king_white:ROM
+	XREF _sprite_empty:ROM
+	XREF _copyCard:ROM
+	XREF _reverseMatrix:ROM
+	XREF _gfx_TransparentSprite_NoClip:ROM
+	XREF __imulu:ROM
+	XREF __setflag:ROM
+	XREF __case24D:ROM
+	XREF __imul_b:ROM
+	XDEF _printMatrix
+	XDEF _printDeck
+	XDEF _eraseMovement
+	XDEF _printMovement
+	XDEF _printCard
+	XDEF _printCardCase
+	XDEF _printCursor
+	XDEF _eraseCursor
+	XDEF _printCase
+	XDEF _matrixCase
+	XDEF _gfx_pal
+	END

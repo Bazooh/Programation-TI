@@ -1,0 +1,31 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\PAL.C"
+	.assume ADL=1
+	SEGMENT DATA
+_gfx_pal:
+	DW	0
+	DW	32767
+	DW	26425
+	DW	19026
+	DW	12684
+	DW	31710
+	DW	32764
+	DW	32594
+	DW	32562
+	DW	32466
+	DW	32136
+	DW	32759
+	DW	32754
+	DW	32749
+	DW	32621
+	DW	32588
+	DW	32272
+	DW	11627
+	XDEF _gfx_pal
+;    1	
+;    2	#include "pal.h"
+;    3	
+;    4	uint16_t gfx_pal[PAL_LENGTH] = {
+	END

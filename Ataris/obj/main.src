@@ -1,0 +1,1488 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -debug -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"SRC\MAIN.C"
+	.assume ADL=1
+.DEBUG "C"
+	SEGMENT CODE
+.BEGREC "NONAME0",6
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "rem"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME0"
+.BEGREC "NONAME1",8
+.DEFINE "quot"
+.VALUE 0
+.CLASS 8
+.TYPE 5
+.ENDEF
+.DEFINE "rem"
+.VALUE 4
+.CLASS 8
+.TYPE 5
+.ENDEF
+.ENDREC "NONAME1"
+.BEGREC "header",6
+.DEFINE "s"
+.VALUE 0
+.CLASS 11
+.TAG "NONAME2"
+.TYPE 8
+.ENDEF
+.DEFINE "x"
+.VALUE 0
+.CLASS 11
+.TYPE 2
+.ENDEF
+.ENDREC "header"
+.BEGREC "NONAME2",6
+.DEFINE "ptr"
+.VALUE 0
+.CLASS 8
+.TAG "header"
+.TYPE 40
+.ENDEF
+.DEFINE "size"
+.VALUE 3
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME2"
+.BEGREC "NONAME3",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME3"
+.BEGREC "NONAME4",3
+.DEFINE "width"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME4"
+.BEGREC "NONAME5",6
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME5"
+.BEGREC "NONAME6",12
+.DEFINE "xmin"
+.VALUE 0
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymin"
+.VALUE 3
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "xmax"
+.VALUE 6
+.CLASS 8
+.TYPE 4
+.ENDEF
+.DEFINE "ymax"
+.VALUE 9
+.CLASS 8
+.TYPE 4
+.ENDEF
+.ENDREC "NONAME6"
+.BEGREC "NONAME7",18
+.DEFINE "map"
+.VALUE 0
+.CLASS 8
+.TYPE 44
+.ENDEF
+.DEFINE "tiles"
+.VALUE 3
+.CLASS 8
+.TAG "NONAME3"
+.TYPE 296
+.ENDEF
+.DEFINE "tile_height"
+.VALUE 6
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "tile_width"
+.VALUE 7
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_height"
+.VALUE 8
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "draw_width"
+.VALUE 9
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_width"
+.VALUE 10
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "type_height"
+.VALUE 11
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "height"
+.VALUE 12
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "width"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "y_loc"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "x_loc"
+.VALUE 15
+.CLASS 8
+.TYPE 14
+.ENDEF
+.ENDREC "NONAME7"
+.BEGREC "NONAME8",9
+.DEFINE "sign"
+.VALUE 0
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "mant"
+.VALUE 2
+.CLASS 8
+.DIM 7
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME8"
+.BEGREC "NONAME9",18
+.DEFINE "real"
+.VALUE 0
+.CLASS 8
+.TAG "NONAME8"
+.TYPE 8
+.ENDEF
+.DEFINE "imag"
+.VALUE 9
+.CLASS 8
+.TAG "NONAME8"
+.TYPE 8
+.ENDEF
+.ENDREC "NONAME9"
+.BEGREC "NONAME10",11
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME8"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME10"
+.BEGREC "NONAME11",20
+.DEFINE "dim"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME9"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME11"
+.BEGREC "NONAME12",11
+.DEFINE "cols"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "rows"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "items"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TAG "NONAME8"
+.TYPE 104
+.ENDEF
+.ENDREC "NONAME12"
+.BEGREC "NONAME13",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME13"
+.BEGREC "NONAME14",3
+.DEFINE "len"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 98
+.ENDEF
+.ENDREC "NONAME14"
+.BEGREC "NONAME15",3
+.DEFINE "size"
+.VALUE 0
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "data"
+.VALUE 2
+.CLASS 8
+.DIM 1
+.TYPE 108
+.ENDEF
+.ENDREC "NONAME15"
+.BEGREC "font",12
+.DEFINE "font"
+.VALUE 0
+.CLASS 8
+.TAG "font"
+.TYPE 40
+.ENDEF
+.DEFINE "drawChar"
+.VALUE 3
+.CLASS 8
+.TYPE 545
+.ENDEF
+.DEFINE "getWidth"
+.VALUE 6
+.CLASS 8
+.TYPE 558
+.ENDEF
+.DEFINE "getHeight"
+.VALUE 9
+.CLASS 8
+.TYPE 558
+.ENDEF
+.ENDREC "font"
+.BEGREC "fmt_type",19
+.DEFINE "status"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "flags"
+.VALUE 1
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "size"
+.VALUE 2
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "chr"
+.VALUE 3
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "type"
+.VALUE 4
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "field_width"
+.VALUE 5
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "precision"
+.VALUE 6
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "set_begin"
+.VALUE 7
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "set_end"
+.VALUE 10
+.CLASS 8
+.TYPE 34
+.ENDEF
+.DEFINE "pad_whole"
+.VALUE 13
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_pre_fract"
+.VALUE 14
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_post_fract"
+.VALUE 15
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "pad_at"
+.VALUE 16
+.CLASS 8
+.TYPE 34
+.ENDEF
+.ENDREC "fmt_type"
+.BEGREC "flt_info",12
+.DEFINE "flags"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "exp"
+.VALUE 1
+.CLASS 8
+.TYPE 2
+.ENDEF
+.DEFINE "digits"
+.VALUE 2
+.CLASS 8
+.DIM 10
+.TYPE 108
+.ENDEF
+.ENDREC "flt_info"
+.BEGREC "__stdio_file",1
+.DEFINE "slot"
+.VALUE 0
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "__stdio_file"
+.BEGREC "s_pos",4
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 14
+.ENDEF
+.DEFINE "y"
+.VALUE 3
+.CLASS 8
+.TYPE 12
+.ENDEF
+.ENDREC "s_pos"
+.BEGREC "s_precision_pos",8
+.DEFINE "x"
+.VALUE 0
+.CLASS 8
+.TYPE 6
+.ENDEF
+.DEFINE "y"
+.VALUE 4
+.CLASS 8
+.TYPE 6
+.ENDEF
+.ENDREC "s_precision_pos"
+.BEGREC "s_ball",20
+.DEFINE "pos"
+.VALUE 0
+.CLASS 8
+.TAG "s_precision_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "old_pos"
+.VALUE 8
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "direction"
+.VALUE 12
+.CLASS 8
+.TYPE 6
+.ENDEF
+.DEFINE "speed"
+.VALUE 16
+.CLASS 8
+.TYPE 6
+.ENDEF
+.ENDREC "s_ball"
+.BEGREC "s_obstacle",35
+.DEFINE "point"
+.VALUE 0
+.CLASS 8
+.DIM 4
+.TAG "s_pos"
+.TYPE 104
+.ENDEF
+.DEFINE "ortho"
+.VALUE 16
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "id"
+.VALUE 20
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "life"
+.VALUE 21
+.CLASS 8
+.TYPE 13
+.ENDEF
+.DEFINE "hide"
+.VALUE 23
+.CLASS 8
+.DIM 4
+.TYPE 108
+.ENDEF
+.DEFINE "in_matrix"
+.VALUE 27
+.CLASS 8
+.TYPE 12
+.ENDEF
+.DEFINE "matrix"
+.VALUE 28
+.CLASS 8
+.TAG "s_pos"
+.TYPE 8
+.ENDEF
+.DEFINE "next"
+.VALUE 32
+.CLASS 8
+.TAG "s_obstacle"
+.TYPE 40
+.ENDEF
+.ENDREC "s_obstacle"
+.BEGREC "s_game_info",3
+.DEFINE "ob_contact"
+.VALUE 0
+.CLASS 8
+.TAG "s_obstacle"
+.TYPE 40
+.ENDEF
+.ENDREC "s_game_info"
+;    1	
+;    2	#include "main.h"
+;    3	
+;    4	t_obstacle *createMap() {
+_createMap:
+.DEFINE "_createMap"
+
+.VALUE _createMap
+
+.CLASS 2
+
+.TAG "s_obstacle"
+
+.TYPE 328
+
+.ENDEF
+
+.BEGFUNC "createMap",4,"_createMap"
+
+.LINE 4
+
+.DEFINE "obstacles"
+
+.CLASS 65
+
+.VALUE -3
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	PUSH	BC
+;    5	    t_obstacle *obstacles;
+;    6	
+;    7	    if (!(obstacles = createInvObstacleRectangle(MAP_X_MARGE, MAP_Y_MARGE, MAP_X_LENGTH, MAP_Y_LENGTH, 0))) { return NULL; }
+.LINE 7
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,50
+	PUSH	BC
+	PUSH	BC
+	LD	BC,10
+	PUSH	BC
+	PUSH	BC
+	CALL	_createInvObstacleRectangle
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	NZ,L_1
+	OR	A,A
+	SBC	HL,HL
+	JR	L_2
+L_1:
+;    8	
+;    9	    obstacles->id = 0;
+.LINE 9
+
+	LD	IY,(IX+-3)
+	LD	(IY+20),0
+;   10	
+;   11	    return obstacles;
+.LINE 11
+
+	LD	HL,(IX+-3)
+;   12	}
+L_2:
+.LINE 12
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _createMap ***************************
+;Name                         Addr/Register   Size   Type
+;_createInvObstacleRectangle         IMPORT  -----   function
+;obstacles                             IX-3      3   variable
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "createMap",12,"_createMap"
+;   13	
+;   14	void gameOver(t_obstacle *obstacles) {
+_gameOver:
+.DEFINE "_gameOver"
+
+.VALUE _gameOver
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "gameOver",14,"_gameOver"
+
+.LINE 14
+
+.DEFINE "obstacles"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   15	    freeObstacles(obstacles);
+.LINE 15
+
+	LD	BC,(IX+6)
+	PUSH	BC
+	CALL	_freeObstacles
+	POP	BC
+;   16	    kb_Reset();
+.LINE 16
+
+	CALL	_kb_Reset
+;   17	    gfx_End();
+.LINE 17
+
+	CALL	_gfx_End
+;   18	}
+.LINE 18
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _gameOver ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_End                            IMPORT  -----   function
+;_kb_Reset                           IMPORT  -----   function
+;_freeObstacles                      IMPORT  -----   function
+;obstacles                             IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "gameOver",18,"_gameOver"
+;   19	
+;   20	void initBall(t_ball *ball) {
+_initBall:
+.DEFINE "_initBall"
+
+.VALUE _initBall
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initBall",20,"_initBall"
+
+.LINE 20
+
+.DEFINE "ball"
+
+.CLASS 65
+
+.VALUE 6
+
+.TAG "s_ball"
+
+.TYPE 40
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+;   21	    ball->pos.x = 30;
+.LINE 21
+
+	LD	BC,15728640
+	LD	A,65
+	LD	IY,(IX+6)
+	LD	(IY+0),BC
+	LD	(IY+3),A
+;   22	    ball->pos.y = 30;
+.LINE 22
+
+	LD	(IY+4),BC
+	LD	(IY+7),A
+;   23	    ball->direction = rad(60);
+.LINE 23
+
+	LD	BC,60
+	PUSH	BC
+	CALL	_rad
+	POP	BC
+	LD	IY,(IX+6)
+	LD	(IY+12),HL
+	LD	(IY+15),E
+;   24	    ball->old_pos.x = 0;
+.LINE 24
+
+	LD	BC,0
+	LD	(IY+8),BC
+;   25	    ball->old_pos.y = 0;
+.LINE 25
+
+	LD	(IY+11),0
+;   26	}
+.LINE 26
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initBall ***************************
+;Name                         Addr/Register   Size   Type
+;_rad                                IMPORT  -----   function
+;ball                                  IX+6      3   parameter
+
+
+; Stack Frame Size: 9 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initBall",26,"_initBall"
+;   27	
+;   28	void initMatrix(uint8_t matrix[MATRIX_X_LENGTH][MATRIX_Y_LENGTH]) {
+_initMatrix:
+.DEFINE "_initMatrix"
+
+.VALUE _initMatrix
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "initMatrix",28,"_initMatrix"
+
+.LINE 28
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE 6
+
+.DIM 5
+
+.TYPE 812
+
+.ENDEF
+
+.DEFINE "i"
+
+.CLASS 65
+
+.VALUE -1
+
+.TYPE 12
+
+.ENDEF
+
+.DEFINE "j"
+
+.CLASS 65
+
+.VALUE -2
+
+.TYPE 12
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	DEC	SP
+	DEC	SP
+;   29	    uint8_t i;
+;   30	    uint8_t j;
+;   31	
+;   32	    for (i = 0; i < MATRIX_Y_LENGTH; ++i) {
+.LINE 32
+
+	LD	(IX+-1),0
+	JR	L_10
+L_8:
+;   33	        for (j= 0; j < MATRIX_X_LENGTH; ++j) {
+.LINE 33
+
+	LD	(IX+-2),0
+	JR	L_7
+L_5:
+;   34	            matrix[j][i] = 0;
+.LINE 34
+
+	LD	A,(IX+-2)
+	UEXT	HL
+	LD	L,A
+	LD	A,5
+	CALL	__imul_b
+	LD	BC,(IX+6)
+	ADD	HL,BC
+	LD	BC,HL
+	LD	A,(IX+-1)
+	UEXT	HL
+	LD	L,A
+	ADD	HL,BC
+	LD	(HL),0
+	INC	(IX+-2)
+;   35	        }
+L_7:
+.LINE 35
+
+	LD	A,(IX+-2)
+	CP	A,5
+	JR	C,L_5
+	INC	(IX+-1)
+;   36	    }
+L_10:
+.LINE 36
+
+	LD	A,(IX+-1)
+	CP	A,5
+	JR	C,L_8
+;   37	}
+.LINE 37
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _initMatrix ***************************
+;Name                         Addr/Register   Size   Type
+;j                                     IX-2      1   variable
+;i                                     IX-1      1   variable
+;matrix                                IX+6      3   parameter
+
+
+; Stack Frame Size: 11 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "initMatrix",37,"_initMatrix"
+;   38	
+;   39	void main(void) {
+_main:
+.DEFINE "_main"
+
+.VALUE _main
+
+.CLASS 2
+
+.TYPE 65
+
+.ENDEF
+
+.BEGFUNC "main",39,"_main"
+
+.LINE 39
+
+.DEFINE "obstacles"
+
+.CLASS 65
+
+.VALUE -3
+
+.TAG "s_obstacle"
+
+.TYPE 40
+
+.ENDEF
+
+.DEFINE "speed_total"
+
+.CLASS 65
+
+.VALUE -7
+
+.TYPE 6
+
+.ENDEF
+
+.DEFINE "nb_speed"
+
+.CLASS 65
+
+.VALUE -11
+
+.TYPE 15
+
+.ENDEF
+
+.DEFINE "speed_moy"
+
+.CLASS 65
+
+.VALUE -15
+
+.TYPE 6
+
+.ENDEF
+
+.DEFINE "ball"
+
+.CLASS 65
+
+.VALUE -35
+
+.TAG "s_ball"
+
+.TYPE 8
+
+.ENDEF
+
+.DEFINE "matrix"
+
+.CLASS 65
+
+.VALUE -60
+
+.DIM 5
+
+.DIM 5
+
+.TYPE 876
+
+.ENDEF
+
+	PUSH	IX
+	LD	IX,0
+	ADD	IX,SP
+	LEA	HL,IX+-68
+	LD	SP,HL
+;   40	    t_ball ball;
+;   41	    uint8_t i;
+;   42	    t_obstacle *obstacles;
+;   43	    t_game_info game_info;
+;   44	    double speed_total;
+;   45	    double speed_moy;
+;   46	    uint32_t nb_speed;
+;   47	    uint8_t matrix[MATRIX_X_LENGTH][MATRIX_Y_LENGTH];
+;   48	
+;   49	    dbg_ClearConsole();
+.LINE 49
+
+	LD	A,1
+	LD	(16580608),A
+;   50	    gfx_Begin();
+.LINE 50
+
+	CALL	_gfx_Begin
+;   51	    gfx_SetPalette(gfx_pal, sizeof_gfx_pal, 0);
+.LINE 51
+
+	LD	BC,0
+	PUSH	BC
+	LD	BC,10
+	PUSH	BC
+	LD	BC,_gfx_pal
+	PUSH	BC
+	CALL	_gfx_SetPalette
+	POP	BC
+	POP	BC
+	POP	BC
+;   52	    gfx_FillScreen(1);
+.LINE 52
+
+	LD	BC,1
+	PUSH	BC
+	CALL	_gfx_FillScreen
+	POP	BC
+;   53	    gfx_SetTextFGColor(2);
+.LINE 53
+
+	LD	BC,2
+	PUSH	BC
+	CALL	_gfx_SetTextFGColor
+	POP	BC
+;   54	    gfx_SetColor(0);
+.LINE 54
+
+	LD	BC,0
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;   55	    srandom(rtc_Time());
+.LINE 55
+
+	LD	A,(15925319)
+	LD	C,A
+	LD	B,0
+	PUSH	BC
+	LD	BC,(15925316)
+	PUSH	BC
+	CALL	_srandom
+	POP	BC
+	POP	BC
+;   56	
+;   57	    timer_Control = TIMER1_DISABLE;
+.LINE 57
+
+	LD	HL,15859760
+	LD	(HL),0
+	INC	HL
+	LD	(HL),0
+;   58	    timer_1_ReloadValue = timer_1_Counter = 0;
+.LINE 58
+
+	LD	BC,0
+	XOR	A,A
+	LD	(15859712),BC
+	LD	(15859715),A
+	LD	BC,(15859712)
+	LD	A,(15859715)
+	LD	(15859716),BC
+	LD	(15859719),A
+;   59	    timer_Control = TIMER1_ENABLE | TIMER1_32K | TIMER1_0INT | TIMER1_UP;
+.LINE 59
+
+	LD	HL,15859760
+	LD	(HL),7
+	INC	HL
+	LD	(HL),2
+;   60	
+;   61	    initMatrix(matrix);
+.LINE 61
+
+	PEA	IX+-60
+	CALL	_initMatrix
+	POP	BC
+;   62	    initBall(&ball);
+.LINE 62
+
+	PEA	IX+-35
+	CALL	_initBall
+	POP	BC
+;   63	    speed_total = 0;
+.LINE 63
+
+	LD	BC,0
+	XOR	A,A
+	LD	(IX+-7),BC
+	LD	(IX+-4),A
+;   64	    nb_speed = 0;
+.LINE 64
+
+	XOR	A,A
+	LD	(IX+-11),BC
+	LD	(IX+-8),A
+;   65	
+;   66	    if (!(obstacles = createMap())) { return; }
+.LINE 66
+
+	CALL	_createMap
+	LD	(IX+-3),HL
+	CALL	__icmpzero
+	JR	Z,L_23
+;   67	
+;   68	    //generateLine(matrix, obstacles);
+;   69	
+;   70	    printAll(obstacles, ball);
+.LINE 70
+
+	LD	IY,0
+	ADD	IY,SP
+	LEA	IY,IY+-21
+	LD	SP,IY
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+-35
+	LD	BC,20
+	LDIR	
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_printAll
+	LD	IY,24
+	ADD	IY,SP
+	LD	SP,IY
+;   71	
+;   72	    while(1) {
+L_22:
+.LINE 72
+
+;   73	        if (kb_AnyKey()) {
+.LINE 73
+
+	CALL	_kb_AnyKey
+	OR	A,A
+	JR	Z,L_20
+;   74	            delay(100);
+.LINE 74
+
+	LD	BC,100
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;   75	            speed_moy = speed_total / (double)nb_speed;
+.LINE 75
+
+	LD	BC,(IX+-11)
+	LD	A,(IX+-8)
+	CALL	__ultof
+	LD	E,A
+	LD	HL,BC
+	LD	BC,(IX+-7)
+	LD	A,(IX+-4)
+	CALL	__fdiv
+	LD	(IX+-15),BC
+	LD	(IX+-12),A
+;   76	            dbg_sprintf(dbgout, "    speed total : %d.%d\n", (int)speed_total, (int)(speed_total*1000000 - (int)speed_total*1000000));
+.LINE 76
+
+	LD	HL,7611392
+	LD	E,73
+	LD	BC,(IX+-7)
+	LD	A,(IX+-4)
+	CALL	__fmul
+	LD	(IX+-67),BC
+	LD	(IX+-68),A
+	LD	BC,(IX+-7)
+	LD	A,(IX+-4)
+	CALL	__ftol
+	LD	HL,BC
+	LD	BC,1000000
+	CALL	__imuls
+	LD	BC,HL
+	CALL	__itol
+	CALL	__ltof
+	LD	E,A
+	LD	HL,BC
+	LD	A,(IX+-68)
+	LD	BC,(IX+-67)
+	CALL	__fsub
+	CALL	__ftol
+	PUSH	BC
+	LD	BC,(IX+-7)
+	LD	A,(IX+-4)
+	CALL	__ftol
+	PUSH	BC
+	LD	BC,L__9
+	PUSH	BC
+	LD	BC,16449536
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   77	            dbg_sprintf(dbgout, "       nb_speed : %d.%d\n", (int)nb_speed, (int)(nb_speed*1000000 - (int)nb_speed*1000000));
+.LINE 77
+
+	LD	HL,(IX+-11)
+	LD	BC,1000000
+	CALL	__imuls
+	LD	DE,HL
+	LD	HL,(IX+-11)
+	LD	BC,1000000
+	CALL	__imuls
+	LD	BC,HL
+	CALL	__itol
+	LD	HL,DE
+	OR	A,A
+	SBC	HL,BC
+	PUSH	HL
+	LD	BC,(IX+-11)
+	PUSH	BC
+	LD	BC,L__10
+	PUSH	BC
+	LD	BC,16449536
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   78	            dbg_sprintf(dbgout, "      speed moy : %d.%d\n", (int)speed_moy, (int)(speed_moy*1000000 - (int)speed_moy*1000000));
+.LINE 78
+
+	LD	HL,7611392
+	LD	E,73
+	LD	BC,(IX+-15)
+	LD	A,(IX+-12)
+	CALL	__fmul
+	LD	(IX+-63),BC
+	LD	(IX+-64),A
+	LD	BC,(IX+-15)
+	LD	A,(IX+-12)
+	CALL	__ftol
+	LD	HL,BC
+	LD	BC,1000000
+	CALL	__imuls
+	LD	BC,HL
+	CALL	__itol
+	CALL	__ltof
+	LD	E,A
+	LD	HL,BC
+	LD	A,(IX+-64)
+	LD	BC,(IX+-63)
+	CALL	__fsub
+	CALL	__ftol
+	PUSH	BC
+	LD	BC,(IX+-15)
+	LD	A,(IX+-12)
+	CALL	__ftol
+	PUSH	BC
+	LD	BC,L__11
+	PUSH	BC
+	LD	BC,16449536
+	PUSH	BC
+	CALL	_sprintf
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   79	
+;   80	            if (!(mapMoveDown(matrix, obstacles))) { gameOver(obstacles); return; }
+.LINE 80
+
+	LD	BC,(IX+-3)
+	PUSH	BC
+	PEA	IX+-60
+	CALL	_mapMoveDown
+	POP	BC
+	POP	BC
+	OR	A,A
+	JR	NZ,L_15
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_gameOver
+	POP	BC
+	JR	L_23
+L_15:
+;   81	            generateLine(matrix, obstacles);
+.LINE 81
+
+	LD	BC,(IX+-3)
+	PUSH	BC
+	PEA	IX+-60
+	CALL	_generateLine
+	POP	BC
+	POP	BC
+;   82	
+;   83	            printAll(obstacles, ball);
+.LINE 83
+
+	LD	IY,0
+	ADD	IY,SP
+	LEA	IY,IY+-21
+	LD	SP,IY
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+-35
+	LD	BC,20
+	LDIR	
+	LD	BC,(IX+-3)
+	PUSH	BC
+	CALL	_printAll
+	LD	IY,24
+	ADD	IY,SP
+	LD	SP,IY
+;   84	
+;   85	            while (!kb_AnyKey());
+L_17:
+.LINE 85
+
+	CALL	_kb_AnyKey
+	OR	A,A
+	JR	Z,L_17
+;   86	            delay(100);
+.LINE 86
+
+	LD	BC,100
+	PUSH	BC
+	CALL	_delay
+	POP	BC
+;   87	            timer_1_Counter = 0;
+.LINE 87
+
+	LD	BC,0
+	XOR	A,A
+	LD	(15859712),BC
+	LD	(15859715),A
+;   88	        }
+L_20:
+.LINE 88
+
+;   89	        ballMove(matrix, obstacles, &ball, &speed_total, &nb_speed);
+.LINE 89
+
+	PEA	IX+-11
+	PEA	IX+-7
+	PEA	IX+-35
+	LD	BC,(IX+-3)
+	PUSH	BC
+	PEA	IX+-60
+	CALL	_ballMove
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   90	        clearOldBall(ball);
+.LINE 90
+
+	LD	IY,0
+	ADD	IY,SP
+	LEA	IY,IY+-21
+	LD	SP,IY
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+-35
+	LD	BC,20
+	LDIR	
+	CALL	_clearOldBall
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   91	        printBall(ball);
+.LINE 91
+
+	LD	IY,0
+	ADD	IY,SP
+	LEA	IY,IY+-21
+	LD	SP,IY
+	OR	A,A
+	SBC	HL,HL
+	ADD	HL,SP
+	LD	DE,HL
+	LEA	HL,IX+-35
+	LD	BC,20
+	LDIR	
+	CALL	_printBall
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	JR	L_22
+;   92	    }
+;   93	}
+L_23:
+.LINE 93
+
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;_printBall                          IMPORT  -----   function
+;_clearOldBall                       IMPORT  -----   function
+;_ballMove                           IMPORT  -----   function
+;_generateLine                       IMPORT  -----   function
+;_mapMoveDown                        IMPORT  -----   function
+;_sprintf                            IMPORT  -----   function
+;_delay                              IMPORT  -----   function
+;_kb_AnyKey                          IMPORT  -----   function
+;_printAll                           IMPORT  -----   function
+;_srandom                            IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+;_gfx_SetTextFGColor                 IMPORT  -----   function
+;_gfx_FillScreen                     IMPORT  -----   function
+;_gfx_pal                            IMPORT     10   variable
+;_gfx_SetPalette                     IMPORT  -----   function
+;_gfx_Begin                          IMPORT  -----   function
+;matrix                               IX-60     25   variable
+;ball                                 IX-35     20   variable
+;speed_moy                            IX-15      4   variable
+;nb_speed                             IX-11      4   variable
+;speed_total                           IX-7      4   variable
+;obstacles                             IX-3      3   variable
+
+
+; Stack Frame Size: 74 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+.ENDFUNC "main",93,"_main"
+	SEGMENT STRSECT
+L__9:
+	DB	"    speed total : %d.%d"
+	DB	10,0
+L__10:
+	DB	"       nb_speed : %d.%d"
+	DB	10,0
+L__11:
+	DB	"      speed moy : %d.%d"
+	DB	10,0
+	XREF _ballMove:ROM
+	XREF _rad:ROM
+	XREF _mapMoveDown:ROM
+	XREF _generateLine:ROM
+	XREF _printAll:ROM
+	XREF _printBall:ROM
+	XREF _clearOldBall:ROM
+	XREF _gfx_pal:ROM
+	XREF _createInvObstacleRectangle:ROM
+	XREF _freeObstacles:ROM
+	XREF _sprintf:ROM
+	XREF _kb_Reset:ROM
+	XREF _kb_AnyKey:ROM
+	XREF _delay:ROM
+	XREF _srandom:ROM
+	XREF _gfx_SetTextFGColor:ROM
+	XREF _gfx_FillScreen:ROM
+	XREF _gfx_SetPalette:ROM
+	XREF _gfx_SetColor:ROM
+	XREF _gfx_End:ROM
+	XREF _gfx_Begin:ROM
+	XREF __imuls:ROM
+	XREF __fsub:ROM
+	XREF __fmul:ROM
+	XREF __fdiv:ROM
+	XREF __ftol:ROM
+	XREF __ltof:ROM
+	XREF __ultof:ROM
+	XREF __itol:ROM
+	XREF __icmpzero:ROM
+	XREF __imul_b:ROM
+	XDEF _main
+	XDEF _initMatrix
+	XDEF _initBall
+	XDEF _gameOver
+	XDEF _createMap
+	END

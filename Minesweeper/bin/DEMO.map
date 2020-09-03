@@ -1,0 +1,110 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+icon     D1A882 D1A882             0h
+launcher D1A882 D1A8DA            58h
+libs     D1A8DA D1A917            3Dh
+startup  D1A917 D1A956            3Fh
+cleanup  D1A956 D1A96A            14h
+exit     D1A96A D1A970             6h
+code     D1A970 D1BC57          12E7h
+data     D1BC57 D1C10A           4B3h
+strsect  D1C10A D1C10A             0h
+text     D1C10A D1C10A             0h
+bss      D031F6 D031FC D13FD6      6h
+header   D1A87F D1A882             3h
+
+Label                       Value
+-------------------------   ------
+_delay                    = D1A970
+_os_DisableHomeTextBuffer = D1A9B9
+_os_EnableHomeTextBuffer  = D1A9CB
+_srandom                  = D1A9DD
+__setstate                = D1A9E4
+_random                   = D1A9F4
+__state                   = D1BC57
+__frameset0               = D1AA4B
+__frameset                = D1AA56
+__imul_b                  = 000158
+__imul_b                  = 000150
+__lremu                   = 0001E0
+__ishl_b                  = 000174
+__ishl_b                  = 000178
+__ishru_b                 = 000184
+__ishru_b                 = 000188
+__stoiu                   = 000264
+__s_sbrk                  = D1AA64
+__lshru                   = 0001EC
+__ildix                   = 000148
+__istix                   = 00018C
+__ior                     = 000168
+__icmpzero                = 000138
+__iand                    = 000134
+__setflag                 = 000218
+_malloc                   = D1AAB5
+__alloc_base              = D031F6
+_free                     = D1AB5D
+__findlibload             = D1A882
+__ccleanup                = D1A956
+_errno                    = D008DC
+_init                     = D1A882
+_exit                     = D1A96C
+__exit                    = D1A945
+__exitsp                  = D1A945
+__errsp                   = D1A945
+_getCase                  = D1AD98
+_returnValue              = D1AD71
+_deleteCursor             = D1AD53
+_printCursor              = D1AD12
+_printScreen              = D1ACA9
+_printCase                = D1AC5B
+_SPRITE_NEAR_BOMB         = D1BC8C
+_sprite_case_8            = D1C08B
+_sprite_case_7            = D1C038
+_sprite_case_6            = D1BFE5
+_sprite_case_5            = D1BF92
+_sprite_case_4            = D1BF3F
+_sprite_case_3            = D1BEEC
+_sprite_case_2            = D1BE99
+_sprite_case_1            = D1BE46
+_sprite_case_0            = D1BDF3
+_sprite_bomb              = D1BDA0
+_sprite_flag              = D1BD4D
+_sprite_cursor            = D1BCFA
+_sprite_hidden_case       = D1BCA7
+_mines_weeper_gfx_pal     = D1C0DE
+_deleteGoNext             = D1AEA3
+_deleteList               = D1AE73
+_addPos                   = D1AE1B
+_play                     = D1BB65
+_gameLoop                 = D1BB00
+_keyAction                = D1BA73
+_keyArrow                 = D1B9DE
+_lockDelay                = D1B96F
+_moveCursor               = D1B8F2
+_checkCanMove             = D1B871
+_putFlag                  = D1B7BA
+_discoverCases            = D1B685
+_checkAddToList           = D1B63B
+_discoverCase             = D1B5B4
+_discoverBomb             = D1B563
+_discoverBombInSquare     = D1B45C
+_discoverBombInLine       = D1B336
+_checkNullCase            = D1B2CC
+_initMatrix               = D1B1ED
+_initCursor               = D1B1D9
+_mapGenerator             = D1B111
+_putBomb                  = D1AF99
+_checkInnerMap            = D1AF5E
+_maxABCD                  = D1AEC5
+_LINE_DIRECTIONS_Y        = D1C106
+_LINE_DIRECTIONS_X        = D1C102
+_DIRECTIONS               = D1C0F2
+_main                     = D1BC23
+_gfx_Begin                = D1A8ED
+_gfx_End                  = D1A8F1
+_gfx_SetPalette           = D1A8F5
+_gfx_FillScreen           = D1A8F9
+_gfx_TransparentSprite    = D1A8FD
+_gfx_Sprite_NoClip        = D1A901
+_kb_Scan                  = D1A90F
+_kb_Reset                 = D1A913
